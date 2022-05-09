@@ -1,10 +1,9 @@
-#include <iostream>
-
-#include "engine/app.h"
+#include "engine/engine.h"
 
 int main()
 {
-  std::cout << "Hello world!\n";
-  engine::run_app();
+  auto app = engine::create_app("RACER");
+
+  engine::run_app(app);
   return 0;
 }
