@@ -15,6 +15,9 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
+add_subdirectory(engine)
 
 # Add executable
 add_executable(RACER main.cpp)
+
+target_link_libraries(RACER engine)
