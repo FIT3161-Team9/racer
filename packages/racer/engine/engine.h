@@ -19,7 +19,7 @@ App create_app(std::string_view name) { return App{ .name = name }; }
 
 void run_app(App const& app)
 {
-  sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.cbegin());
+  sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, COORDINATE_SPACE_WIDTH, COORDINATE_SPACE_HEIGHT));
   window.setView(view);
 
