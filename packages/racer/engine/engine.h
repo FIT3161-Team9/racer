@@ -7,6 +7,9 @@
 namespace engine
 {
 
+float const COORDINATE_SPACE_WIDTH = 200;
+float const COORDINATE_SPACE_HEIGHT = 200;
+
 App create_app(std::string_view name) { return App{ .name = name }; }
 
 void run_app(App const& app)
@@ -24,4 +27,14 @@ void run_app(App const& app)
   }
 }
 
+/**
+ * SFML's coordinate system has (0,0) at the top left of the view.
+ * We want games to have (0,0) as the center of the view. This utility function
+ * transforms coordinates in the game's coordinate system to coordinates in
+ * SFML's coordinate system
+ */
+sf::Vector2f to_screen_space(sf::Vector2f const& vec)
+{
+  return { vec.x + 0.5f * COORDINATE_SPACE_WIDTH, vec.y + 0.5f * COORDINATE_SPACE_HEIGHT };
+}
 }// namespace engine
