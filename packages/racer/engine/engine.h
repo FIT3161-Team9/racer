@@ -12,8 +12,9 @@ namespace detail
   void scale_view_to_window_size(sf::RenderWindow&);
 }
 
-float const COORDINATE_SPACE_WIDTH = 200;
-float const COORDINATE_SPACE_HEIGHT = 200;
+float const COORDINATE_SPACE_WIDTH = 2000;
+float const COORDINATE_SPACE_HEIGHT = 1000;
+auto const ASPECT_RATIO = COORDINATE_SPACE_WIDTH / COORDINATE_SPACE_HEIGHT;
 
 App create_app(std::string_view name) { return App{ .name = name }; }
 
@@ -67,26 +68,24 @@ namespace detail
 {
   void scale_view_to_window_size(sf::RenderWindow& window)
   {
-
-    sf::View theView = window.getView();
-
     auto const [width, height] = window.getSize();
 
+    auto const scaled_height = static_cast<float>(width) / ASPECT_RATIO;
 
-    if (width < height) {
-      const float windowRatio = static_cast<float>(height) / width;
-      const float newViewHeight = theView.getSize().x * windowRatio;
-      theView.setSize({ theView.getSize().x, newViewHeight });
+    // If the scaled height is greater than the height of the window, we want to scale
+    // the width
+    auto const target_width = scaled_height > height ? height * ASPECT_RATIO : static_cast<float>(width);
+    auto const target_height = scaled_height > height ? height : scaled_height;
 
-      window.setView(theView);
-      return;
-    }
+    auto const target_width_scale = target_width / width;
+    auto const target_height_scale = target_height / height;
 
-    const float windowRatio = static_cast<float>(width) / height;
-    const float newViewWidth = theView.getSize().y * windowRatio;
-    theView.setSize({ newViewWidth, theView.getSize().y });
+    sf::View view(sf::FloatRect(0, 0, COORDINATE_SPACE_WIDTH, COORDINATE_SPACE_HEIGHT));
 
-    window.setView(theView);
+    view.setViewport(
+      { (1 - target_width_scale) * 0.5f, (1 - target_height_scale) * 0.5f, target_width_scale, target_height_scale });
+
+    window.setView(view);
   }
 }// namespace detail
 
