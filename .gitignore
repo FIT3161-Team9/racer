@@ -3,3 +3,7 @@
 
 # Build Directory
 build
+
+# Mac Files
+.DS_Store
+
