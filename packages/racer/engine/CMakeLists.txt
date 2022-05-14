@@ -1,8 +1,17 @@
 
 add_library(engine app.cpp)
 
-# Find SFML shared libraries
-find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
+# Add FetchContent module
+include(FetchContent)
+
+# Fetch SFML
+FetchContent_Declare(
+ SFML
+ GIT_REPOSITORY https://github.com/SFML/SFML.git
+ GIT_TAG 2.6.x
+)
+FetchContent_MakeAvailable(SFML)
+
 
 # Link executable to required SFML modules
 target_link_libraries(engine sfml-graphics)
