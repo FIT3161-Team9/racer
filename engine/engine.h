@@ -9,8 +9,9 @@ namespace engine
 
 namespace detail
 {
+  void handle_events(sf::RenderWindow&);
   void scale_view_to_window_size(sf::RenderWindow&);
-}
+}// namespace detail
 
 float const COORDINATE_SPACE_WIDTH = 2000;
 float const COORDINATE_SPACE_HEIGHT = 1000;
@@ -28,17 +29,8 @@ void run_app(App const& app)
 
   while (window.isOpen()) {
     window.clear();
-
-    sf::Event event;
-
-    while (window.pollEvent(event)) {
-
-      if (event.type == sf::Event::Closed) window.close();
-      if (event.type == sf::Event::Resized) { detail::scale_view_to_window_size(window); }
-    }
-
+    detail::handle_events(window);
     for (auto entity : app.entities) { entity->render(window); }
-
     window.display();
   }
 }
@@ -86,6 +78,15 @@ namespace detail
       { (1 - target_width_scale) * 0.5f, (1 - target_height_scale) * 0.5f, target_width_scale, target_height_scale });
 
     window.setView(view);
+  }
+
+  void handle_events(sf::RenderWindow& window)
+  {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) window.close();
+      if (event.type == sf::Event::Resized) { detail::scale_view_to_window_size(window); }
+    }
   }
 }// namespace detail
 
