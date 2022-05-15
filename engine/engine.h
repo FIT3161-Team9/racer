@@ -44,7 +44,7 @@ void run_app(App const& app)
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;
       window.clear();
-      for (auto entity : app.entities) { entity->render(window); }
+      // for (auto entity : app.entities) { entity->render(window); }
       window.display();
     }
   }
@@ -59,16 +59,6 @@ void run_app(App const& app)
 sf::Vector2f to_screen_space(sf::Vector2f const& vec)
 {
   return { vec.x + 0.5f * COORDINATE_SPACE_WIDTH, vec.y + 0.5f * COORDINATE_SPACE_HEIGHT };
-}
-
-template<typename EntityType, typename... EntityArgs>
-std::shared_ptr<EntityType> spawn_entity(App& app, EntityArgs... args)
-{
-  auto entity = std::make_shared<EntityType>(std::forward<EntityArgs>(args)...);
-
-  app.entities.push_back(entity);
-
-  return entity;
 }
 
 namespace detail

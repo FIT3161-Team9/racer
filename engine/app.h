@@ -9,5 +9,4 @@
 struct App
 {
   std::string_view const name;
-  std::vector<std::shared_ptr<Entity>> entities;
 };
