@@ -53,8 +53,9 @@ The project will be completed in sprints. Each sprint will be 2 weeks long. The 
 2. Break each story into tasks
    1. Identify what tasks will be worked on for the current sprint
    2. Estimate the amonut of work for each task - call them `story points`
-   3. Add up the total `story point`s for each epic
-   4. Move tasks into current sprint backlog
+   3. Identify risks associated with the ticket, and enter them into a risk register
+   4. Add up the total `story points` for each epic
+   5. Move tasks into current sprint backlog
 3. Assigns tasks to be done to current sprint.
    1. Estimate the amount of time that the team can work on this project.
    2. Ensure that everyone has something they **can** work on for the sprint.
@@ -89,7 +90,11 @@ For each individual team member:
 
 ### Sprint Retrospective
 
-Sprint retros are to be done immediately before the **next sprint planning** session. This helps in keeping the `what needs to be improved` ideas fresh. If anything needs to be improved, we create tickets accordingly. (See Sprint planning 1.1)
+Sprint retros are to be done immediately before the **next sprint planning** session. This helps in keeping the `what needs to be improved` ideas fresh. If anything needs to be improved, we create tickets accordingly. The sprint retrospective will be a meeting ran by the scrum master and will
+give all memebers of the team the opportunity to reflect on how the previous sprint, as well as on
+the project management process as a whole. Furthermore, during the sprint retro, any risks that
+occurred during the previous sprint that weren't in the risk register will be analysed and added
+to the register.
 
 ## Team Management
 
