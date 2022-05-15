@@ -28,7 +28,8 @@ void run_app(App const& app)
   sf::View view(sf::FloatRect(0, 0, COORDINATE_SPACE_WIDTH, COORDINATE_SPACE_HEIGHT));
   window.setView(view);
 
-  auto app_commands = AppCommands();
+  auto entity_registery = entt::registry{};
+  auto app_commands = AppCommands(entity_registery);
 
   app.on_startup(app_commands);
 
