@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include <thread>
 
 #include "app.h"
 #include "app_commands.h"
@@ -41,6 +42,14 @@ void run_app(App const& app)
     detail::handle_events(window);
     sf::Time const elapsed = clock.restart();
     std::uint64_t const elapsed_milliseconds = elapsed.asMilliseconds();
+
+    // If we are updating too quickly, slow down (otherwise no time will ever pass in the system)
+    if (elapsed_milliseconds < 1) {
+      using namespace std::this_thread;// sleep_for, sleep_until
+      using namespace std::chrono;// nanoseconds, system_clock, seconds
+
+      sleep_for(milliseconds(1));
+    }
 
     total_time_since_render += elapsed_milliseconds;
 
