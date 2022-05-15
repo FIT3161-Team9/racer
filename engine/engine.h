@@ -44,8 +44,7 @@ void run_app(App const& app)
 
     total_time_since_render += elapsed_milliseconds;
 
-    // We would update the entities here:
-    // for (auto entity : app.entities) { entity->update(elapsed_milliseconds); }
+    app_commands.run_systems();
 
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;

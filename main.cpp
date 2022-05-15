@@ -16,8 +16,10 @@ int main()
   auto app = engine::create_app("RACER");
 
   app.on_startup = [](AppCommands& app_commands) -> void {
-    std::cout << "Hello World!\n";
     app_commands.spawn().add_component<SayHello>("James");
+
+    app_commands.add_system<SayHello const>(
+      [](auto& view) { view.each([](auto& say_hello) { std::cout << say_hello.name << " says hello!\n"; }); });
   };
 
   engine::run_app(app);
