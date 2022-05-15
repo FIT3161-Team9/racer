@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include "app.h"
+#include "app_commands.h"
 
 namespace engine
 {
@@ -26,6 +27,10 @@ void run_app(App const& app)
   sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, COORDINATE_SPACE_WIDTH, COORDINATE_SPACE_HEIGHT));
   window.setView(view);
+
+  auto app_commands = AppCommands();
+
+  app.on_startup(app_commands);
 
   detail::scale_view_to_window_size(window);
 
