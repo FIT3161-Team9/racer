@@ -1,13 +1,20 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <entt/entt.hpp>
 
-/**
- * A generic entity that can be rendered to the screen
- */
 class Entity
 {
+  friend class AppCommands;
+  entt::entity m_entity;
+  entt::registry& m_registry;
+
+  Entity(entt::entity entity, entt::registry& registry) : m_entity(entity), m_registry(registry) {}
+
 public:
-  virtual ~Entity() = default;
-  virtual void render(sf::RenderWindow&) {}
+  template<typename T, typename... TArgs>
+  Entity& add_component(TArgs... args)
+  {
+    m_registry.emplace<T>(m_entity, std::forward<TArgs>(args)...);
+    return *this;
+  }
 };
