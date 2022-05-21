@@ -9,6 +9,7 @@
 #include "engine/app_commands.h"
 #include "engine/circle.h"
 #include "engine/engine.h"
+#include "engine/event.h"
 #include "engine/transform.h"
 
 using AppState = std::optional<float>;
@@ -21,12 +22,16 @@ int main()
 
     app_commands.spawn().add_component<Transform>(sf::Vector2f{ 0.f, 0.f }).add_component<Circle>(80.f);
 
-    app_commands.add_system<Transform>(
-      [&](auto& view) { view.each([&](auto& transform) { app_commands.set_state(transform.value.x); }); });
-
     app_commands.on_state_change([](auto before, auto after) {
       if (before) std::cout << "Before: " << static_cast<int>(*before) << '\n';
       if (after) std::cout << "After: " << static_cast<int>(*after) << '\n';
+    });
+
+    app_commands.add_system<Event::EventType::MouseButtonPressed, Transform const>([](auto event, auto& view) {
+      view.each([&](auto const& transform) {
+        std::cout << "Mouse down at " << event.mouse_button_pressed.location.x
+                  << " checking for hit against: " << transform.value.x << '\n';
+      });
     });
 
     return {};
