@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include <functional>
 #include <thread>
 
 #include "app.h"
@@ -23,7 +24,8 @@ auto const ASPECT_RATIO = COORDINATE_SPACE_WIDTH / COORDINATE_SPACE_HEIGHT;
 
 App create_app(std::string_view name) { return App{ .name = name }; }
 
-void run_app(App const& app)
+template<typename StartupFn>
+void run_app(App const& app, StartupFn on_startup)
 {
   sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, COORDINATE_SPACE_WIDTH, COORDINATE_SPACE_HEIGHT));
@@ -32,7 +34,7 @@ void run_app(App const& app)
   auto entity_registery = entt::registry{};
   auto app_commands = AppCommands(entity_registery);
 
-  app.on_startup(app_commands);
+  on_startup(app_commands);
 
   detail::scale_view_to_window_size(window);
 

@@ -5,23 +5,15 @@
 #include "engine/app_commands.h"
 #include "engine/circle.h"
 #include "engine/engine.h"
-
-struct SayHello
-{
-  std::string_view name;
-};
+#include "engine/transform.h"
 
 int main()
 {
   auto app = engine::create_app("RACER");
+  engine::run_app(app, [](AppCommands& app_commands) {
+    std::cout << "Creating circle\n";
+    app_commands.spawn().add_component<Transform>(sf::Vector2f{ 0.f, 0.f }).add_component<Circle>(80.f);
+  });
 
-  app.on_startup = [](AppCommands& app_commands) -> void {
-    app_commands.spawn().add_component<SayHello>("James");
-
-    app_commands.add_system<SayHello const>(
-      [](auto& view) { view.each([](auto& say_hello) { std::cout << say_hello.name << " says hello!\n"; }); });
-  };
-
-  engine::run_app(app);
   return 0;
 }
