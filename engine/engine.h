@@ -24,7 +24,7 @@ auto const ASPECT_RATIO = COORDINATE_SPACE_WIDTH / COORDINATE_SPACE_HEIGHT;
 
 App create_app(std::string_view name) { return App{ .name = name }; }
 
-template<typename StartupFn>
+template<typename StateType, typename StartupFn>
 void run_app(App const& app, StartupFn on_startup)
 {
   sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
@@ -32,7 +32,7 @@ void run_app(App const& app, StartupFn on_startup)
   window.setView(view);
 
   auto entity_registery = entt::registry{};
-  auto app_commands = AppCommands(entity_registery);
+  auto app_commands = AppCommands<StateType>(entity_registery);
 
   on_startup(app_commands);
 
