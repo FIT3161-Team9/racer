@@ -4,6 +4,7 @@
 
 class Entity
 {
+  template<typename StateType>
   friend class AppCommands;
   entt::entity m_entity;
   entt::registry& m_registry;
