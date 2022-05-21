@@ -1,12 +1,17 @@
 #pragma once
 
+#include <entt/entt.hpp>
 #include <vector>
 
 #include "app.h"
+#include "entity.h"
+
+class AppCommands;
 
 namespace engine
 {
-void run_app(App const&);
+template<typename StartupFn>
+void run_app(App const& app, StartupFn on_startup);
 };
 
 class AppCommands
@@ -14,7 +19,8 @@ class AppCommands
   std::vector<std::function<void()>> m_systems{};
   entt::registry& m_registry;
 
-  friend void engine::run_app(App const&);
+  template<typename StartupFn>
+  friend void engine::run_app(App const& app, StartupFn on_startup);
 
   AppCommands(entt::registry& registry) : m_registry(registry) {}
 
