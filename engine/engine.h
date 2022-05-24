@@ -8,6 +8,7 @@
 #include "app.h"
 #include "app_commands.h"
 #include "event.h"
+#include "render.h"
 #include "window.h"
 
 namespace engine
@@ -46,8 +47,8 @@ void run_app(App const& app, StartupFn on_startup)
 
     // If we are updating too quickly, slow down (otherwise no time will ever pass in the system)
     if (elapsed_milliseconds < 1) {
-      using namespace std::this_thread;// sleep_for, sleep_until
-      using namespace std::chrono;// nanoseconds, system_clock, seconds
+      using namespace std::this_thread;
+      using namespace std::chrono;
 
       sleep_for(milliseconds(1));
     }
@@ -59,6 +60,7 @@ void run_app(App const& app, StartupFn on_startup)
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;
       window.clear();
+      render::all(window, entity_registery);
       window.display();
     }
   }
