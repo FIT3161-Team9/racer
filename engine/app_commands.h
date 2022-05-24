@@ -104,4 +104,10 @@ public:
   {
     plugin(*this);
   }
+
+  template<typename Component>
+  Component* component(entt::entity entity)
+  {
+    return m_registry.try_get<Component>(entity);
+  }
 };
