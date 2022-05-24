@@ -13,21 +13,26 @@
 #include "engine/event.h"
 #include "engine/transform.h"
 
-using AppState = std::optional<float>;
+#include "src/app_state.h"
+#include "src/drag_and_drop_circles.h"
 
 int main()
 {
   auto app = engine::create_app("RACER");
   engine::run_app<AppState>(app, [](AppCommands<AppState>& app_commands) -> AppState {
-    app_commands.spawn()
-      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
-      .add_component<Circle>(80.f)
-      .add_component<Colour>(colour::alpha(colour::red(), 150));
+    app_commands.add_plugin(drag_and_drop_circles::plugin);
 
     app_commands.spawn()
       .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
       .add_component<Circle>(80.f)
-      .add_component<Colour>(colour::alpha(colour::blue(), 150));
+      .add_component<Colour>(colour::alpha(colour::red(), 150))
+      .add_component<drag_and_drop_circles::Draggable>();
+
+    app_commands.spawn()
+      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
+      .add_component<Circle>(80.f)
+      .add_component<Colour>(colour::alpha(colour::blue(), 150))
+      .add_component<drag_and_drop_circles::Draggable>();
 
     app_commands.on_state_change([](auto before, auto after) {
       if (before) std::cout << "Before: " << static_cast<int>(*before) << '\n';
