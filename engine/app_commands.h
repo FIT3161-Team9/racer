@@ -98,4 +98,10 @@ public:
   }
 
   AppStateType current_state() { return m_state; }
+
+  template<typename Plugin>
+  void add_plugin(Plugin plugin)
+  {
+    plugin(*this);
+  }
 };
