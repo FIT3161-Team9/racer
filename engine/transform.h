@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-struct Transform {
+struct Transform
+{
   sf::Vector2f value;
 };

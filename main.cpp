@@ -8,6 +8,7 @@
 
 #include "engine/app_commands.h"
 #include "engine/circle.h"
+#include "engine/colour.h"
 #include "engine/engine.h"
 #include "engine/event.h"
 #include "engine/transform.h"
@@ -18,9 +19,15 @@ int main()
 {
   auto app = engine::create_app("RACER");
   engine::run_app<AppState>(app, [](AppCommands<AppState>& app_commands) -> AppState {
-    app_commands.spawn().add_component<Transform>(sf::Vector2f{ 1.f, 0.f }).add_component<Circle>(80.f);
+    app_commands.spawn()
+      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
+      .add_component<Circle>(80.f)
+      .add_component<Colour>(colour::alpha(colour::red(), 150));
 
-    app_commands.spawn().add_component<Transform>(sf::Vector2f{ 0.f, 0.f }).add_component<Circle>(80.f);
+    app_commands.spawn()
+      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
+      .add_component<Circle>(80.f)
+      .add_component<Colour>(colour::alpha(colour::blue(), 150));
 
     app_commands.on_state_change([](auto before, auto after) {
       if (before) std::cout << "Before: " << static_cast<int>(*before) << '\n';
