@@ -9,6 +9,7 @@
 #include "app_commands.h"
 #include "event.h"
 #include "render.h"
+#include "render_context.h"
 #include "window.h"
 
 namespace engine
@@ -29,6 +30,7 @@ void run_app(App const& app, StartupFn on_startup)
 {
   sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT));
+  RenderContext render_context{};
   window.setView(view);
 
   auto entity_registery = entt::registry{};
@@ -60,7 +62,7 @@ void run_app(App const& app, StartupFn on_startup)
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;
       window.clear();
-      render::all(window, entity_registery);
+      render::all(render_context, window, entity_registery);
       window.display();
     }
   }
