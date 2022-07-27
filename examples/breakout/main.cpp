@@ -19,7 +19,6 @@
 
 #include "src/ball.h"
 #include "src/brick.h"
-#include "src/drag_and_drop_circles.h"
 #include "src/gravity.h"
 #include "src/physics.h"
 #include "src/player.h"
