@@ -4,7 +4,6 @@
 
 class Entity
 {
-  template<typename StateType>
   friend class AppCommands;
   entt::entity m_entity;
   entt::registry& m_registry;
@@ -17,5 +16,10 @@ public:
   {
     m_registry.emplace<T>(m_entity, std::forward<TArgs>(args)...);
     return *this;
+  }
+
+  entt::entity entity()
+  {
+    return m_entity;
   }
 };
