@@ -25,13 +25,14 @@ float const MAX_SPEED = 1600.f;
 
 inline sf::Vector2f ball_starting_velocity()
 {
-  const std::int32_t seed = std::random_device{}();
+  const std::uint32_t seed = static_cast<std::uint32_t>(std::random_device{}());
   std::mt19937 generator(seed);
-  std::uniform_int_distribution<std::int32_t> distribute(-STARTING_SPEED / 2, STARTING_SPEED / 2);
+  std::uniform_int_distribution<std::int32_t> distribute(-static_cast<int>(STARTING_SPEED / 2),
+                                                         static_cast<int>(STARTING_SPEED / 2));
 
   auto const random_value = distribute(generator);
 
-  float x_velocity = random_value;
+  float x_velocity = static_cast<float>(random_value);
   float y_velocity = std::sqrt(STARTING_SPEED * STARTING_SPEED - x_velocity * x_velocity);
   return sf::Vector2f{ x_velocity, y_velocity };
 }
