@@ -7,3 +7,6 @@ build
 # Mac Files
 .DS_Store
 
+# Cache directories
+.cache
+
