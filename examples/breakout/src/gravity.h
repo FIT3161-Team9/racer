@@ -21,15 +21,15 @@ inline void plugin(AppCommands& app_commands)
   app_commands.add_system<Velocity, AffectedByGravity const>([&](auto& view) {
     auto const elapsed_milliseconds = app_commands.get_resource<timing::ElapsedTime>()->elapsed_milliseconds;
     for (auto [entity, velocity, affected_by_gravity] : view.each()) {
-      if (affected_by_gravity.value) { velocity.value.y += GRAVITY * static_cast<float>(elapsed_milliseconds) * 0.01f; }
+      if (affected_by_gravity.value) { velocity.value.y += static_cast<float>(GRAVITY * elapsed_milliseconds * 0.01f); }
     }
   });
 
   app_commands.add_system<Velocity const, Transform>([&](auto& view) {
     auto const elapsed_milliseconds = app_commands.get_resource<timing::ElapsedTime>()->elapsed_milliseconds;
     for (auto [entity, velocity, transform] : view.each()) {
-      transform.value.y += static_cast<float>(elapsed_milliseconds) * velocity.value.y * 0.01f;
-      transform.value.x += static_cast<float>(elapsed_milliseconds) * velocity.value.x * 0.01f;
+      transform.value.y += static_cast<float>(elapsed_milliseconds * velocity.value.y * 0.01f);
+      transform.value.x += static_cast<float>(elapsed_milliseconds * velocity.value.x * 0.01f);
     }
   });
 }

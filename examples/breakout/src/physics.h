@@ -64,7 +64,7 @@ auto const ball_wall_collision = [](auto& ball_view) {
   }
 };
 
-auto ball_brick_collision = [](auto& bricks_view, auto& ball_view) {
+inline auto ball_brick_collision = [](auto& bricks_view, auto& ball_view) {
   auto ball_tuple = *ball_view.each().begin();
   auto& ball_velocity = std::get<2>(ball_tuple).value;
   auto const& ball_transform = std::get<1>(ball_tuple).value;
@@ -84,15 +84,15 @@ auto ball_brick_collision = [](auto& bricks_view, auto& ball_view) {
   }
 };
 
-void plugin(AppCommands& app_commands)
+inline void plugin(AppCommands& app_commands)
 {
   // Update transform based on velocity
   app_commands.add_system(
     ResourceQuery<timing::ElapsedTime>{}, Query<Transform, Velocity const>{}, [](auto& resources, auto& view) {
       auto elapsed_milliseconds = std::get<1>(resources).elapsed_milliseconds;
       for (auto [_, transform, velocity] : view.each()) {
-        transform.value.x += velocity.value.x * elapsed_milliseconds * 0.001;
-        transform.value.y += velocity.value.y * elapsed_milliseconds * 0.001;
+        transform.value.x += static_cast<float>(velocity.value.x * elapsed_milliseconds * 0.001f);
+        transform.value.y += static_cast<float>(velocity.value.y * elapsed_milliseconds * 0.001f);
       }
     });
 
