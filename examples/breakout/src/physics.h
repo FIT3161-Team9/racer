@@ -77,8 +77,8 @@ inline auto ball_brick_collision = [](auto& bricks_view, auto& ball_view) {
       brick.health -= 1;
       ball_velocity.y = -ball_velocity.y;
       if (util::magnitude(ball_velocity) < ball::MAX_SPEED) {
-        ball_velocity.x *= 1.1;
-        ball_velocity.y *= 1.1;
+        ball_velocity.x *= 1.1f;
+        ball_velocity.y *= 1.1f;
       }
     }
   }
