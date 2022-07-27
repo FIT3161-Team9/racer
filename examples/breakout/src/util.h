@@ -8,7 +8,7 @@ namespace util
 
 sf::Vector2f const ZERO_VEC = { 0.f, 0.f };
 
-inline auto distance_between(sf::Vector2f const& a, sf::Vector2f const& b)
+inline float distance_between(sf::Vector2f const& a, sf::Vector2f const& b)
 {
   return std::sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }

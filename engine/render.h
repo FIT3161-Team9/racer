@@ -71,8 +71,8 @@ inline void rectangle(RenderContext& render_context,
     rectangle_shape.setOutlineThickness(outline->thickness);
   }
   auto* rotation_component = render_context.get_component<Rotation>(entity);
-  auto rotation = rotation_component ? rotation_component->degrees : 0;
-  if (rotation) { rectangle_shape.rotate(rotation); }
+  auto rotation = rotation_component ? rotation_component->degrees : 0.f;
+  if (rotation != 0.f) { rectangle_shape.rotate(rotation); }
   window.draw(rectangle_shape);
 };
 
