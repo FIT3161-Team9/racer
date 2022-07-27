@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include <entt/entt.hpp>
 #include <functional>
 #include <thread>
 
@@ -17,24 +18,23 @@ namespace engine
 
 namespace detail
 {
-  template<typename AppState>
-  void handle_events(sf::RenderWindow&, AppCommands<AppState>&);
+  void handle_events(sf::RenderWindow&, AppCommands&);
 }// namespace detail
 
-std::uint64_t MS_PER_FRAME = 12;
+constexpr std::uint64_t MS_PER_FRAME = 12;
 
-App create_app(std::string_view name) { return App{ .name = name }; }
+inline App create_app(std::string_view name) { return App{ .name = name }; }
 
-template<typename StateType, typename StartupFn>
+template<typename StartupFn>
 void run_app(App const& app, StartupFn on_startup)
 {
-  sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
+  sf::RenderWindow window(sf::VideoMode(1820, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT));
-  RenderContext render_context{};
   window.setView(view);
 
   auto entity_registery = entt::registry{};
-  auto app_commands = AppCommands<StateType>(entity_registery);
+  auto render_context = RenderContext{ entity_registery };
+  auto app_commands = AppCommands(entity_registery);
 
   on_startup(app_commands);
 
@@ -70,8 +70,7 @@ void run_app(App const& app, StartupFn on_startup)
 
 namespace detail
 {
-  template<typename AppState>
-  void handle_events(sf::RenderWindow& window, AppCommands<AppState>& app_commands)
+  inline void handle_events(sf::RenderWindow& window, AppCommands& app_commands)
   {
     sf::Event event;
     while (window.pollEvent(event)) {
