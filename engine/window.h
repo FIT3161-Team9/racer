@@ -9,18 +9,18 @@ float const COORDINATE_SPACE_WIDTH = 2000;
 float const COORDINATE_SPACE_HEIGHT = 1000;
 auto const ASPECT_RATIO = COORDINATE_SPACE_WIDTH / COORDINATE_SPACE_HEIGHT;
 
-sf::Vector2f to_screen_space(sf::Vector2f const& vec)
+inline sf::Vector2f to_screen_space(sf::Vector2f const& vec)
 {
   return { vec.x + 0.5f * COORDINATE_SPACE_WIDTH, vec.y + 0.5f * COORDINATE_SPACE_HEIGHT };
 }
 
 
-sf::Vector2f from_screen_space(sf::Vector2f const& vec)
+inline sf::Vector2f from_screen_space(sf::Vector2f const& vec)
 {
   return { vec.x - 0.5f * COORDINATE_SPACE_WIDTH, vec.y - 0.5f * COORDINATE_SPACE_HEIGHT };
 }
 
-void scale_view_to_window_size(sf::RenderWindow& window)
+inline void scale_view_to_window_size(sf::RenderWindow& window)
 {
   auto const [width, height] = window.getSize();
 
