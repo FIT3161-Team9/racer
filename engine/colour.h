@@ -14,16 +14,23 @@ struct Colour
 namespace colour
 {
 
-Colour alpha(Colour colour, std::uint8_t alpha) { return { .r = colour.r, .g = colour.g, .b = colour.b, .a = alpha }; }
+inline Colour alpha(Colour colour, std::uint8_t alpha)
+{
+  return { .r = colour.r, .g = colour.g, .b = colour.b, .a = alpha };
+}
 
-Colour red() { return Colour{ .r = 255 }; }
+inline Colour red() { return Colour{ .r = 255 }; }
 
-Colour blue() { return Colour{ .b = 255 }; }
+inline Colour orange() { return Colour{ .r = 240, .g = 125, .b = 31 }; }
 
-Colour green() { return Colour{ .r = 255 }; }
+inline Colour blue() { return Colour{ .b = 255 }; }
 
-Colour black() { return Colour{}; }
+inline Colour green() { return Colour{ .g = 255 }; }
 
-Colour white() { return Colour{ .r = 255, .g = 255, .b = 255 }; }
+inline Colour black() { return Colour{}; }
+
+inline Colour white() { return Colour{ .r = 255, .g = 255, .b = 255 }; }
+
+inline Colour transparent() { return Colour{ .a = 0 }; }
 
 };// namespace colour
