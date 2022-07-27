@@ -92,6 +92,14 @@ namespace detail
           window::from_screen_space(window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y })));
         for (auto event_handler : app_commands.m_event_systems) event_handler(mouse_button_event);
       }
+      if (event.type == sf::Event::KeyPressed) {
+        auto key_pressed_event = event::key_pressed(event.key.code);
+        for (auto event_handler : app_commands.m_event_systems) event_handler(key_pressed_event);
+      }
+      if (event.type == sf::Event::KeyReleased) {
+        auto key_released_event = event::key_released(event.key.code);
+        for (auto event_handler : app_commands.m_event_systems) event_handler(key_released_event);
+      }
     }
   }
 }// namespace detail
