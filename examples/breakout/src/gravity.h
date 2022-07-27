@@ -14,7 +14,7 @@ struct AffectedByGravity
   bool value{};
 };
 
-float const GRAVITY = 9.8;
+float constexpr GRAVITY = 9.8f;
 
 inline void plugin(AppCommands& app_commands)
 {

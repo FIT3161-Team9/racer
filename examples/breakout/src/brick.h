@@ -7,32 +7,33 @@
 #include <engine/entity.h>
 #include <engine/rectangle.h>
 #include <engine/transform.h>
+#include <engine/window.h>
 
 struct Brick
 {
-  uint8_t health;
+  uint32_t health;
 };
 
 namespace brick
 {
 
-Colour color_for_brick_health(uint8_t health)
+inline Colour color_for_brick_health(uint32_t health)
 {
   if (health > 2) { return colour::red(); }
   if (health == 2) { return colour::orange(); }
   return colour::green();
 }
 
-std::uint32_t BRICKS_PER_ROW = 6;
+std::uint32_t constexpr BRICKS_PER_ROW = 6;
 float const GAP = 10.f;
 float const WIDTH = (window::COORDINATE_SPACE_WIDTH - GAP * (BRICKS_PER_ROW + 1)) / BRICKS_PER_ROW;
 float const HEIGHT = 40.f;
 
-Entity spawn(AppCommands& app_commands, std::uint32_t index)
+inline Entity spawn(AppCommands& app_commands, std::uint32_t index)
 {
   auto const row_number = index / BRICKS_PER_ROW;
   auto const col_number = index % BRICKS_PER_ROW;
-  std::uint8_t health = 5 - row_number;
+  std::uint32_t health = 5 - row_number;
   return app_commands.spawn()
     .add_component<Transform>(sf::Vector2f{
       -0.5f * window::COORDINATE_SPACE_WIDTH + 0.5f * WIDTH + GAP + col_number * WIDTH + col_number * GAP,
@@ -42,7 +43,7 @@ Entity spawn(AppCommands& app_commands, std::uint32_t index)
     .add_component<Rectangle>(sf::Vector2f{ WIDTH, HEIGHT });
 }
 
-void plugin(AppCommands& app_commands)
+inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_system(Query<Brick>{}, [&](auto& bricks_view) {
     for (auto [brick_entity, brick_component] : bricks_view.each()) {
