@@ -15,10 +15,10 @@ TEST(VectorUtils, Magnitude)
 
 TEST(VectorUtils, DotProduct)
 {
-  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 0.f, 0.f }, sf::Vector2f{ 0.f, 0.f }), 0);
-  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 1.f, 2.f }, sf::Vector2f{ 2.f, 1.f }), 4);
-  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 3.f, 5.f }, sf::Vector2f{ -2.f, 10.f }), 44);
-  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 3.f, 5.f }, sf::Vector2f{ -2.f, 10.23f }), 45.15);
+  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 0.f, 0.f }, sf::Vector2f{ 0.f, 0.f }), 0.f);
+  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 1.f, 2.f }, sf::Vector2f{ 2.f, 1.f }), 4.f);
+  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 3.f, 5.f }, sf::Vector2f{ -2.f, 10.f }), 44.f);
+  EXPECT_FLOAT_EQ(vector_utils::dot_product(sf::Vector2f{ 3.f, 5.f }, sf::Vector2f{ -2.f, 10.23f }), 45.15f);
 }
 
 TEST(VectorUtils, Scale)
