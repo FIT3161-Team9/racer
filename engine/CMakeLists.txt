@@ -40,12 +40,6 @@ set(gtest_force_shared_crt
     ON
     CACHE BOOL "" FORCE)
 
-# This is so we don't override compiler settings on windows (as per GoogleTest
-# docs)
-set(gtest_force_shared_crt
-    ON
-    CACHE BOOL "" FORCE)
-
 FetchContent_MakeAvailable(googletest)
 
 # Link executable to required SFML modules
