@@ -28,5 +28,32 @@ FetchContent_Declare(
   GIT_TAG v3.10.1)
 FetchContent_MakeAvailable(EnTT)
 
+# Add Google Test
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG release-1.12.1)
+
+# This is so we don't override compiler settings on windows (as per GoogleTest
+# docs)
+set(gtest_force_shared_crt
+    ON
+    CACHE BOOL "" FORCE)
+
+# This is so we don't override compiler settings on windows (as per GoogleTest
+# docs)
+set(gtest_force_shared_crt
+    ON
+    CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
 # Link executable to required SFML modules
 target_link_libraries(engine sfml-graphics EnTT::EnTT)
+
+enable_testing()
+
+add_executable(engine_tests ./tests/tests.cpp)
+target_link_libraries(engine_tests sfml-graphics EnTT::EnTT GTest::gtest_main)
+include(GoogleTest)
+gtest_discover_tests(engine_tests)
