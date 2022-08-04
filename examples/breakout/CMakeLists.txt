@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.11)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Make sure dll's get outputted to the same directory as executables
+set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
+
 # Output compile commands
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 
