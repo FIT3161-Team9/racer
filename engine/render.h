@@ -3,9 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <entt/entt.hpp>
+#include <iostream>
 
+#include "SFML/System/Vector2.hpp"
+#include "children.h"
 #include "circle.h"
 #include "colour.h"
+#include "layout.h"
 #include "outline.h"
 #include "rectangle.h"
 #include "render_context.h"
@@ -27,6 +31,7 @@ void texture(RenderContext&, sf::RenderWindow&, Transform const&, Texture const&
 void text(RenderContext&, sf::RenderWindow&, Transform const&, Text const&, Colour const&);
 void vector(sf::RenderWindow&, sf::Vector2f const&, Transform const&, Colour const&);
 void triangle(RenderContext&, sf::RenderWindow&, entt::entity, Transform const&, Triangle const&, Colour const&);
+void flex_box(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
 
 inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::registry& registry)
 {
@@ -50,6 +55,52 @@ inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::r
   for (auto [_entity, transform, text, colour] : text_view.each()) {
     render::text(render_context, window, transform, text, colour);
   }
+  auto flex_boxes = registry.view<layout::Flex, Children>();
+  for (auto [flex_parent, flex, children] : flex_boxes.each()) {
+    render::flex_box(render_context, window, flex_parent, flex, children);
+  }
+}
+
+inline void flex_box(RenderContext& render_context,
+                     sf::RenderWindow& window,
+                     entt::entity flex_parent,
+                     layout::Flex const& layout,
+                     Children const& children)
+{
+  auto vertical_space_used_so_far = 0;
+  for (auto child : children.children) {
+    auto* text = render_context.get_component<Text>(child);
+    auto* colour = render_context.get_component<Colour>(child);
+    auto* margin = render_context.get_component<layout::Margin>(child);
+    sf::Text sf_text{};
+    sf_text.setFont(render_context.get_or_load_font(*text));
+    sf_text.setCharacterSize(text->character_size);
+    sf_text.setString(text->content.data());
+    sf_text.setFillColor(render_utils::convert_colour(*colour));
+    sf_text.setLetterSpacing(text->letter_spacing);
+
+    if (margin && margin->top) { vertical_space_used_so_far += margin->top; }
+
+    // First layout - this doesn't work because positioning text considers the tallest
+    // letter in the font (we only want to consider the tallest letter in this string)
+    auto const bounds = sf_text.getGlobalBounds();
+    sf_text.setPosition(window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width, vertical_space_used_so_far);
+
+    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
+    // and the tallest letter we're using. We need to offset by this distance
+    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
+    auto const difference_between_target_and_actual = bounds_after_setting_position.top - vertical_space_used_so_far;
+    sf_text.setPosition(window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width,
+                        vertical_space_used_so_far - difference_between_target_and_actual);
+
+    window.draw(sf_text);
+
+    if (margin && margin->bottom) { vertical_space_used_so_far += margin->bottom; }
+
+    vertical_space_used_so_far += bounds.height;
+  }
+  (void)flex_parent;
+  (void)layout;
 }
 
 inline void rectangle(RenderContext& render_context,
