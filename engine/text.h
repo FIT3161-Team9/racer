@@ -10,4 +10,5 @@ struct Text
   std::string font;
   std::string content;
   uint32_t character_size;
+  float letter_spacing{};
 };
