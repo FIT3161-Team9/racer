@@ -100,7 +100,6 @@ public:
     return;
   }
 
-
   template<typename... QueryTypes, typename Fn>
   void add_system(Query<QueryTypes...>, Fn fn)
   {
@@ -117,6 +116,26 @@ public:
       if (event.type == event_type) function(event, view);
     });
   }
+
+  template<Event::EventType event_type, typename... QueryTypes, typename Fn>
+  void add_system(ResourceQuery<QueryTypes...>, Fn function)
+  {
+    auto resource_tuple = *m_resource_registry.view<QueryTypes...>().each().begin();
+    m_event_systems.push_back([=](Event event) {
+      if (event.type == event_type) function(event, resource_tuple);
+    });
+  }
+
+  template<Event::EventType event_type, typename... ResourceQueryTypes, typename... QueryTypes, typename Fn>
+  void add_system(ResourceQuery<ResourceQueryTypes...>, Query<QueryTypes...>, Fn function)
+  {
+    auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
+    auto view = m_registry.view<QueryTypes...>();
+    m_event_systems.push_back([=](Event event) {
+      if (event.type == event_type) function(event, resource_tuple, view);
+    });
+  }
+
 
   template<typename Plugin>
   void add_plugin(Plugin plugin)
