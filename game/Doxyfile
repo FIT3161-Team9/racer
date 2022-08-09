@@ -1,0 +1,7 @@
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = "RACER"
+OUTPUT_DIRECTORY       = generated_docs
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+RECURSIVE              = YES
+INPUT                  = "./src"
