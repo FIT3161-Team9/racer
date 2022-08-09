@@ -46,38 +46,20 @@ public:
   Entity spawn() { return { m_registry.create(), m_registry }; }
   void destroy(entt::entity entity) { m_registry.destroy(entity); }
 
-  template<Event::EventType event_type, typename... ComponentTypes, typename Fn>
-  void add_system(Fn function)
-  {
-    m_event_systems.push_back([=](Event event) {
-      if constexpr (sizeof...(ComponentTypes)) {
-        auto view = m_registry.view<ComponentTypes...>();
-        if (event.type == event_type) function(event, view);
-      } else {
-        if (event.type == event_type) function(event);
-      }
-    });
-  }
-
-  template<typename... ComponentTypes, typename Fn>
-  void add_system(Fn function)
-  {
-    m_systems.push_back([=]() {
-      if constexpr (!sizeof...(ComponentTypes)) {
-        function();
-      } else {
-        auto view = m_registry.view<ComponentTypes...>();
-        function(view);
-      }
-    });
-  }
-
   template<typename... ResourceQueryTypes, typename... EntityQueryTypes, typename Fn>
   void add_system(ResourceQuery<ResourceQueryTypes...>, Query<EntityQueryTypes...>, Fn fn)
   {
     auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
     auto entity_view = m_registry.view<EntityQueryTypes...>();
     m_systems.push_back([=]() { fn(resource_tuple, entity_view); });
+    return;
+  }
+
+  template<typename... ResourceQueryTypes, typename Fn>
+  void add_system(ResourceQuery<ResourceQueryTypes...>, Fn fn)
+  {
+    auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
+    m_systems.push_back([=]() { fn(resource_tuple); });
     return;
   }
 
