@@ -6,6 +6,7 @@
 #include <engine/colour.h>
 #include <engine/entity.h>
 #include <engine/event.h>
+#include <engine/query.h>
 #include <engine/rectangle.h>
 #include <engine/transform.h>
 #include <engine/window.h>
@@ -31,14 +32,14 @@ inline Entity spawn(AppCommands& app_commands)
 
 inline void plugin(AppCommands& app_commands)
 {
-  app_commands.add_system<Event::EventType::KeyPressed, Player const, Velocity>([&](auto event, auto& view) {
+  app_commands.add_system<Event::EventType::KeyPressed>(Query<Player const, Velocity>{}, [&](auto event, auto& view) {
     for (auto [_, __, velocity] : view.each()) {
       if (event.key_pressed.key == sf::Keyboard::Key::Left) { velocity.value.x = -SPEED; }
       if (event.key_pressed.key == sf::Keyboard::Key::Right) { velocity.value.x = SPEED; }
     }
   });
 
-  app_commands.add_system<Event::EventType::KeyReleased, Player const, Velocity>([&](auto event, auto& view) {
+  app_commands.add_system<Event::EventType::KeyReleased>(Query<Player const, Velocity>{}, [&](auto event, auto& view) {
     for (auto [_, __, velocity] : view.each()) {
       if (event.key_released.key == sf::Keyboard::Key::Left || event.key_released.key == sf::Keyboard::Key::Right) {
         velocity.value.x = 0;
@@ -46,7 +47,7 @@ inline void plugin(AppCommands& app_commands)
     }
   });
 
-  app_commands.add_system<Player const, Velocity, Transform, Rectangle const>([&](auto& view) {
+  app_commands.add_system(Query<Player const, Velocity, Transform, Rectangle const>{}, [&](auto& view) {
     for (auto [_, __, velocity, transform, rectangle] : view.each()) {
       if (transform.value.x + 0.5f * rectangle.width_height.x > 0.5f * window::COORDINATE_SPACE_WIDTH) {
         transform.value.x = 0.5f * window::COORDINATE_SPACE_WIDTH - 0.5f * rectangle.width_height.x;
