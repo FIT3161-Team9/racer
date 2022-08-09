@@ -52,12 +52,12 @@ inline void plugin(AppCommands& app_commands)
 
   auto title = app_commands.spawn()
                  .template add_component<Text>(
-                   std::filesystem::path("./assets/Inter-Black.ttf"), "RACER", static_cast<uint32_t>(97), 2.5f)
+                   std::filesystem::path("./assets/Inter-Black.ttf").string(), "RACER", static_cast<uint32_t>(97), 2.5f)
                  .template add_component<Colour>(colour::black())
                  .template add_component<layout::Margin>(layout::margin_top(350.f));
 
   auto subtitle = app_commands.spawn()
-                    .template add_component<Text>(std::filesystem::path("./assets/Inter-SemiBold.ttf"),
+                    .template add_component<Text>(std::filesystem::path("./assets/Inter-SemiBold.ttf").string(),
                                                   "SIMULATION-BASED RACING",
                                                   static_cast<uint32_t>(21),
                                                   0.85f)
@@ -65,7 +65,7 @@ inline void plugin(AppCommands& app_commands)
                     .template add_component<layout::Margin>(layout::margin_top(45.f));
 
   auto prompt = app_commands.spawn()
-                  .template add_component<Text>(std::filesystem::path("./assets/Inter-SemiBold.ttf"),
+                  .template add_component<Text>(std::filesystem::path("./assets/Inter-SemiBold.ttf").string(),
                                                 "PRESS ENTER BUTTON TO START",
                                                 static_cast<uint32_t>(28),
                                                 2.5f)
