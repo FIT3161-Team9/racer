@@ -10,3 +10,6 @@ build
 # Cache directories
 .cache
 
+# Generated documentation
+generated_docs
+

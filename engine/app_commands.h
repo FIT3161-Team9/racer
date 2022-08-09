@@ -20,12 +20,25 @@ namespace detail
 }
 };// namespace engine
 
+/// The interface between an app and the engine.
+///
+/// AppCommands allows clients of the engine to interact with the engine. It maintains
+/// the list of systems and resources that the app has registered with the engine
 class AppCommands
 {
+  /// The list of systems currently registered in the ECS.
+  ///
+  /// Each of these are called at each iteration of the main engine loop.
   std::vector<std::function<void()>> m_systems{};
+  /// The list of event systems currently registered in the ECS
+  ///
+  /// These are called when the specified event type triggers.
   std::vector<std::function<void(Event)>> m_event_systems{};
+  /// The registry of the Entities and their corresponding Components in the ECS.
   entt::registry& m_registry;
+  /// A second ECS registry that has only the resource entity
   entt::registry m_resource_registry{};
+  /// The resource entity. Each resource component hangs off of this entity in the m_resource_registry
   entt::entity m_resource_entity;
 
   template<typename StartupFn>
@@ -37,15 +50,19 @@ class AppCommands
     m_resource_entity = m_resource_registry.create();
   }
 
+  /// Run all of the currently registered systems in the ECS
   void run_systems()
   {
     for (auto system : m_systems) system();
   }
 
 public:
+  /// Spawn a new entity
   Entity spawn() { return { m_registry.create(), m_registry }; }
+  /// Destroy the given entity
   void destroy(entt::entity entity) { m_registry.destroy(entity); }
 
+  /// Add a system with a resource query and a component query
   template<typename... ResourceQueryTypes, typename... EntityQueryTypes, typename Fn>
   void add_system(ResourceQuery<ResourceQueryTypes...>, Query<EntityQueryTypes...>, Fn fn)
   {
@@ -55,6 +72,7 @@ public:
     return;
   }
 
+  /// Add a system with a resource query
   template<typename... ResourceQueryTypes, typename Fn>
   void add_system(ResourceQuery<ResourceQueryTypes...>, Fn fn)
   {
@@ -63,6 +81,7 @@ public:
     return;
   }
 
+  /// Add a system with a resource query and two component queries
   template<typename... ResourceQueryTypes, typename... QueryOneTypes, typename... QueryTwoTypes, typename Fn>
   void add_system(ResourceQuery<ResourceQueryTypes...>, Query<QueryOneTypes...>, Query<QueryTwoTypes...>, Fn fn)
   {
@@ -73,6 +92,7 @@ public:
     return;
   }
 
+  /// Add a system with two component queries
   template<typename... QueryOneTypes, typename... QueryTwoTypes, typename Fn>
   void add_system(Query<QueryOneTypes...>, Query<QueryTwoTypes...>, Fn fn)
   {
@@ -82,6 +102,7 @@ public:
     return;
   }
 
+  /// Add a system with a component query
   template<typename... QueryTypes, typename Fn>
   void add_system(Query<QueryTypes...>, Fn fn)
   {
@@ -90,6 +111,7 @@ public:
     return;
   }
 
+  /// Add an event system with a component query
   template<Event::EventType event_type, typename... QueryTypes, typename Fn>
   void add_system(Query<QueryTypes...>, Fn function)
   {
@@ -99,15 +121,17 @@ public:
     });
   }
 
-  template<Event::EventType event_type, typename... QueryTypes, typename Fn>
-  void add_system(ResourceQuery<QueryTypes...>, Fn function)
+  /// Add an event system with a resource query
+  template<Event::EventType event_type, typename... ResourceQueryTypes, typename Fn>
+  void add_system(ResourceQuery<ResourceQueryTypes...>, Fn function)
   {
-    auto resource_tuple = *m_resource_registry.view<QueryTypes...>().each().begin();
+    auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
     m_event_systems.push_back([=](Event event) {
       if (event.type == event_type) function(event, resource_tuple);
     });
   }
 
+  /// Add an event system with a resource query and a component query
   template<Event::EventType event_type, typename... ResourceQueryTypes, typename... QueryTypes, typename Fn>
   void add_system(ResourceQuery<ResourceQueryTypes...>, Query<QueryTypes...>, Fn function)
   {
@@ -118,19 +142,23 @@ public:
     });
   }
 
-
+  /// Add a plugin. Plugins are just functions that get passed a reference to AppCommands
   template<typename Plugin>
   void add_plugin(Plugin plugin)
   {
     plugin(*this);
   }
 
+  /// Given an entity and a component, return a pointer to that component on that entity
   template<typename Component>
   Component* component(entt::entity entity)
   {
     return m_registry.try_get<Component>(entity);
   }
 
+  /// Add a resource. A resource is a component that exists away from any entity, i.e. it is basically
+  /// global state. There can only be one resource of each type. The params passed are passed to the
+  /// constructor of the given resource type
   template<typename Resource, typename... ResourceArgs>
   void add_resource(ResourceArgs... args)
   {
@@ -139,6 +167,7 @@ public:
     }
   }
 
+  /// Get a pointer to a resource
   template<typename Resource>
   Resource* get_resource()
   {

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <numbers>
 
+/// Component for representing the rotation of an entity
 struct Rotation
 {
   float degrees;
@@ -12,6 +13,9 @@ struct Rotation
 namespace rotation
 {
 
+/// Given a point to rotate, a point to rotate about and a magnitude to rotate by,
+/// return a new point that is equal to the first point rotated about the second
+/// point by the given magnitude
 inline sf::Vector2f
   rotate_about_point(sf::Vector2f const& to_rotate, sf::Vector2f const& point_to_rotate_about, float degrees)
 {

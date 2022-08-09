@@ -3,11 +3,16 @@
 #include <SFML/Graphics.hpp>
 #include <cstdint>
 
+/// A basic component representing the colour of an entity
 struct Colour
 {
+  /// Red
   std::uint8_t r{};
+  /// Green
   std::uint8_t g{};
+  /// Blue
   std::uint8_t b{};
+  /// Alpha (Transparency)
   std::uint8_t a{ 255 };
 };
 

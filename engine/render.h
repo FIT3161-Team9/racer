@@ -33,6 +33,8 @@ void vector(sf::RenderWindow&, sf::Vector2f const&, Transform const&, Colour con
 void triangle(RenderContext&, sf::RenderWindow&, entt::entity, Transform const&, Triangle const&, Colour const&);
 void flex_box(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
 
+/// Render all entities in the ECS that meet the criteria to be rendered. See the parameters of each
+/// of the individual render methods to see what the criteria is to be rendered
 inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::registry& registry)
 {
   // TODO : Render according to a Z Order?

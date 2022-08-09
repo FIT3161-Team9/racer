@@ -1,7 +1,3 @@
-/**
- * Class for internal use by the engine. Basically a cache for loaded resources
- * (Shaders, Textures, etc.)
- */
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -21,12 +17,16 @@ template<typename StartupFn>
 void run_app(App const&, StartupFn);
 }
 
+/// Caches used by the renderer. This means we don't have to load assets
+/// from files everytime we want to use them in rendering, we just store
+/// them here
 class RenderContext
 {
   using FilePath = std::string;
   using FontCache = std::map<FilePath, sf::Font>;
   using TextureCache = std::map<FilePath, sf::Texture>;
   using ShaderCache = std::map<FilePath, sf::Shader>;
+
   TextureCache m_texture_cache{};
   FontCache m_font_cache{};
   ShaderCache m_shader_cache{};
@@ -38,6 +38,9 @@ class RenderContext
   RenderContext(entt::registry& entity_registry) : m_entity_registry(entity_registry) {}
 
 public:
+  /// Given a texture component, load it from the filesystem if
+  /// it's not already in the cache, otherwise, load it from the
+  /// cache
   sf::Texture& get_or_load_texture(Texture const& texture)
   {
     if (!m_texture_cache.contains(texture.path)) {
@@ -50,6 +53,9 @@ public:
     return m_texture_cache.at(texture.path);
   }
 
+  /// Given a Text component, load it's font from the filesystem if
+  /// it's not already in the cache, otherwise, load it from the
+  /// cache
   sf::Font& get_or_load_font(Text const& text)
   {
     if (!m_font_cache.contains(text.font)) {
@@ -62,6 +68,8 @@ public:
     return m_font_cache.at(text.font);
   }
 
+  /// Given an entity and a component, get a pointer to that entity's instance
+  /// of the component
   template<typename ComponentType>
   ComponentType* get_component(entt::entity entity)
   {
