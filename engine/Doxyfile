@@ -1,0 +1,5 @@
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = "Engine"
+OUTPUT_DIRECTORY       = generated_docs
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = YES

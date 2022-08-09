@@ -5,6 +5,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "colour.h"
 
+/// Component for storing everything required to render text to the screen
 struct Text
 {
   std::string font;

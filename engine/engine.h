@@ -23,19 +23,28 @@ namespace detail
 
 constexpr std::uint64_t MS_PER_FRAME = 12;
 
+/// Helper function for creating a new app
 inline App create_app(std::string_view name) { return App{ .name = name }; }
 
+/// Run the app with the given name. The StartupFn get's called after the Window and ECS
+/// have been initialised, and gets given a reference to the AppCommands instance in order
+/// to spawn entities, add components and add systems. This function doesn't return until
+/// the user closes the app window. It runs the main app loop, renders graphics to the screen,
+/// handles events and runs the ECS systems that the app has registered
 template<typename StartupFn>
 void run_app(App const& app, StartupFn on_startup)
 {
+  // Initialise the window and setup the coordinate system
   sf::RenderWindow window(sf::VideoMode(1820, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT));
   window.setView(view);
 
+  // Create the ECS registry, render context and AppCommands instance
   auto entity_registery = entt::registry{};
   auto render_context = RenderContext{ entity_registery };
   auto app_commands = AppCommands(entity_registery);
 
+  // Call the passed in callback
   on_startup(app_commands);
 
   window::scale_view_to_window_size(window);
