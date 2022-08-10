@@ -1,6 +1,7 @@
 # Racer
 
-This package is the C++ source code for the _RACER_ simulation-based game.
+This package is the C++ source code for the _RACER_ simulation-based game. See the `GettingStarted.md` document in the documentation
+directory to read about the architecture of this project.
 
 ## Development
 
