@@ -23,5 +23,5 @@ public:
   }
 
   /// Get the underlying entt entity
-  entt::entity entity() { return m_entity; }
+  entt::entity entity() const { return m_entity; }
 };
