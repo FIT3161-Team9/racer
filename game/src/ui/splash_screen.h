@@ -17,8 +17,9 @@
 #include <engine/transform.h>
 #include <engine/window.h>
 
-#include "./game_state.h"
-#include "./utils.h"
+#include "../game_state.h"
+#include "../utils.h"
+#include "./background.h"
 
 namespace splash_screen
 {
@@ -30,13 +31,7 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
-  {
-    using utils::u8;
-    app_commands.spawn()
-      .add_component<Rectangle>(sf::Vector2f{ window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT })
-      .add_component<Colour>(u8(255), u8(237), u8(237))
-      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f });
-  }
+  auto const background = background::spawn(app_commands);
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -53,6 +48,7 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+      background::destroy(app_commands, background.entity());
 
       // TODO: Spawn UI for main menu
     });
