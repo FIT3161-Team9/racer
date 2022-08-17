@@ -4,7 +4,7 @@
 #include <engine/timing.h>
 
 #include "./src/game_state.h"
-#include "./src/splash_screen.h"
+#include "./src/ui/splash_screen.h"
 #include "./src/velocity.h"
 
 int main()
