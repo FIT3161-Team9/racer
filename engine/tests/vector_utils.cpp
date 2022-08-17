@@ -41,3 +41,16 @@ TEST(VectorUtils, Scale)
     EXPECT_FLOAT_EQ(result.y, 0.f);
   }
 }
+
+TEST(VectorUtils, Distance)
+{
+  {
+    auto const result = vector_utils::distance_between(sf::Vector2f{ -7.f, -4.f }, sf::Vector2f{ 17.f, 6.5f });
+    EXPECT_FLOAT_EQ(result, 26.196374f);
+  }
+
+  {
+    auto const result = vector_utils::distance_between(sf::Vector2f{ 7.f, 4.f }, sf::Vector2f{ 7.f, 4.f });
+    EXPECT_FLOAT_EQ(result, 0.f);
+  }
+}
