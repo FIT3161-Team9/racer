@@ -18,23 +18,23 @@ TEST(RectangleUtils, Segments)
 
   auto const error_threshold = 0.05;
 
-  EXPECT_NEAR(result[0].start.x, -1.f, error_threshold);
-  EXPECT_NEAR(result[0].start.y, 1.f, error_threshold);
-  EXPECT_NEAR(result[0].end.x, 1.f, error_threshold);
-  EXPECT_NEAR(result[0].end.y, 1.f, error_threshold);
+  EXPECT_NEAR(result[0].start.x, 1.f, error_threshold);
+  EXPECT_NEAR(result[0].start.y, -1.f, error_threshold);
+  EXPECT_NEAR(result[0].end.x, -1.f, error_threshold);
+  EXPECT_NEAR(result[0].end.y, -1.f, error_threshold);
 
-  EXPECT_NEAR(result[1].start.x, 1.f, error_threshold);
-  EXPECT_NEAR(result[1].start.y, 1.f, error_threshold);
-  EXPECT_NEAR(result[1].end.x, 1.f, error_threshold);
-  EXPECT_NEAR(result[1].end.y, -1.f, error_threshold);
+  EXPECT_NEAR(result[1].start.x, -1.f, error_threshold);
+  EXPECT_NEAR(result[1].start.y, -1.f, error_threshold);
+  EXPECT_NEAR(result[1].end.x, -1.f, error_threshold);
+  EXPECT_NEAR(result[1].end.y, 1.f, error_threshold);
 
-  EXPECT_NEAR(result[2].start.x, 1.f, error_threshold);
-  EXPECT_NEAR(result[2].start.y, -1.f, error_threshold);
-  EXPECT_NEAR(result[2].end.x, -1.f, error_threshold);
-  EXPECT_NEAR(result[2].end.y, -1.f, error_threshold);
+  EXPECT_NEAR(result[2].start.x, -1.f, error_threshold);
+  EXPECT_NEAR(result[2].start.y, 1.f, error_threshold);
+  EXPECT_NEAR(result[2].end.x, 1.f, error_threshold);
+  EXPECT_NEAR(result[2].end.y, 1.f, error_threshold);
 
-  EXPECT_NEAR(result[3].start.x, -1.f, error_threshold);
-  EXPECT_NEAR(result[3].start.y, -1.f, error_threshold);
-  EXPECT_NEAR(result[3].end.x, -1.f, error_threshold);
-  EXPECT_NEAR(result[3].end.y, 1.f, error_threshold);
+  EXPECT_NEAR(result[3].start.x, 1.f, error_threshold);
+  EXPECT_NEAR(result[3].start.y, 1.f, error_threshold);
+  EXPECT_NEAR(result[3].end.x, 1.f, error_threshold);
+  EXPECT_NEAR(result[3].end.y, -1.f, error_threshold);
 }
