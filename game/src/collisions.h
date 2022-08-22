@@ -5,6 +5,7 @@
 #include <engine/rectangle.h>
 #include <engine/transform.h>
 #include <engine/vector_utils.h>
+#include <memory>
 
 #include "rectangle_utils.h"
 #include "segment.h"
@@ -37,15 +38,17 @@ bool point_segment(Segment const& segment, sf::Vector2f const& point)
          && (distance_to_end + distance_to_start) <= segment_len + inaccuracy_threshold;
 }
 
-bool segment_circle(Segment const& segment, Circle const& circle, Transform const& circle_transform)
+/// Given a segment and a circle, if the circle is colliding with the segment, return the
+/// point on the segment that the circle is touching
+std::unique_ptr<sf::Vector2f>
+  segment_circle(Segment const& segment, Circle const& circle, Transform const& circle_transform)
 {
   // If either end of the segment is within the circle, return true
-  if (point_circle(circle, circle_transform, segment.start) || point_circle(circle, circle_transform, segment.end)) {
-    return true;
-  }
+  if (point_circle(circle, circle_transform, segment.start)) { return std::make_unique<sf::Vector2f>(segment.start); }
+  if (point_circle(circle, circle_transform, segment.end)) { return std::make_unique<sf::Vector2f>(segment.end); }
 
   auto const segment_length = vector_utils::distance_between(segment.start, segment.end);
-  if (segment_length == 0.f) { return false; }
+  if (segment_length == 0.f) { return nullptr; }
 
   auto const dot = ((circle_transform.value.x - segment.start.x) * (segment.end.x - segment.start.x)
                     + (circle_transform.value.y - segment.start.y) * (segment.end.y - segment.start.y))
@@ -56,33 +59,52 @@ bool segment_circle(Segment const& segment, Circle const& circle, Transform cons
   float closest_y = segment.start.y + (dot * (segment.end.y - segment.start.y));
   auto const closest_point = sf::Vector2f{ closest_x, closest_y };
 
-  if (!point_segment(segment, closest_point)) { return false; }
+  if (!point_segment(segment, closest_point)) { return nullptr; }
 
   auto const distance = vector_utils::magnitude(vector_utils::minus(closest_point, circle_transform.value));
 
-  return distance <= circle.radius;
+  if (distance <= circle.radius) { return std::make_unique<sf::Vector2f>(closest_point); }
+  return nullptr;
 }
 
-bool rectangle_circle(Rectangle const& rectangle,
-                      Transform const& rectangle_transform,
-                      Rotation const& rectangle_rotation,
-                      Circle const& circle,
-                      Transform const& circle_transform)
+
+struct RectangleCircleCollision
+{
+  sf::Vector2f normal;
+  sf::Vector2f point_of_collision;
+};
+
+/// Given a rectangle and a circle, if they are colliding, return the normal of the edge of the rectangle
+/// the circle is touching as well as the point of contact along that edge
+std::unique_ptr<RectangleCircleCollision> rectangle_circle(Rectangle const& rectangle,
+                                                           Transform const& rectangle_transform,
+                                                           Rotation const& rectangle_rotation,
+                                                           Circle const& circle,
+                                                           Transform const& circle_transform)
 {
   auto const segments = rectangle_utils::segments(rectangle, rectangle_transform, rectangle_rotation);
 
-  std::cout << "SEGMENTS:\n\n";
+  // Work out which segment we collided with
+  // Work out what coordinate we collided at (closest point on segment to center of circle)
+  // Unit vector in the direction of the normal to the segment
+
   for (auto const segment : segments) {
-    std::cout << "Segment: start(" << segment.start.x << ", " << segment.start.y << "), end(" << segment.end.x << ", "
-              << segment.end.y << ")\n";
-    if (segment_circle(segment, circle, circle_transform)) {
-      std::cout << "\nCOLLISION: above segment with circle(" << circle_transform.value.x << ", "
-                << circle_transform.value.y << ")\n";
-      return true;
+    auto const collision_point = segment_circle(segment, circle, circle_transform);
+    if (collision_point) {
+      auto const normal =
+        rotation::rotate_about_point(vector_utils::minus(segment.end, segment.start), { 0.f, 0.f }, 90.f);
+      auto const normal_unit = vector_utils::scale_vector(normal, 1 / vector_utils::magnitude(normal));
+
+      return std::make_unique<RectangleCircleCollision>(
+        RectangleCircleCollision{ sf::Vector2f{ normal_unit.x, normal_unit.y }, *collision_point });
     }
   }
 
-  return point_rectangle(rectangle, rectangle_transform, rectangle_rotation, circle_transform.value);
+  if (point_rectangle(rectangle, rectangle_transform, rectangle_rotation, circle_transform.value)) {
+    return std::make_unique<RectangleCircleCollision>(
+      RectangleCircleCollision{ sf::Vector2f{ 0.f, 0.f }, sf::Vector2f{ 0.f, 0.f } });
+  }
+  return nullptr;
 }
 
 bool point_rectangle(Rectangle const& rectangle,
