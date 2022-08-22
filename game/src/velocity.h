@@ -22,7 +22,7 @@ Transform apply_velocity(Velocity const& velocity, Transform const& current_tran
 
 /// Apply velocity to any entity that has a transform and a velocity. Note: Requires the timing plugin
 /// to work
-void plugin(AppCommands& app_commands)
+inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_system(
     ResourceQuery<timing::ElapsedTime>{}, Query<Transform, Velocity>{}, [](auto& resource_tuple, auto& query) {
@@ -36,7 +36,7 @@ void plugin(AppCommands& app_commands)
 /// Given a velocity, a transform and some amount of time, return a new transform that represents the position
 /// an entity would be in if it had been moving from the given transform with the given velocity for the given
 /// time
-Transform
+inline Transform
   apply_velocity(Velocity const& velocity, Transform const& current_transform, std::uint64_t elasped_miliseconds)
 {
   return Transform{ .value =
