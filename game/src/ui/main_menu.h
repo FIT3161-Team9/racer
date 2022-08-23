@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 #include <filesystem>
-#include <iostream>
 #include <vector>
 
 #include <engine/app_commands.h>
@@ -19,6 +18,7 @@
 
 #include "../game_state.h"
 #include "../utils.h"
+#include "./background.h"
 
 namespace main_menu
 {
@@ -29,15 +29,6 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 /// This plugin implements the game's splash screen
 inline void plugin(AppCommands& app_commands)
 {
-  // Spawn the background
-  {
-    using utils::u8;
-    app_commands.spawn()
-      .add_component<Rectangle>(sf::Vector2f{ window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT })
-      .add_component<Colour>(u8(255), u8(237), u8(237))
-      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f });
-  }
-
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
@@ -47,14 +38,14 @@ inline void plugin(AppCommands& app_commands)
       // the splash screen, do nothing
       if (event.key_released.key != sf::Keyboard::Key::Enter
           || game_state.current_screen != GameState::CurrentScreen::MainMenu) {
-        return;
+        return false;
       }
 
       game_state.current_screen = GameState::CurrentScreen::DisplayCrouse;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
 
-      // TODO: Spawn UI for main menu
+      return false;
     });
 }
 

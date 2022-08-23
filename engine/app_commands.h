@@ -30,10 +30,11 @@ class AppCommands
   ///
   /// Each of these are called at each iteration of the main engine loop.
   std::vector<std::function<void()>> m_systems{};
-  /// The list of event systems currently registered in the ECS
+  /// The list of event systems currently registered in the ECS. Each event system should return
+  /// a boolean indicating whether the event has been handled and it's propagation should stop
   ///
   /// These are called when the specified event type triggers.
-  std::vector<std::function<void(Event)>> m_event_systems{};
+  std::vector<std::function<bool(Event)>> m_event_systems{};
   /// The registry of the Entities and their corresponding Components in the ECS.
   entt::registry& m_registry;
   /// A second ECS registry that has only the resource entity
@@ -117,7 +118,8 @@ public:
   {
     auto view = m_registry.view<QueryTypes...>();
     m_event_systems.push_back([=](Event event) {
-      if (event.type == event_type) function(event, view);
+      if (event.type == event_type) { return function(event, view); }
+      return false;
     });
   }
 
@@ -127,7 +129,8 @@ public:
   {
     auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
     m_event_systems.push_back([=](Event event) {
-      if (event.type == event_type) function(event, resource_tuple);
+      if (event.type == event_type) { return function(event, resource_tuple); }
+      return false;
     });
   }
 
@@ -138,7 +141,8 @@ public:
     auto resource_tuple = *m_resource_registry.view<ResourceQueryTypes...>().each().begin();
     auto view = m_registry.view<QueryTypes...>();
     m_event_systems.push_back([=](Event event) {
-      if (event.type == event_type) function(event, resource_tuple, view);
+      if (event.type == event_type) { return function(event, resource_tuple, view); }
+      return false;
     });
   }
 

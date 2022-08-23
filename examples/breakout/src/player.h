@@ -37,6 +37,7 @@ inline void plugin(AppCommands& app_commands)
       if (event.key_pressed.key == sf::Keyboard::Key::Left) { velocity.value.x = -SPEED; }
       if (event.key_pressed.key == sf::Keyboard::Key::Right) { velocity.value.x = SPEED; }
     }
+    return false;
   });
 
   app_commands.add_system<Event::EventType::KeyReleased>(Query<Player const, Velocity>{}, [&](auto event, auto& view) {
@@ -45,6 +46,7 @@ inline void plugin(AppCommands& app_commands)
         velocity.value.x = 0;
       }
     }
+    return false;
   });
 
   app_commands.add_system(Query<Player const, Velocity, Transform, Rectangle const>{}, [&](auto& view) {
