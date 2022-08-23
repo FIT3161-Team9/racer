@@ -21,6 +21,7 @@ int main()
     app_commands.add_plugin(gravity::plugin);
     app_commands.add_plugin(ground::circle_ground_collision_plugin);
     app_commands.add_plugin(splash_screen::plugin);
+    app_commands.add_plugin(main_menu::plugin);
   });
 
 

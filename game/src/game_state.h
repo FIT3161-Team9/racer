@@ -7,6 +7,7 @@ struct GameState
   enum class CurrentScreen {
     SplashScreen,
     MainMenu,
+    DisplayCrouse,
   };
 
   CurrentScreen current_screen;
