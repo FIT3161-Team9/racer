@@ -41,7 +41,7 @@ inline void plugin(AppCommands& app_commands)
         return false;
       }
 
-      game_state.current_screen = GameState::CurrentScreen::DisplayCrouse;
+      game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
 
