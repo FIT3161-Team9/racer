@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <entt/entt.hpp>
-#include <iostream>
 
 #include "SFML/System/Vector2.hpp"
 #include "children.h"
@@ -72,13 +71,12 @@ inline void flex_box(RenderContext& render_context,
                      layout::Flex const& layout,
                      Children const& children)
 {
-  if (layout.direction == layout::Flex::Direction::Vertical){
+  if (layout.direction == layout::Flex::Direction::Vertical) {
     render::flex_box_vertical(render_context, window, flex_parent, layout, children);
   }
-  if (layout.direction == layout::Flex::Direction::Horizontal){
+  if (layout.direction == layout::Flex::Direction::Horizontal) {
     render::flex_box_horizontal(render_context, window, flex_parent, layout, children);
   }
-
 }
 
 inline void rectangle(RenderContext& render_context,
@@ -176,14 +174,15 @@ inline void vector(sf::RenderWindow& window, sf::Vector2f const& vec, Transform 
   window.draw(rectangle_shape);
 }
 
-inline void flex_box_vertical (RenderContext& render_context,
-                     sf::RenderWindow& window,
-                     entt::entity flex_parent,
-                     layout::Flex const& layout,
-                     Children const& children){
+inline void flex_box_vertical(RenderContext& render_context,
+                              sf::RenderWindow& window,
+                              entt::entity flex_parent,
+                              layout::Flex const& layout,
+                              Children const& children)
+{
   auto vertical_space_used_so_far = 0.f;
   auto edge_bound_x = 0.f;
-  
+
   for (auto child : children.children) {
     auto* text = render_context.get_component<Text>(child);
     auto* colour = render_context.get_component<Colour>(child);
@@ -194,19 +193,17 @@ inline void flex_box_vertical (RenderContext& render_context,
     sf_text.setString(text->content.data());
     sf_text.setFillColor(render_utils::convert_colour(*colour));
     sf_text.setLetterSpacing(text->letter_spacing);
-    
+
     if (margin && margin->top) { vertical_space_used_so_far += margin->top; }
 
     // First layout - this doesn't work because positioning text considers the tallest
     // letter in the font (we only want to consider the tallest letter in this string)
     auto const bounds = sf_text.getGlobalBounds();
 
-    if (layout.alignment == layout::Flex::Alignment::Center){
+    if (layout.alignment == layout::Flex::Alignment::Center) {
       edge_bound_x = window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width;
     }
-    if (layout.alignment == layout::Flex::Alignment::Start){
-      edge_bound_x = 50.f;
-    }
+    if (layout.alignment == layout::Flex::Alignment::Start) { edge_bound_x = 50.f; }
 
     sf_text.setPosition(edge_bound_x, vertical_space_used_so_far);
 
@@ -225,14 +222,15 @@ inline void flex_box_vertical (RenderContext& render_context,
   (void)flex_parent;
 }
 
-inline void flex_box_horizontal (RenderContext& render_context,
-                     sf::RenderWindow& window,
-                     entt::entity flex_parent,
-                     layout::Flex const& layout,
-                     Children const& children){
+inline void flex_box_horizontal(RenderContext& render_context,
+                                sf::RenderWindow& window,
+                                entt::entity flex_parent,
+                                layout::Flex const& layout,
+                                Children const& children)
+{
   auto horizontal_space_used_so_far = 50.f;
   auto edge_bound_y = 0.f;
-  
+
   for (auto child : children.children) {
     auto* text = render_context.get_component<Text>(child);
     auto* colour = render_context.get_component<Colour>(child);
@@ -244,24 +242,20 @@ inline void flex_box_horizontal (RenderContext& render_context,
     sf_text.setFillColor(render_utils::convert_colour(*colour));
     sf_text.setLetterSpacing(text->letter_spacing);
 
-    if (margin && margin->left) { 
-      horizontal_space_used_so_far += margin->left; 
-    }
+    if (margin && margin->left) { horizontal_space_used_so_far += margin->left; }
 
     // First layout - this doesn't work because positioning text considers the tallest
     // letter in the font (we only want to consider the tallest letter in this string)
     auto const bounds = sf_text.getGlobalBounds();
 
-    if (layout.alignment == layout::Flex::Alignment::Center){
+    if (layout.alignment == layout::Flex::Alignment::Center) {
       edge_bound_y = window::COORDINATE_SPACE_HEIGHT * 0.5 - 0.5 * bounds.height;
     }
 
-    if (layout.alignment == layout::Flex::Alignment::Start){
-      edge_bound_y = 50.f - 0.5 * bounds.height;
-    }
+    if (layout.alignment == layout::Flex::Alignment::Start) { edge_bound_y = 50.f - 0.5 * bounds.height; }
 
-    if (layout.alignment == layout::Flex::Alignment::End){
-      edge_bound_y =  window::COORDINATE_SPACE_HEIGHT * 0.95 - 0.5 * bounds.height;
+    if (layout.alignment == layout::Flex::Alignment::End) {
+      edge_bound_y = window::COORDINATE_SPACE_HEIGHT * 0.95 - 0.5 * bounds.height;
     }
 
     sf_text.setPosition(horizontal_space_used_so_far, edge_bound_y);

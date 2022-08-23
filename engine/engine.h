@@ -88,25 +88,35 @@ namespace detail
       if (event.type == sf::Event::MouseMoved) {
         auto mouse_moved_event = event::mouse_moved(
           window::from_screen_space(window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y })));
-        for (auto event_handler : app_commands.m_event_systems) event_handler(mouse_moved_event);
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(mouse_moved_event)) { break; }
+        }
       };
       if (event.type == sf::Event::MouseButtonPressed) {
         auto mouse_button_event = event::mouse_button_pressed(
           window::from_screen_space(window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y })));
-        for (auto event_handler : app_commands.m_event_systems) event_handler(mouse_button_event);
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(mouse_button_event)) { break; }
+        }
       }
       if (event.type == sf::Event::MouseButtonReleased) {
         auto mouse_button_event = event::mouse_button_released(
           window::from_screen_space(window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y })));
-        for (auto event_handler : app_commands.m_event_systems) event_handler(mouse_button_event);
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(mouse_button_event)) { break; }
+        }
       }
       if (event.type == sf::Event::KeyPressed) {
         auto key_pressed_event = event::key_pressed(event.key.code);
-        for (auto event_handler : app_commands.m_event_systems) event_handler(key_pressed_event);
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(key_pressed_event)) { break; }
+        }
       }
       if (event.type == sf::Event::KeyReleased) {
         auto key_released_event = event::key_released(event.key.code);
-        for (auto event_handler : app_commands.m_event_systems) event_handler(key_released_event);
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(key_released_event)) { break; }
+        }
       }
     }
   }
