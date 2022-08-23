@@ -61,23 +61,54 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   auto title = app_commands.spawn()
-                 .add_component<Text>(utils::INTER_BLACK, "1", u32(97), 2.5f)
+                 .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
                  .add_component<Colour>(colour::black())
-                 .add_component<layout::Margin>(layout::margin_left(50.f));
+                 .add_component<layout::Margin>(layout::Margin{ .top = 80.f, .left = 80.f });
 
   auto subtitle = app_commands.spawn()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, "2-BASED RACING", u32(21), 0.85f)
+                    .add_component<Text>(utils::INTER_SEMI_BOLD, "SIMULATION-BASED RACING", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
-                    .add_component<layout::Margin>(layout::margin_left(50.f));
+                    .add_component<layout::Margin>(layout::Margin{ .top = 40.f, .left = 80.f });
 
-  auto prompt = app_commands.spawn()
-                  .add_component<Text>(utils::INTER_SEMI_BOLD, "PRESS 3 BUTTON TO START", u32(28), 2.5f)
-                  .add_component<Colour>(colour::black())
-                  .add_component<layout::Margin>(layout::margin_left(50.f));
+  auto play_button_label = app_commands.spawn()
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black());
+
+  auto play_button_icon = app_commands.spawn()
+                            .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY", u32(25), 0.85f)
+                            .add_component<Colour>(colour::black());
+
+  auto play_button_row =
+    app_commands.spawn()
+      .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
+      .template add_component<Children>(std::vector{ play_button_label.entity(), play_button_icon.entity() })
+      .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
+
+  auto quit_button_label = app_commands.spawn()
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "QUIT", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black());
+
+  auto quit_button_icon = app_commands.spawn()
+                            .add_component<Text>(utils::INTER_SEMI_BOLD, "QUIT", u32(25), 0.85f)
+                            .add_component<Colour>(colour::black());
+
+  auto quit_button_row =
+    app_commands.spawn()
+      .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
+      .template add_component<Children>(std::vector{ quit_button_label.entity(), quit_button_icon.entity() })
+      .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
+
+
+  // auto prompt = app_commands.spawn()
+  //                 .add_component<Text>(utils::INTER_SEMI_BOLD, "PRESS 3 BUTTON TO START", u32(28), 2.5f)
+  //                 .add_component<Colour>(colour::black())
+  //                 .add_component<layout::Margin>(layout::margin_left(50.f));
 
   app_commands.spawn()
-    .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
-    .template add_component<Children>(std::vector{ title.entity(), subtitle.entity(), prompt.entity() });
+    .template add_component<layout::FlexRoot>()
+    .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
+    .template add_component<Children>(
+      std::vector{ title.entity(), subtitle.entity(), play_button_row.entity(), quit_button_row.entity() });
 }
 
 };// namespace main_menu

@@ -24,15 +24,41 @@
 namespace render
 {
 
+// TODO: Give this thing a nicer home
+struct LayoutResult
+{
+  float horizontal_space_used{};
+  float vertical_space_used{};
+};
+
+// TODO: Give this thing a nicer home
+struct FlexContext
+{
+  float current_x{};
+  float current_y{};
+  layout::Flex layout;
+};
+
+
 void circle(sf::RenderWindow&, Transform const&, Circle const&, Colour const&);
 void rectangle(RenderContext&, sf::RenderWindow&, entt::entity, Transform const&, Rectangle const&, Colour const&);
 void texture(RenderContext&, sf::RenderWindow&, Transform const&, Texture const&);
 void text(RenderContext&, sf::RenderWindow&, Transform const&, Text const&, Colour const&);
 void vector(sf::RenderWindow&, sf::Vector2f const&, Transform const&, Colour const&);
 void triangle(RenderContext&, sf::RenderWindow&, entt::entity, Transform const&, Triangle const&, Colour const&);
-void flex_box(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
-void flex_box_vertical(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
-void flex_box_horizontal(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
+void root_flex_box(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
+LayoutResult flex_box_vertical(RenderContext&,
+                               sf::RenderWindow&,
+                               entt::entity,
+                               layout::Flex const&,
+                               Children const&,
+                               FlexContext const* parent_flex_context);
+LayoutResult flex_box_horizontal(RenderContext&,
+                                 sf::RenderWindow&,
+                                 entt::entity,
+                                 layout::Flex const&,
+                                 Children const&,
+                                 FlexContext const* parent_flex_context);
 
 
 /// Render all entities in the ECS that meet the criteria to be rendered. See the parameters of each
@@ -59,23 +85,23 @@ inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::r
   for (auto [_entity, transform, text, colour] : text_view.each()) {
     render::text(render_context, window, transform, text, colour);
   }
-  auto flex_boxes = registry.view<layout::Flex, Children>();
-  for (auto [flex_parent, flex, children] : flex_boxes.each()) {
-    render::flex_box(render_context, window, flex_parent, flex, children);
+  auto flex_boxes = registry.view<layout::FlexRoot, layout::Flex, Children>();
+  for (auto [flex_parent, _flex_root, flex, children] : flex_boxes.each()) {
+    render::root_flex_box(render_context, window, flex_parent, flex, children);
   }
 }
 
-inline void flex_box(RenderContext& render_context,
-                     sf::RenderWindow& window,
-                     entt::entity flex_parent,
-                     layout::Flex const& layout,
-                     Children const& children)
+inline void root_flex_box(RenderContext& render_context,
+                          sf::RenderWindow& window,
+                          entt::entity flex_parent,
+                          layout::Flex const& layout,
+                          Children const& children)
 {
   if (layout.direction == layout::Flex::Direction::Vertical) {
-    render::flex_box_vertical(render_context, window, flex_parent, layout, children);
+    render::flex_box_vertical(render_context, window, flex_parent, layout, children, nullptr);
   }
   if (layout.direction == layout::Flex::Direction::Horizontal) {
-    render::flex_box_horizontal(render_context, window, flex_parent, layout, children);
+    render::flex_box_horizontal(render_context, window, flex_parent, layout, children, nullptr);
   }
 }
 
@@ -173,108 +199,170 @@ inline void vector(sf::RenderWindow& window, sf::Vector2f const& vec, Transform 
     rotation::to_radians(std::acos(vector_utils::dot_product(vec, { 0.f, 1.f }) / vector_utils::magnitude(vec))));
   window.draw(rectangle_shape);
 }
-
-inline void flex_box_vertical(RenderContext& render_context,
-                              sf::RenderWindow& window,
-                              entt::entity flex_parent,
-                              layout::Flex const& layout,
-                              Children const& children)
-{
-  auto vertical_space_used_so_far = 0.f;
-  auto edge_bound_x = 0.f;
-
-  for (auto child : children.children) {
-    auto* text = render_context.get_component<Text>(child);
-    auto* colour = render_context.get_component<Colour>(child);
-    auto* margin = render_context.get_component<layout::Margin>(child);
-    sf::Text sf_text{};
-    sf_text.setFont(render_context.get_or_load_font(*text));
-    sf_text.setCharacterSize(text->character_size);
-    sf_text.setString(text->content.data());
-    sf_text.setFillColor(render_utils::convert_colour(*colour));
-    sf_text.setLetterSpacing(text->letter_spacing);
-
-    if (margin && margin->top) { vertical_space_used_so_far += margin->top; }
-
-    // First layout - this doesn't work because positioning text considers the tallest
-    // letter in the font (we only want to consider the tallest letter in this string)
-    auto const bounds = sf_text.getGlobalBounds();
-
-    if (layout.alignment == layout::Flex::Alignment::Center) {
-      edge_bound_x = window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width;
-    }
-    if (layout.alignment == layout::Flex::Alignment::Start) { edge_bound_x = 0.f; }
-    if (margin && margin->left && layout.alignment == layout::Flex::Alignment::Start) { edge_bound_x += margin->left; }
-
-    sf_text.setPosition(edge_bound_x, vertical_space_used_so_far);
-
-    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
-    // and the tallest letter we're using. We need to offset by this distance
-    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
-    auto const difference_between_target_and_actual = bounds_after_setting_position.top - vertical_space_used_so_far;
-    sf_text.setPosition(edge_bound_x, vertical_space_used_so_far - difference_between_target_and_actual);
-
-    window.draw(sf_text);
-
-    if (margin && margin->bottom) { vertical_space_used_so_far += margin->bottom; }
-
-    vertical_space_used_so_far += bounds.height;
-  }
-  (void)flex_parent;
-}
-
-inline void flex_box_horizontal(RenderContext& render_context,
+inline LayoutResult layout_text(RenderContext& render_context,
                                 sf::RenderWindow& window,
-                                entt::entity flex_parent,
-                                layout::Flex const& layout,
-                                Children const& children)
+                                FlexContext const& flex_context,
+                                Text const& text,
+                                entt::entity entity)
 {
-  auto horizontal_space_used_so_far = 50.f;
-  auto edge_bound_y = 0.f;
+  auto* colour = render_context.get_component<Colour>(entity);
+  auto* margin = render_context.get_component<layout::Margin>(entity);
+  sf::Text sf_text{};
+  sf_text.setFont(render_context.get_or_load_font(text));
+  sf_text.setCharacterSize(text.character_size);
+  sf_text.setString(text.content.data());
+  sf_text.setFillColor(render_utils::convert_colour(*colour));
+  sf_text.setLetterSpacing(text.letter_spacing);
+
+  auto const margin_top = [margin]() { return margin ? margin->top : 0.f; };
+  auto const margin_left = [margin]() { return margin ? margin->left : 0.f; };
+  auto const margin_bottom = [margin]() { return margin ? margin->bottom : 0.f; };
+  auto const margin_right = [margin]() { return margin ? margin->right : 0.f; };
+
+  auto const alignment_padding_top = [&](auto const& bounds) {
+    if (flex_context.layout.alignment != layout::Flex::Alignment::Center) { return 0.f; }
+    if (flex_context.layout.direction != layout::Flex::Direction::Horizontal) { return 0.f; }
+    return -0.5f * bounds.height;
+  };
+  auto const alignment_padding_left = [&](auto const& bounds) {
+    if (flex_context.layout.alignment != layout::Flex::Alignment::Center) { return 0.f; }
+    if (flex_context.layout.direction != layout::Flex::Direction::Vertical) { return 0.f; }
+    return 0.5f * window::COORDINATE_SPACE_WIDTH - 0.5f * bounds.width;
+  };
+
+  auto const x_position = [&](auto const& bounds) {
+    return flex_context.current_x + margin_left() + alignment_padding_left(bounds);
+  };
+  auto const y_position = [&](auto const& bounds) {
+    return flex_context.current_y + margin_top() + alignment_padding_top(bounds);
+  };
+
+  // First layout - this doesn't work because positioning text considers the tallest
+  // letter in the font (we only want to consider the tallest letter in this string)
+  auto const bounds = sf_text.getGlobalBounds();
+  sf_text.setPosition(x_position(bounds), y_position(bounds));
+
+  // Re-layout - after the first layout we now know the difference between the tallest letter in the font
+  // and the tallest letter we're using. We need to offset by this distance
+  auto const bounds_after_setting_position = sf_text.getGlobalBounds();
+  auto const difference_between_target_and_actual_x =
+    bounds_after_setting_position.left - x_position(bounds_after_setting_position);
+  auto const difference_between_target_and_actual_y =
+    bounds_after_setting_position.top - y_position(bounds_after_setting_position);
+
+  sf_text.setPosition(x_position(bounds) - difference_between_target_and_actual_x,
+                      y_position(bounds) - difference_between_target_and_actual_y);
+
+  window.draw(sf_text);
+
+  return LayoutResult{ .horizontal_space_used =
+                         margin_left() + alignment_padding_left(bounds) + bounds.width + margin_right(),
+                       .vertical_space_used =
+                         margin_top() + alignment_padding_top(bounds) + bounds.height + margin_bottom() };
+}
+
+inline LayoutResult layout_flex(RenderContext& render_context,
+                                sf::RenderWindow& window,
+                                FlexContext const& parent_flex_context,
+                                layout::Flex const& flex,
+                                entt::entity entity)
+{
+  auto* children = render_context.get_component<Children>(entity);
+
+  if (flex.direction == layout::Flex::Direction::Vertical) {
+    return render::flex_box_vertical(render_context, window, entity, flex, *children, &parent_flex_context);
+  }
+  if (flex.direction == layout::Flex::Direction::Horizontal) {
+    return render::flex_box_horizontal(render_context, window, entity, flex, *children, &parent_flex_context);
+  }
+  // We didn't use any space...
+  return LayoutResult{};
+}
+
+inline LayoutResult flex_box_vertical(RenderContext& render_context,
+                                      sf::RenderWindow& window,
+                                      entt::entity flex_parent,
+                                      layout::Flex const& layout,
+                                      Children const& children,
+                                      FlexContext const* parent_flex_context)
+{
+  auto flex_context = FlexContext{ .layout = layout };
+  if (parent_flex_context) {
+    flex_context.current_y = parent_flex_context->current_y;
+    flex_context.current_x = parent_flex_context->current_x;
+  }
+  auto* margin = render_context.get_component<layout::Margin>(flex_parent);
+  if (margin) {
+    flex_context.current_y += margin->top;
+    flex_context.current_x += margin->left;
+  }
+  // The width of this flex boxes widest child
+  float widest_child_width = 0.f;
 
   for (auto child : children.children) {
     auto* text = render_context.get_component<Text>(child);
-    auto* colour = render_context.get_component<Colour>(child);
-    auto* margin = render_context.get_component<layout::Margin>(child);
-    sf::Text sf_text{};
-    sf_text.setFont(render_context.get_or_load_font(*text));
-    sf_text.setCharacterSize(text->character_size);
-    sf_text.setString(text->content.data());
-    sf_text.setFillColor(render_utils::convert_colour(*colour));
-    sf_text.setLetterSpacing(text->letter_spacing);
-
-    if (margin && margin->left) { horizontal_space_used_so_far += margin->left; }
-
-    // First layout - this doesn't work because positioning text considers the tallest
-    // letter in the font (we only want to consider the tallest letter in this string)
-    auto const bounds = sf_text.getGlobalBounds();
-
-    if (layout.alignment == layout::Flex::Alignment::Center) {
-      edge_bound_y = window::COORDINATE_SPACE_HEIGHT * 0.5 - 0.5 * bounds.height;
+    auto* flex = render_context.get_component<layout::Flex>(child);
+    if (text) {
+      auto text_layout_result = layout_text(render_context, window, flex_context, *text, child);
+      flex_context.current_y += text_layout_result.vertical_space_used;
+      widest_child_width = std::max(widest_child_width, text_layout_result.horizontal_space_used);
+    } else if (flex) {
+      auto flex_layout_result = layout_flex(render_context, window, flex_context, *flex, child);
+      flex_context.current_y += flex_layout_result.vertical_space_used;
+      widest_child_width = std::max(widest_child_width, flex_layout_result.horizontal_space_used);
     }
-
-    if (layout.alignment == layout::Flex::Alignment::Start) { edge_bound_y = 50.f - 0.5 * bounds.height; }
-
-    if (layout.alignment == layout::Flex::Alignment::End) {
-      edge_bound_y = window::COORDINATE_SPACE_HEIGHT * 0.95 - 0.5 * bounds.height;
-    }
-
-    sf_text.setPosition(horizontal_space_used_so_far, edge_bound_y);
-
-    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
-    // and the tallest letter we're using. We need to offset by this distance
-    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
-    auto const difference_between_target_and_actual = bounds_after_setting_position.left - horizontal_space_used_so_far;
-    edge_bound_y -= 0.5 * bounds_after_setting_position.height;
-    sf_text.setPosition(horizontal_space_used_so_far - difference_between_target_and_actual, edge_bound_y);
-
-    window.draw(sf_text);
-
-    if (margin && margin->right) { horizontal_space_used_so_far += margin->right; }
-
-    horizontal_space_used_so_far += bounds.width;
   }
-  (void)flex_parent;
+
+  if (margin) {
+    flex_context.current_y += margin->bottom;
+    flex_context.current_x += margin->right;
+  }
+  return LayoutResult{ .horizontal_space_used = widest_child_width, .vertical_space_used = flex_context.current_y };
 }
+
+inline LayoutResult flex_box_horizontal(RenderContext& render_context,
+                                        sf::RenderWindow& window,
+                                        entt::entity flex_parent,
+                                        layout::Flex const& layout,
+                                        Children const& children,
+                                        FlexContext const* parent_flex_context)
+{
+  (void)flex_parent;
+
+  auto flex_context = FlexContext{ .layout = layout };
+  if (parent_flex_context) {
+    flex_context.current_y = parent_flex_context->current_y;
+    flex_context.current_x = parent_flex_context->current_x;
+  }
+  auto* margin = render_context.get_component<layout::Margin>(flex_parent);
+  if (margin) {
+    flex_context.current_y += margin->top;
+    flex_context.current_x += margin->left;
+  }
+  // The width of this flex boxes widest child
+  float tallest_child_height = 0.f;
+
+  for (auto child : children.children) {
+    auto* text = render_context.get_component<Text>(child);
+    auto* flex = render_context.get_component<layout::Flex>(child);
+    if (text) {
+      auto text_layout_result = layout_text(render_context, window, flex_context, *text, child);
+      flex_context.current_x += text_layout_result.horizontal_space_used;
+      tallest_child_height = std::max(tallest_child_height, text_layout_result.horizontal_space_used);
+    } else if (flex) {
+      auto flex_layout_result = layout_flex(render_context, window, flex_context, *flex, child);
+      flex_context.current_x += flex_layout_result.horizontal_space_used;
+      tallest_child_height = std::max(tallest_child_height, flex_layout_result.horizontal_space_used);
+    }
+  }
+
+  if (margin) {
+    flex_context.current_y += margin->bottom;
+    flex_context.current_x += margin->right;
+  }
+
+  return LayoutResult{ .horizontal_space_used = flex_context.current_x, .vertical_space_used = tallest_child_height };
+}
+
 
 };// namespace render
