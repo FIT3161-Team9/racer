@@ -26,6 +26,9 @@ struct Margin
   float left{};
 };
 
-inline Margin margin_top(float value) { return Margin{ value }; }
+inline Margin margin_top(float value) { return Margin { .top = value }; }
+
+inline Margin margin_left(float value) { return Margin { .left = value};}
+
 
 }// namespace layout
