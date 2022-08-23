@@ -204,6 +204,7 @@ inline void flex_box_vertical(RenderContext& render_context,
       edge_bound_x = window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width;
     }
     if (layout.alignment == layout::Flex::Alignment::Start) { edge_bound_x = 0.f; }
+    if (margin && margin->left && layout.alignment == layout::Flex::Alignment::Start) { edge_bound_x += margin->left; }
 
     sf_text.setPosition(edge_bound_x, vertical_space_used_so_far);
 
