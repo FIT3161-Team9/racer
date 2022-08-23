@@ -32,6 +32,9 @@ void text(RenderContext&, sf::RenderWindow&, Transform const&, Text const&, Colo
 void vector(sf::RenderWindow&, sf::Vector2f const&, Transform const&, Colour const&);
 void triangle(RenderContext&, sf::RenderWindow&, entt::entity, Transform const&, Triangle const&, Colour const&);
 void flex_box(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
+void flex_box_vertical(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
+void flex_box_horizontal(RenderContext&, sf::RenderWindow&, entt::entity, layout::Flex const&, Children const&);
+
 
 /// Render all entities in the ECS that meet the criteria to be rendered. See the parameters of each
 /// of the individual render methods to see what the criteria is to be rendered
@@ -69,40 +72,13 @@ inline void flex_box(RenderContext& render_context,
                      layout::Flex const& layout,
                      Children const& children)
 {
-  auto vertical_space_used_so_far = 0;
-  for (auto child : children.children) {
-    auto* text = render_context.get_component<Text>(child);
-    auto* colour = render_context.get_component<Colour>(child);
-    auto* margin = render_context.get_component<layout::Margin>(child);
-    sf::Text sf_text{};
-    sf_text.setFont(render_context.get_or_load_font(*text));
-    sf_text.setCharacterSize(text->character_size);
-    sf_text.setString(text->content.data());
-    sf_text.setFillColor(render_utils::convert_colour(*colour));
-    sf_text.setLetterSpacing(text->letter_spacing);
-
-    if (margin && margin->top) { vertical_space_used_so_far += margin->top; }
-
-    // First layout - this doesn't work because positioning text considers the tallest
-    // letter in the font (we only want to consider the tallest letter in this string)
-    auto const bounds = sf_text.getGlobalBounds();
-    sf_text.setPosition(window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width, vertical_space_used_so_far);
-
-    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
-    // and the tallest letter we're using. We need to offset by this distance
-    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
-    auto const difference_between_target_and_actual = bounds_after_setting_position.top - vertical_space_used_so_far;
-    sf_text.setPosition(window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width,
-                        vertical_space_used_so_far - difference_between_target_and_actual);
-
-    window.draw(sf_text);
-
-    if (margin && margin->bottom) { vertical_space_used_so_far += margin->bottom; }
-
-    vertical_space_used_so_far += bounds.height;
+  if (layout.direction == layout::Flex::Direction::Vertical){
+    render::flex_box_vertical(render_context, window, flex_parent, layout, children);
   }
-  (void)flex_parent;
-  (void)layout;
+  if (layout.direction == layout::Flex::Direction::Horizontal){
+    render::flex_box_horizontal(render_context, window, flex_parent, layout, children);
+  }
+
 }
 
 inline void rectangle(RenderContext& render_context,
@@ -198,6 +174,112 @@ inline void vector(sf::RenderWindow& window, sf::Vector2f const& vec, Transform 
   rectangle_shape.setRotation(
     rotation::to_radians(std::acos(vector_utils::dot_product(vec, { 0.f, 1.f }) / vector_utils::magnitude(vec))));
   window.draw(rectangle_shape);
+}
+
+inline void flex_box_vertical (RenderContext& render_context,
+                     sf::RenderWindow& window,
+                     entt::entity flex_parent,
+                     layout::Flex const& layout,
+                     Children const& children){
+  auto vertical_space_used_so_far = 0.f;
+  auto edge_bound_x = 0.f;
+  
+  for (auto child : children.children) {
+    auto* text = render_context.get_component<Text>(child);
+    auto* colour = render_context.get_component<Colour>(child);
+    auto* margin = render_context.get_component<layout::Margin>(child);
+    sf::Text sf_text{};
+    sf_text.setFont(render_context.get_or_load_font(*text));
+    sf_text.setCharacterSize(text->character_size);
+    sf_text.setString(text->content.data());
+    sf_text.setFillColor(render_utils::convert_colour(*colour));
+    sf_text.setLetterSpacing(text->letter_spacing);
+    
+    if (margin && margin->top) { vertical_space_used_so_far += margin->top; }
+
+    // First layout - this doesn't work because positioning text considers the tallest
+    // letter in the font (we only want to consider the tallest letter in this string)
+    auto const bounds = sf_text.getGlobalBounds();
+
+    if (layout.alignment == layout::Flex::Alignment::Center){
+      edge_bound_x = window::COORDINATE_SPACE_WIDTH * 0.5 - 0.5 * bounds.width;
+    }
+    if (layout.alignment == layout::Flex::Alignment::Start){
+      edge_bound_x = 50.f;
+    }
+
+    sf_text.setPosition(edge_bound_x, vertical_space_used_so_far);
+
+    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
+    // and the tallest letter we're using. We need to offset by this distance
+    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
+    auto const difference_between_target_and_actual = bounds_after_setting_position.top - vertical_space_used_so_far;
+    sf_text.setPosition(edge_bound_x, vertical_space_used_so_far - difference_between_target_and_actual);
+
+    window.draw(sf_text);
+
+    if (margin && margin->bottom) { vertical_space_used_so_far += margin->bottom; }
+
+    vertical_space_used_so_far += bounds.height;
+  }
+  (void)flex_parent;
+}
+
+inline void flex_box_horizontal (RenderContext& render_context,
+                     sf::RenderWindow& window,
+                     entt::entity flex_parent,
+                     layout::Flex const& layout,
+                     Children const& children){
+  auto horizontal_space_used_so_far = 50.f;
+  auto edge_bound_y = 0.f;
+  
+  for (auto child : children.children) {
+    auto* text = render_context.get_component<Text>(child);
+    auto* colour = render_context.get_component<Colour>(child);
+    auto* margin = render_context.get_component<layout::Margin>(child);
+    sf::Text sf_text{};
+    sf_text.setFont(render_context.get_or_load_font(*text));
+    sf_text.setCharacterSize(text->character_size);
+    sf_text.setString(text->content.data());
+    sf_text.setFillColor(render_utils::convert_colour(*colour));
+    sf_text.setLetterSpacing(text->letter_spacing);
+
+    if (margin && margin->left) { 
+      horizontal_space_used_so_far += margin->left; 
+    }
+
+    // First layout - this doesn't work because positioning text considers the tallest
+    // letter in the font (we only want to consider the tallest letter in this string)
+    auto const bounds = sf_text.getGlobalBounds();
+
+    if (layout.alignment == layout::Flex::Alignment::Center){
+      edge_bound_y = window::COORDINATE_SPACE_HEIGHT * 0.5 - 0.5 * bounds.height;
+    }
+
+    if (layout.alignment == layout::Flex::Alignment::Start){
+      edge_bound_y = 50.f - 0.5 * bounds.height;
+    }
+
+    if (layout.alignment == layout::Flex::Alignment::End){
+      edge_bound_y =  window::COORDINATE_SPACE_HEIGHT * 0.95 - 0.5 * bounds.height;
+    }
+
+    sf_text.setPosition(horizontal_space_used_so_far, edge_bound_y);
+
+    // Re-layout - after the first layout we now know the difference between the tallest letter in the font
+    // and the tallest letter we're using. We need to offset by this distance
+    auto const bounds_after_setting_position = sf_text.getGlobalBounds();
+    auto const difference_between_target_and_actual = bounds_after_setting_position.left - horizontal_space_used_so_far;
+    edge_bound_y -= 0.5 * bounds_after_setting_position.height;
+    sf_text.setPosition(horizontal_space_used_so_far - difference_between_target_and_actual, edge_bound_y);
+
+    window.draw(sf_text);
+
+    if (margin && margin->right) { horizontal_space_used_so_far += margin->right; }
+
+    horizontal_space_used_so_far += bounds.width;
+  }
+  (void)flex_parent;
 }
 
 };// namespace render
