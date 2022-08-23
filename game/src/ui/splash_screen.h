@@ -35,7 +35,9 @@ inline void plugin(AppCommands& app_commands)
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
-    ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
+    ResourceQuery<GameState>{},
+    Query<layout::Flex>{},
+    [&, background](auto& event, auto& resource_tuple, auto& flex_query) {
       auto&& [_, game_state] = resource_tuple;
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
