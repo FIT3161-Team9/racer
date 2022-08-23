@@ -3,6 +3,9 @@
 namespace layout
 {
 
+/// The root of the UI. Rendering will start here, and traverse the root's children
+enum class FlexRoot {};
+
 /// Component for flex box layout parent - render lays out the children of the entity with this
 /// component in a CSS Flex-box like fashion
 struct Flex

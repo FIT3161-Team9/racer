@@ -83,6 +83,7 @@ inline void spawn_ui(AppCommands& app_commands)
                   .add_component<layout::Margin>(layout::margin_top(100.f));
 
   app_commands.spawn()
+    .template add_component<layout::FlexRoot>()
     .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Center)
     .template add_component<Children>(std::vector{ title.entity(), subtitle.entity(), prompt.entity() });
 }
