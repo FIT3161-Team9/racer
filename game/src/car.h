@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
-#include <iostream>
 
 #include "engine/app_commands.h"
 #include "engine/colour.h"
@@ -12,8 +11,11 @@
 #include "engine/transform.h"
 #include "engine/vector_utils.h"
 
+#include "./gravity.h"
 #include "./rectangle_utils.h"
+#include "./rotational_velocity.h"
 #include "./velocity.h"
+
 
 
 struct Car
@@ -33,14 +35,15 @@ void synchronise_car_with_wheels(AppCommands& app_commands,
                                  entt::entity back_wheel,
                                  entt::entity front_wheel)
 {
-  std::cout << "Car entity: " << static_cast<int>(car) << ", wheels: " << static_cast<int>(back_wheel) << ", "
-            << static_cast<int>(front_wheel) << "\n";
   auto* back_wheel_velocity = app_commands.component<Velocity>(back_wheel);
   auto* front_wheel_velocity = app_commands.component<Velocity>(front_wheel);
   auto* car_velocity = app_commands.component<Velocity>(car);
   assert(back_wheel_velocity);
   assert(front_wheel_velocity);
   assert(car_velocity);
+
+  // TODO: Calculate rotational velocity of car
+
   auto const& fastest_wheel_velocity =
     vector_utils::magnitude(back_wheel_velocity->value) > vector_utils::magnitude(front_wheel_velocity->value)
       ? back_wheel_velocity->value
@@ -82,14 +85,16 @@ Entity spawn(AppCommands& app_commands)
                       .add_component<Circle>(30.f)
                       .add_component<Colour>(colour::red())
                       .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
-                      .add_component<Velocity>(sf::Vector2f{ 0.f, 0.f });
+                      .add_component<Velocity>(sf::Vector2f{ 0.f, 0.f })
+                      .add_component<AffectedByGravity>();
 
   auto front_wheel = app_commands.spawn()
                        .add_component<FrontWheel>()
                        .add_component<Circle>(30.f)
                        .add_component<Colour>(colour::red())
                        .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
-                       .add_component<Velocity>(sf::Vector2f{ 200.f, 0.f });
+                       .add_component<Velocity>(sf::Vector2f{ 200.f, 0.f })
+                       .add_component<AffectedByGravity>();
 
   return app_commands.spawn()
     .add_component<Rectangle>(sf::Vector2f{ 100.f, 50.f })
@@ -97,6 +102,7 @@ Entity spawn(AppCommands& app_commands)
     .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
     .add_component<Rotation>(0.f)
     .add_component<Velocity>(sf::Vector2f{ 0.f, 0.f })
+    .add_component<RotationalVelocity>(0.f)
     .add_component<Car>(back_wheel.entity(), front_wheel.entity());
 }
 }// namespace car

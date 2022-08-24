@@ -13,14 +13,19 @@
 #include <engine/layout.h>
 #include <engine/query.h>
 #include <engine/rectangle.h>
+#include <engine/rotation.h>
 #include <engine/text.h>
 #include <engine/transform.h>
 #include <engine/window.h>
 
+#include "../car.h"
 #include "../game_state.h"
+#include "../gravity.h"
+#include "../ground.h"
 #include "../utils.h"
 #include "./background.h"
 #include "./main_menu.h"
+
 
 namespace splash_screen
 {
@@ -32,7 +37,7 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
-  background::spawn(app_commands);
+  // background::spawn(app_commands);
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -49,7 +54,16 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-      main_menu::spawn_ui(app_commands);
+      // main_menu::spawn_ui(app_commands);
+      car::spawn(app_commands);
+
+      app_commands.spawn()
+        .add_component<Ground>()
+        .add_component<Rectangle>(sf::Vector2f{ window::COORDINATE_SPACE_WIDTH, 40.f })
+        .add_component<Transform>(sf::Vector2f{ 0, 0.5f * window::COORDINATE_SPACE_HEIGHT - 20.f })
+        .add_component<Rotation>(10.f)
+        .add_component<Colour>(colour::white());
+
       return true;
     });
 

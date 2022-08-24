@@ -7,6 +7,7 @@
 #include "game/src/game_state.h"
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
+#include "game/src/rotational_velocity.h"
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
 
@@ -20,6 +21,7 @@ int main()
 
     app_commands.add_plugin(timing::plugin);
     app_commands.add_plugin(velocity::plugin);
+    app_commands.add_plugin(rotational_velocity::plugin);
     app_commands.add_plugin(car::plugin);
     app_commands.add_plugin(gravity::plugin);
     app_commands.add_plugin(ground::circle_ground_collision_plugin);
