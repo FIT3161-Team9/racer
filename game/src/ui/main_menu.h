@@ -81,6 +81,7 @@ inline void spawn_ui(AppCommands& app_commands)
   auto play_button_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
+      .template add_component<layout::Height>(100.f)
       .template add_component<Children>(std::vector{ play_button_label.entity(), play_button_icon.entity() })
       .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
 
@@ -95,8 +96,9 @@ inline void spawn_ui(AppCommands& app_commands)
   auto quit_button_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
+      .template add_component<layout::Height>(100.f)
       .template add_component<Children>(std::vector{ quit_button_label.entity(), quit_button_icon.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
+      .template add_component<layout::Margin>(layout::Margin{ .top = 0.f, .left = 80.f });
 
 
   // auto prompt = app_commands.spawn()
