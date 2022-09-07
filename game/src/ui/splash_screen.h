@@ -16,11 +16,13 @@
 #include <engine/text.h>
 #include <engine/transform.h>
 #include <engine/window.h>
-
+#include <engine/triangle.h>
 #include "../game_state.h"
 #include "../utils.h"
 #include "./background.h"
 #include "./main_menu.h"
+#include "./vehicle_select.h"
+#include "./background2.h"
 
 namespace splash_screen
 {
@@ -33,6 +35,7 @@ inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
   background::spawn(app_commands);
+ 
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -49,6 +52,7 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+      
       main_menu::spawn_ui(app_commands);
       return true;
     });
@@ -81,6 +85,10 @@ inline void spawn_ui(AppCommands& app_commands)
                   .add_component<Text>(utils::INTER_SEMI_BOLD, "PRESS ENTER BUTTON TO START", u32(28), 2.5f)
                   .add_component<Colour>(colour::black())
                   .add_component<layout::Margin>(layout::margin_top(100.f));
+ app_commands.spawn()
+                  .add_component<Rectangle>(sf::Vector2f{ 100.f, 100.f })
+                  .add_component<Colour>(colour::black())
+                  .add_component<Transform>(sf::Vector2f{ 0.f, 0.f });
 
   app_commands.spawn()
     .template add_component<layout::FlexRoot>()
@@ -88,5 +96,5 @@ inline void spawn_ui(AppCommands& app_commands)
     .template add_component<Children>(std::vector{ title.entity(), subtitle.entity(), prompt.entity() });
 }
 
-};// namespace splash_screen
+};
 // namespace splash_screen
