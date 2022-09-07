@@ -14,6 +14,7 @@
 #include "children.h"
 #include "circle.h"
 #include "colour.h"
+#include "entt/core/type_traits.hpp"
 #include "layout.h"
 #include "outline.h"
 #include "rectangle.h"
