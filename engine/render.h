@@ -29,7 +29,6 @@
 #include "window.h"
 #include "zindex.h"
 
-
 #include "render/circle.h"
 #include "render/rectangle.h"
 #include "render/text.h"

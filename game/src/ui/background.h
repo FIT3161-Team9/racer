@@ -2,14 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../utils.h"
+#include "engine/circle.h"
 #include <engine/app_commands.h>
 #include <engine/colour.h>
 #include <engine/entity.h>
 #include <engine/rectangle.h>
 #include <engine/transform.h>
 #include <engine/window.h>
-
-#include "../utils.h"
 
 namespace background
 {
