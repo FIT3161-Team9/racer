@@ -4,6 +4,7 @@
 
 #include "../utils.h"
 #include "engine/circle.h"
+#include "engine/zindex.h"
 #include <engine/app_commands.h>
 #include <engine/colour.h>
 #include <engine/entity.h>

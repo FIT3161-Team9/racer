@@ -17,6 +17,7 @@
 #include <engine/transform.h>
 #include <engine/triangle.h>
 #include <engine/window.h>
+#include <engine/zindex.h>
 
 #include "../game_state.h"
 #include "../utils.h"
@@ -33,7 +34,6 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
 {
-  background::spawn(app_commands);
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
