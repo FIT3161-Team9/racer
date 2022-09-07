@@ -8,6 +8,7 @@
 #include <engine/rectangle.h>
 #include <engine/transform.h>
 #include <engine/window.h>
+#include <engine/zindex.h>
 
 struct Brick
 {
@@ -40,7 +41,8 @@ inline Entity spawn(AppCommands& app_commands, std::uint32_t index)
       -0.5f * window::COORDINATE_SPACE_HEIGHT + 0.5f * HEIGHT + GAP + row_number * HEIGHT + row_number * GAP })
     .add_component<Brick>(health)
     .add_component<Colour>(color_for_brick_health(health))
-    .add_component<Rectangle>(sf::Vector2f{ WIDTH, HEIGHT });
+    .add_component<Rectangle>(sf::Vector2f{ WIDTH, HEIGHT })
+    .add_component<ZIndex>(1);
 }
 
 inline void plugin(AppCommands& app_commands)

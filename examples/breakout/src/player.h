@@ -10,6 +10,7 @@
 #include <engine/rectangle.h>
 #include <engine/transform.h>
 #include <engine/window.h>
+#include <engine/zindex.h>
 
 #include "util.h"
 #include "velocity.h"
@@ -27,6 +28,7 @@ inline Entity spawn(AppCommands& app_commands)
     .add_component<Colour>(colour::white())
     .add_component<Rectangle>(sf::Vector2f{ 200.f, 30.f })
     .add_component<Velocity>(util::ZERO_VEC)
+    .add_component<ZIndex>(0)
     .add_component<Player>();
 }
 
