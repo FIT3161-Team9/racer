@@ -112,6 +112,16 @@ public:
     return;
   }
 
+  /// Add an event system
+  template<Event::EventType event_type, typename Fn>
+  void add_system(Fn function)
+  {
+    m_event_systems.push_back([=](Event event) {
+      if (event.type == event_type) { return function(event); }
+      return false;
+    });
+  }
+
   /// Add an event system with a component query
   template<Event::EventType event_type, typename... QueryTypes, typename Fn>
   void add_system(Query<QueryTypes...>, Fn function)
