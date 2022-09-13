@@ -35,7 +35,7 @@ template<typename StartupFn>
 void run_app(App const& app, StartupFn on_startup)
 {
   // Initialise the window and setup the coordinate system
-  sf::RenderWindow window(sf::VideoMode(1820, 1080), app.name.data());
+  sf::RenderWindow window(sf::VideoMode(1920, 1080), app.name.data());
   sf::View view(sf::FloatRect(0, 0, window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT));
   window.setView(view);
 
@@ -71,6 +71,7 @@ void run_app(App const& app, StartupFn on_startup)
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;
       window.clear();
+      render::update_view(render_context, window, entity_registery);
       render::all(render_context, window, entity_registery);
       window.display();
     }
