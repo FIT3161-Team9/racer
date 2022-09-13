@@ -151,8 +151,8 @@ inline Result layout_flex(RenderContext& render_context,
   assert(children_ptr && "Flex box has no children");
   auto const& children = *children_ptr;
 
-  auto flex_context = FlexContext{ .current_y = parent_flex_context.current_y,
-                                   .current_x = parent_flex_context.current_x,
+  auto flex_context = FlexContext{ .current_x = parent_flex_context.current_x,
+                                   .current_y = parent_flex_context.current_y,
                                    .layout = flex_box };
 
   auto* width = render_context.get_component<layout::Width>(entity);

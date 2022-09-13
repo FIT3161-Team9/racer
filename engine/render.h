@@ -83,7 +83,7 @@ inline void root_flex_box(RenderContext& render_context,
                           layout::Flex const& layout)
 {
   auto const root_flex_box =
-    layout::FlexContext{ .height = window::COORDINATE_SPACE_HEIGHT, .width = window::COORDINATE_SPACE_WIDTH };
+    layout::FlexContext{ .width = window::COORDINATE_SPACE_WIDTH, .height = window::COORDINATE_SPACE_HEIGHT };
   layout::layout_flex(render_context, window, root_flex_box, layout, flex_parent);
 }
 

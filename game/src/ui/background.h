@@ -20,7 +20,8 @@ inline Entity spawn(AppCommands& app_commands)
   return app_commands.spawn()
     .add_component<Rectangle>(sf::Vector2f{ window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT })
     .add_component<Colour>(u8(255), u8(237), u8(237))
-    .add_component<Transform>(sf::Vector2f{ 0.f, 0.f });
+    .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
+    .add_component<ZIndex>(0);
 };
 
 inline void destroy(AppCommands& app_commands, entt::entity background) { app_commands.destroy(background); };
