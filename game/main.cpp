@@ -8,6 +8,7 @@
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
+#include "game/src/shift_key_resource.h"
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
 
@@ -27,6 +28,7 @@ int main()
     app_commands.add_plugin(main_menu::plugin);
     app_commands.add_plugin(camera::plugin);
     app_commands.add_plugin(image_dimensions::synchronise_image_size_with_rect_size_plugin);
+    app_commands.add_plugin(shift_key_resource::plugin);
   });
 
 
