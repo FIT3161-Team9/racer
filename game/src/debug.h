@@ -3,6 +3,8 @@
 #include <iostream>
 #include <optional>
 
+#include <entt/entt.hpp>
+
 #include "engine/app_commands.h"
 #include "engine/circle.h"
 #include "engine/colour.h"
@@ -11,95 +13,175 @@
 #include "engine/query.h"
 #include "engine/rectangle.h"
 #include "engine/rotation.h"
+#include "engine/scale.h"
 #include "engine/transform.h"
+#include "engine/vector_utils.h"
+#include "engine/window.h"
 #include "engine/zindex.h"
 
-#include "entt/entity/fwd.hpp"
 #include "game/src/collisions.h"
+#include "game/src/debug/draggable.h"
+#include "game/src/debug/resizeable.h"
+#include "game/src/debug/selectable.h"
 #include "game/src/ground.h"
 #include "game/src/rectangle_utils.h"
+#include "game/src/shift_key_resource.h"
 
 namespace debug
 {
 
-// Resource for selected entity
-struct SelectedEntityResource
+namespace drag_and_drop
 {
-  std::optional<entt::entity> entity{};
-  std::vector<entt::entity> corners{};
-};
-
-namespace report_mouse_position
-{
-
-  inline void clear_selection(AppCommands& app_commands, SelectedEntityResource& selected_entity_resource)
-  {
-    if (!selected_entity_resource.entity.has_value()) { return; }
-    auto selected_entity_outline = app_commands.component<Outline>(selected_entity_resource.entity.value());
-    selected_entity_outline->colour = colour::transparent();
-
-    for (auto corner_entity : selected_entity_resource.corners) { app_commands.destroy(corner_entity); }
-
-    selected_entity_resource.corners.clear();
-    selected_entity_resource.entity.reset();
-  }
-
-  inline void make_selection(AppCommands& app_commands,
-                             SelectedEntityResource& selected_entity_resource,
-                             entt::entity entity_to_select,
-                             Rectangle const& rectangle,
-                             Transform const& transform,
-                             Rotation const& rotation,
-                             Outline& outline)
-  {
-    selected_entity_resource.entity = entity_to_select;
-    outline.colour = colour::blue();
-
-    auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
-    for (auto const& corner : corners) {
-      selected_entity_resource.corners.push_back(app_commands.spawn()
-                                                   .add_component<Circle>(10.f)
-                                                   .add_component<Transform>(corner)
-                                                   .template add_component<ZIndex>(4)
-                                                   .template add_component<Colour>(colour::blue())
-                                                   .entity());
-    }
-  }
-
   inline void plugin(AppCommands& app_commands)
   {
-    app_commands.add_resource<SelectedEntityResource>();
+    // Specify whether or not entities are being dragged/selected on mouse down
+    app_commands.add_system<Event::EventType::MouseButtonPressed>(
+      Query<Draggable, Selectable, Transform const, Rectangle const, Rotation const, Outline>{},
+      [&](auto& event, auto& view) {
+        bool selected_something = false;
+        auto const mouse_location = event.mouse_button_pressed.location;
+        for (auto&& [entity, draggable, selectable, transform, rectangle, rotation, outline] : view.each()) {
+          if (!selected_something && collisions::point_rectangle(rectangle, transform, rotation, mouse_location)) {
+            selectable.selected = true;
+            draggable.drag_offset = vector_utils::minus(mouse_location, transform.value);
+            outline.colour = colour::blue();
+            selected_something = true;
+            continue;
+          }
+          selectable.selected = false;
+          draggable.drag_offset.reset();
+          outline.colour = colour::transparent();
+        }
+        return selected_something;
+      });
 
-    app_commands.add_system<Event::EventType::MouseButtonReleased>(
-      Query<Transform const, Ground const, Rectangle const, Rotation const, Outline>{}, [&](auto& event, auto& view) {
-        auto const selected_entity_resource = app_commands.get_resource<SelectedEntityResource>();
-        std::optional<entt::entity> clicked_on_entity{};
+    // Clear draggable state on mouse release
+    app_commands.add_system<Event::EventType::MouseButtonReleased>(Query<Draggable>{}, [&](auto& event, auto& view) {
+      (void)event;
+      view.each([&](auto& draggable) { draggable.drag_offset.reset(); });
+      return false;
+    });
 
-        assert(selected_entity_resource);
+    // Update draggable transform when being dragged
+    app_commands.add_system<Event::EventType::MouseMoved>(Query<Draggable, Transform>{}, [&](auto& event, auto& view) {
+      auto const& mouse_location = event.mouse_moved.location;
+      view.each([&](auto& draggable, auto& transform) {
+        if (!draggable.drag_offset.has_value()) { return; }
+        transform.value = vector_utils::minus(mouse_location, draggable.drag_offset.value());
+      });
+      return false;
+    });
+  }
+}// namespace drag_and_drop
 
-        for (auto&& [entity, transform, ground, rectangle, rotation, outline] : view.each()) {
+namespace resize
+{
+  inline void plugin(AppCommands& app_commands)
+  {
+    // Spawn circles when selectable is first selected
+    app_commands.add_system(
+      Query<Selectable, Resizeable, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
+        view.each(
+          [&](auto& selectable, auto& resizeable, auto const& rectangle, auto const& transform, auto const& rotation) {
+            if (!selectable.selected || resizeable.resize_circles.size() != 0) { return; }
+            auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
+            for (auto const& corner : corners) {
+              resizeable.resize_circles.push_back(app_commands.spawn()
+                                                    .add_component<Circle>(8.f)
+                                                    .add_component<Transform>(corner)
+                                                    .template add_component<ZIndex>(4)
+                                                    .template add_component<Colour>(colour::blue())
+                                                    .entity());
+            }
+          });
+      });
+    // Destroy circles when selectable is first deselected
+    app_commands.add_system(Query<Selectable, Resizeable>{}, [&](auto& view) {
+      view.each([&](auto& selectable, auto& resizeable) {
+        if (selectable.selected || resizeable.resize_circles.size() == 0) { return; }
 
-          if (!collisions::point_rectangle(rectangle, transform, rotation, event.mouse_button_released.location)) {
+        for (auto const& corner : resizeable.resize_circles) { app_commands.destroy(corner); }
+        resizeable.resize_circles.clear();
+      });
+    });
+    // Synchronise "resize circles" with the selected resizeable
+    app_commands.add_system(
+      Query<Selectable const, Resizeable const, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
+        view.each([&](auto const& selectable,
+                      auto const& resizeable,
+                      auto const& rectangle,
+                      auto const& transform,
+                      auto const& rotation) {
+          if (!selectable.selected) { return; }
+          auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
+          for (auto i = 0; i < 4; i++) {
+            auto& resize_circle_transform = *app_commands.component<Transform>(resizeable.resize_circles[i]);
+            resize_circle_transform.value = corners[i];
+          }
+        });
+      });
+
+    // Resize selected objects when mouse moves and is pressed
+    app_commands.add_system<Event::EventType::MouseMoved>(
+      ResourceQuery<ShiftKeyResource>{},
+      Query<Resizeable, Transform const, Rectangle>{},
+      [&](auto& event, auto& resources, auto& view) {
+        auto const& mouse_location = event.mouse_moved.location;
+        auto&& [_, shift_key_resource] = resources;
+        for (auto&& [_entity, resizeable, transform, rectangle] : view.each()) {
+
+          if (!resizeable.is_resizing) { continue; }
+          auto const width = std::abs((mouse_location.x - transform.value.x) * 2.f);
+          auto const height = std::abs((mouse_location.y - transform.value.y) * 2.f);
+
+          if (!shift_key_resource.shift_pressed) {
+            rectangle.width_height.x = width;
+            rectangle.width_height.y = height;
             continue;
           }
 
-          clicked_on_entity = entity;
+          auto [target_width_scale, target_height_scale] = window::scale_required_to_satisfy_aspect_ratio(
+            { width, height }, rectangle.width_height.x / rectangle.width_height.y);
 
-          if (clicked_on_entity != selected_entity_resource->entity) {
-            clear_selection(app_commands, *selected_entity_resource);
-            make_selection(app_commands, *selected_entity_resource, entity, rectangle, transform, rotation, outline);
-          }
-          break;
-        }
-
-        if (clicked_on_entity != selected_entity_resource->entity) {
-          clear_selection(app_commands, *selected_entity_resource);
+          rectangle.width_height.x = width * target_width_scale;
+          rectangle.width_height.y = height * target_height_scale;
         }
 
         return false;
       });
+
+    // Hittest the resize circles
+    app_commands.add_system<Event::EventType::MouseButtonPressed>(Query<Resizeable>{}, [&](auto& event, auto& view) {
+      auto const mouse_location = event.mouse_button_pressed.location;
+      for (auto&& [_entity, resizeable] : view.each()) {
+        for (auto& circle_entity : resizeable.resize_circles) {
+          auto& corner_circle = *app_commands.component<Circle>(circle_entity);
+          auto& corner_transform = *app_commands.component<Transform>(circle_entity);
+          if (collisions::point_circle(corner_circle, corner_transform, mouse_location)) {
+            resizeable.is_resizing = true;
+            return true;
+          }
+        }
+      }
+      return false;
+    });
+
+    // Clear `is_resizing` when the mouse is released
+    app_commands.add_system<Event::EventType::MouseButtonReleased>(Query<Resizeable>{}, [&](auto& event, auto& view) {
+      (void)event;
+
+      view.each([](auto& resizeable) { resizeable.is_resizing = false; });
+
+      return false;
+    });
   }
 
-}// namespace report_mouse_position
+}// namespace resize
+
+inline void plugin(AppCommands& app_commands)
+{
+  app_commands.add_plugin(resize::plugin);
+  app_commands.add_plugin(drag_and_drop::plugin);
+}
 
 }// namespace debug

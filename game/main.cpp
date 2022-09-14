@@ -4,6 +4,7 @@
 #include <engine/timing.h>
 
 #include "game/src/camera.h"
+#include "game/src/debug.h"
 #include "game/src/game_state.h"
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
@@ -29,6 +30,8 @@ int main()
     app_commands.add_plugin(camera::plugin);
     app_commands.add_plugin(image_dimensions::synchronise_image_size_with_rect_size_plugin);
     app_commands.add_plugin(shift_key_resource::plugin);
+
+    app_commands.add_plugin(debug::plugin);
   });
 
 
