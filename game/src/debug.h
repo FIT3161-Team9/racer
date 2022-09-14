@@ -19,6 +19,7 @@
 #include "engine/window.h"
 #include "engine/zindex.h"
 
+#include "game/src/arrow_keys_resource.h"
 #include "game/src/collisions.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
@@ -32,8 +33,16 @@ namespace debug
 
 namespace drag_and_drop
 {
+  // When the user presses and holds an arrow key, we don't want to start moving the selected item straight away,
+  // so we set a timer and only move after a certain time
+  struct MoveOnKeyDownTimer
+  {
+    std::optional<sf::Clock> timer{};
+  };
+
   inline void plugin(AppCommands& app_commands)
   {
+    app_commands.add_resource<MoveOnKeyDownTimer>();
     // Specify whether or not entities are being dragged/selected on mouse down
     app_commands.add_system<Event::EventType::MouseButtonPressed>(
       Query<Draggable, Selectable, Transform const, Rectangle const, Rotation const, Outline>{},
@@ -71,6 +80,58 @@ namespace drag_and_drop
       });
       return false;
     });
+
+    // Move selected item when arrow key is initially pressed, and start the timer
+    app_commands.add_system<Event::EventType::KeyPressed>(
+      ResourceQuery<MoveOnKeyDownTimer>{},
+      Query<Selectable const, Transform>{},
+      [&](auto& event, auto& resources, auto& view) {
+        auto&& [_, move_on_key_down_timer] = resources;
+        if (event.key_pressed.key != sf::Keyboard::Left && event.key_pressed.key != sf::Keyboard::Right
+            && event.key_pressed.key != sf::Keyboard::Up && event.key_pressed.key != sf::Keyboard::Down) {
+          return false;
+        }
+
+        if (!move_on_key_down_timer.timer.has_value()) { move_on_key_down_timer.timer = sf::Clock{}; }
+        move_on_key_down_timer.timer.value().restart();
+
+        view.each([&](auto const& selectable, auto& transform) {
+          if (!selectable.selected) { return; }
+          if (event.key_pressed.key == sf::Keyboard::Left) { transform.value.x -= 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Right) { transform.value.x += 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Down) { transform.value.y += 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Up) { transform.value.y -= 1.f; }
+        });
+        return false;
+      });
+
+    app_commands.add_system<Event::EventType::KeyReleased>(ResourceQuery<MoveOnKeyDownTimer>{},
+                                                           [](auto& event, auto& resources) {
+                                                             (void)event;
+                                                             auto&& [_, move_on_key_down_timer] = resources;
+                                                             if (move_on_key_down_timer.timer.has_value()) {
+                                                               move_on_key_down_timer.timer.reset();
+                                                             }
+                                                             return false;
+                                                           });
+
+    // Move selected items with arrows keys
+    app_commands.add_system(ResourceQuery<ArrowKeysResource, MoveOnKeyDownTimer>{},
+                            Query<Selectable const, Transform>{},
+                            [&](auto& resources, auto& view) {
+                              auto&& [_, arrow_keys_resource, move_on_key_down_timer] = resources;
+                              if (!move_on_key_down_timer.timer.has_value()) { return; }
+                              auto const time_since_key_was_pressed =
+                                move_on_key_down_timer.timer.value().getElapsedTime().asMilliseconds();
+                              if (time_since_key_was_pressed < 500) { return; }
+                              for (auto&& [entity, selectable, transform] : view.each()) {
+                                if (!selectable.selected) { return; }
+                                if (arrow_keys_resource.left_pressed) { transform.value.x -= 1.f; }
+                                if (arrow_keys_resource.right_pressed) { transform.value.x += 1.f; }
+                                if (arrow_keys_resource.up_pressed) { transform.value.y -= 1.f; }
+                                if (arrow_keys_resource.down_pressed) { transform.value.y += 1.f; }
+                              }
+                            });
   }
 }// namespace drag_and_drop
 
@@ -95,6 +156,7 @@ namespace resize
             }
           });
       });
+
     // Destroy circles when selectable is first deselected
     app_commands.add_system(Query<Selectable, Resizeable>{}, [&](auto& view) {
       view.each([&](auto& selectable, auto& resizeable) {
@@ -104,6 +166,7 @@ namespace resize
         resizeable.resize_circles.clear();
       });
     });
+
     // Synchronise "resize circles" with the selected resizeable
     app_commands.add_system(
       Query<Selectable const, Resizeable const, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
