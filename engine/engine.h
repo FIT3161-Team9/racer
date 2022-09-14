@@ -71,7 +71,6 @@ void run_app(App const& app, StartupFn on_startup)
     if (total_time_since_render > MS_PER_FRAME) {
       total_time_since_render -= MS_PER_FRAME;
       window.clear();
-      render::update_view(render_context, window, entity_registery);
       render::all(render_context, window, entity_registery);
       window.display();
     }

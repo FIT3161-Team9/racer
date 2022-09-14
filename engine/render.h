@@ -5,6 +5,7 @@
 #include <entt/entt.hpp>
 
 #include "SFML/System/Vector2.hpp"
+#include "camera_target.h"
 #include "children.h"
 #include "circle.h"
 #include "colour.h"
@@ -15,7 +16,6 @@
 #include "render_utils.h"
 #include "rotation.h"
 #include "scale.h"
-#include "target.h"
 #include "text.h"
 #include "texture.h"
 #include "transform.h"
@@ -23,6 +23,7 @@
 #include "vector_utils.h"
 #include "window.h"
 #include "zindex.h"
+
 
 #include "render/circle.h"
 #include "render/rectangle.h"
@@ -38,20 +39,6 @@ inline void root_flex_box(RenderContext& render_context,
                           entt::entity flex_parent,
                           layout::Flex const& layout);
 
-/// Updates the centre of the window view to be the position of the target entity
-void update_view(RenderContext& render_context, sf::RenderWindow& window, entt::registry& registry)
-{
-  auto render_target = registry.group<>(entt::get<Target const, Transform const>);
-  render_target.each([&](auto const& entity, auto const& target, auto const& transform) {
-    (void)entity;
-    (void)target;
-
-    sf::View view(sf::FloatRect(
-      transform.value.x, transform.value.y, window::COORDINATE_SPACE_WIDTH, window::COORDINATE_SPACE_HEIGHT));
-
-    window.setView(view);
-  });
-}
 
 /// Render all entities in the ECS that meet the criteria to be rendered. See the parameters of each
 /// of the individual render methods to see what the criteria is to be rendered

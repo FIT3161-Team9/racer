@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <engine/app_commands.h>
+#include <engine/camera_target.h>
 #include <engine/children.h>
 #include <engine/colour.h>
 #include <engine/event.h>

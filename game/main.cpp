@@ -3,11 +3,13 @@
 #include <engine/engine.h>
 #include <engine/timing.h>
 
+#include "game/src/camera.h"
 #include "game/src/game_state.h"
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
+
 
 int main()
 {
@@ -22,6 +24,7 @@ int main()
     app_commands.add_plugin(ground::circle_ground_collision_plugin);
     app_commands.add_plugin(splash_screen::plugin);
     app_commands.add_plugin(main_menu::plugin);
+    app_commands.add_plugin(camera::plugin);
   });
 
 
