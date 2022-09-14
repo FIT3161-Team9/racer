@@ -31,11 +31,6 @@ inline void texture(RenderContext& render_context,
 
   sprite.setPosition(position);
 
-  // TODO : add support for sprite sheets
-  // sprite.setTextureRect(sf::IntRect(0, 8, 16, 16));
-  // TODO : handle rendering a texture according to a given size
-  // sprite.setScale( scale_that_will_set_it_to_given_size );
-
   window.draw(sprite);
 }
 
