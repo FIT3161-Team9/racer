@@ -1,7 +1,9 @@
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <string>
+
+#include <SFML/System/Vector2.hpp>
 
 namespace vector_utils
 {
@@ -29,6 +31,11 @@ inline float distance_between(sf::Vector2f const& point_one, sf::Vector2f const&
 inline sf::Vector2f minus(sf::Vector2f const& vector_one, sf::Vector2f const& vector_two)
 {
   return sf::Vector2f{ vector_one.x - vector_two.x, vector_one.y - vector_two.y };
+}
+
+inline std::string stringify(sf::Vector2f const& vector)
+{
+  return "(x=" + std::to_string(vector.x) + ", y=" + std::to_string(vector.y) + ")";
 }
 
 }// namespace vector_utils
