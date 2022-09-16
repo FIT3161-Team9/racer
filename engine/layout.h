@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "children.h"
 #include "render_context.h"
 #include "render_utils.h"
 #include "text.h"
@@ -79,6 +80,7 @@ inline Result layout_text(RenderContext& render_context,
   sf_text.setString(text.content.data());
   sf_text.setFillColor(render_utils::convert_colour(*colour));
   sf_text.setLetterSpacing(text.letter_spacing);
+
 
   auto const margin_top = margin ? margin->top : 0.f;
   auto const margin_left = margin ? margin->left : 0.f;
