@@ -1,18 +1,15 @@
 #pragma once
 
-#include <engine/app_commands.h>
-#include <engine/camera_target.h>
-#include <engine/transform.h>
-#include <engine/vector_utils.h>
 #include <memory>
 #include <vector>
 
-#include "player.h"
+#include "engine/app_commands.h"
+#include "engine/camera_target.h"
+#include "engine/transform.h"
+#include "engine/vector_utils.h"
 
 namespace camera
 {
-inline void print_vector(sf::Vector2f const& vec) { std::cout << "(x=" << vec.x << ", y=" << vec.y << ")"; }
-
 inline void update_positions(AppCommands& app_commands);
 inline void update_target(AppCommands& app_commands);
 
@@ -43,6 +40,9 @@ inline void update_target(AppCommands& app_commands)
     std::vector<entt::entity> targets{};
 
     for (auto&& [ent, _target, _outline] : view.each()) { targets.push_back(ent); }
+
+    if (targets.size() < 1) { return; }
+
     auto const player_one_transform = app_commands.component<Transform>(targets.front());
     auto const player_two_transform = app_commands.component<Transform>(targets.back());
 
