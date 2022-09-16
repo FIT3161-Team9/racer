@@ -53,6 +53,8 @@ int main(int argc, char** argv)
     if (arguments.level == nullptr) {
       app_commands.add_plugin(splash_screen::plugin);
       app_commands.add_plugin(main_menu::plugin);
+      app_commands.add_plugin(vehicle_select::plugin);
+      app_commands.add_plugin(result_screen::plugin);
     }
   });
 

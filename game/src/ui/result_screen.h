@@ -22,14 +22,15 @@
 #include "../game_state.h"
 #include "../utils.h"
 #include "./background.h"
-#include "./icon.h"
 #include "./vehicle_select.h"
+#include "./main_menu.h"
 
-namespace main_menu
+namespace result_screen
 {
-void spawn_ui(AppCommands&);
-void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 
+void spawn_ui(AppCommands&);
+
+void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
@@ -38,20 +39,19 @@ inline void plugin(AppCommands& app_commands)
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
       auto&& [_, game_state] = resource_tuple;
-      // auto icon
-      if (event.key_released.key == sf::Keyboard::Key::Up) { app_commands.destroy(icon_change(start).entity()); }
+
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
       if (event.key_released.key != sf::Keyboard::Key::Enter
-          || game_state.current_screen != GameState::CurrentScreen::MainMenu) {
+          || game_state.current_screen != GameState::CurrentScreen::ResultScreen) {
         return false;
       }
 
-      game_state.current_screen = GameState::CurrentScreen::VehicleSelect;
+      game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-
-      vehicle_select::spawn_ui(app_commands);
+      
+      main_menu::spawn_ui(app_commands);
       return true;
     });
 }
@@ -68,28 +68,28 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
-
+  
   auto outline_p2 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(2)
-                      .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
+    .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
+    .add_component<Colour>(u8(255), u8(237), u8(237))
+    .add_component<Outline>(colour::black(), 2.2f)
+    .add_component<ZIndex>(2)
+    .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
 
   auto outline_p4 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(3)
-                      .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
+    .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
+    .add_component<Colour>(u8(255), u8(237), u8(237))
+    .add_component<Outline>(colour::black(), 2.2f)
+    .add_component<ZIndex>(3)
+    .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
 
   auto outline_p6 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(4)
-                      .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
-
+    .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
+    .add_component<Colour>(u8(255), u8(237), u8(237))
+    .add_component<Outline>(colour::black(), 2.2f)
+    .add_component<ZIndex>(4)
+    .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
+    
   auto title = app_commands.spawn()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
                  .add_component<Colour>(colour::black())
@@ -101,27 +101,37 @@ inline void spawn_ui(AppCommands& app_commands)
                     .add_component<layout::Margin>(layout::Margin{ .top = 40.f, .left = 80.f });
 
   auto play_button_label = app_commands.spawn()
-                             .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY", u32(75), 0.85f)
-                             .add_component<Colour>(colour::black());
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY AGAIN", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black())
+                             .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
+  
+ auto quit_button_label = app_commands.spawn()
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "Main Menu", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black())
+                             .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
+ 
+ auto winer_label = app_commands.spawn()
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "PLayer One Wins", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black())
+                             .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
 
-  botton->icon::spawn(app_commands, sf::Vector2f{ -610.f, -120.f });
-  auto play_button_row =
+
+ auto menu_row =
     app_commands.spawn()
-      .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
-      .template add_component<layout::Height>(100.f)
-      .template add_component<Children>(std::vector{ play_button_label.entity(), play_button_icon.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
+      .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
+      .template add_component<Children>(std::vector{ winer_label.entity(),play_button_label.entity(), quit_button_label.entity()});
 
-  auto quit_button_label = app_commands.spawn()
-                             .add_component<Text>(utils::INTER_SEMI_BOLD, "QUIT", u32(75), 0.85f)
-                             .add_component<Colour>(colour::black());
-
-  auto quit_button_row =
+  auto play_button_icon =
     app_commands.spawn()
-      .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
-      .template add_component<layout::Height>(100.f)
-      .template add_component<Children>(std::vector{ quit_button_label.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 0.f, .left = 80.f });
+      .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
+      .add_component<Colour>(colour::black())
+      .add_component<Transform>(sf::Vector2f{ -360.f, 40.f }); 
+
+  auto quit_button_icon =
+    app_commands.spawn()
+      .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
+      .add_component<Colour>(colour::black())
+      .add_component<Transform>(sf::Vector2f{ -360.f, 200.f });
 
   auto prompt_1 = app_commands.spawn()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "USE THE ", u32(21), 0.85f)
@@ -157,6 +167,10 @@ inline void spawn_ui(AppCommands& app_commands)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
+  auto winer_time = app_commands.spawn()
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "(123121321)", u32(75), 0.85f)
+                             .add_component<Colour>(colour::black())
+                             .add_component<layout::Margin>(layout::Margin{ .top = - 605.f, .left = -200.f });
   auto bottom_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
@@ -166,21 +180,23 @@ inline void spawn_ui(AppCommands& app_commands)
                                                      prompt_4.entity(),
                                                      prompt_5.entity(),
                                                      prompt_6.entity(),
-                                                     prompt_7.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 347.f, .left = 80.f });
+                                                     prompt_7.entity(),
+                                                     winer_time.entity() })
+      .template add_component<layout::Margin>(layout::Margin{ .top = 8.0f, .left = 80.f });
 
   app_commands.spawn()
     .template add_component<layout::FlexRoot>()
     .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
-    .template add_component<Children>(std::vector{
-      title.entity(),
-      subtitle.entity(),
-      play_button_row.entity(),
-      quit_button_row.entity(),
-      bottom_row.entity(),
-      play_button_icon.entity(),
-    });
+    .template add_component<Children>(std::vector{ title.entity(),
+                                                   subtitle.entity(),
+                                                   menu_row.entity(),
+                                                   bottom_row.entity(),
+                                                   quit_button_icon.entity(),
+                                                   play_button_icon.entity(),
+                                                   outline_p2.entity(),
+                                                   outline_p4.entity(),
+                                                   outline_p6.entity() });
+  
 }
 
-
-};// namespace main_menu
+};

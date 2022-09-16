@@ -33,8 +33,7 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
-  background::spawn(app_commands);
-
+   background::spawn(app_commands);
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -51,7 +50,6 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-
       main_menu::spawn_ui(app_commands);
       return true;
     });
