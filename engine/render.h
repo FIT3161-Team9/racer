@@ -1,11 +1,18 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <cmath>
+#include <iostream>
+
+#include "SFML/System/Vector2.hpp"
+#include "camera_target.h"
+#include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 
 #include "SFML/System/Vector2.hpp"
 #include "camera_target.h"
+#include <SFML/Graphics.hpp>
+#include <entt/entt.hpp>
+
 #include "children.h"
 #include "circle.h"
 #include "colour.h"
@@ -85,8 +92,26 @@ inline void root_flex_box(RenderContext& render_context,
                           entt::entity flex_parent,
                           layout::Flex const& layout)
 {
-  auto const root_flex_box =
-    layout::FlexContext{ .width = window::COORDINATE_SPACE_WIDTH, .height = window::COORDINATE_SPACE_HEIGHT };
+  auto const root_transform = render_context.get_component<Transform>(flex_parent);
+  auto const root_bounding_rectangle = render_context.get_component<Rectangle>(flex_parent);
+
+  auto const height =
+    root_bounding_rectangle == nullptr ? window::COORDINATE_SPACE_HEIGHT : root_bounding_rectangle->width_height.y;
+  auto const width =
+    root_bounding_rectangle == nullptr ? window::COORDINATE_SPACE_WIDTH : root_bounding_rectangle->width_height.x;
+
+  auto const starting_y = root_bounding_rectangle == nullptr || root_transform == nullptr
+                            ? -0.5f * window::COORDINATE_SPACE_HEIGHT
+                            : root_transform->value.y - 0.5f * root_bounding_rectangle->width_height.y;
+  auto const starting_x = root_bounding_rectangle == nullptr || root_transform == nullptr
+                            ? -0.5f * window::COORDINATE_SPACE_WIDTH
+                            : root_transform->value.x - 0.5f * root_bounding_rectangle->width_height.x;
+
+  auto const starting_coords = window::to_screen_space(sf::Vector2f{ starting_x, starting_y });
+
+  auto const root_flex_box = layout::FlexContext{
+    .height = height, .width = width, .current_x = starting_coords.x, .current_y = starting_coords.y
+  };
   layout::layout_flex(render_context, window, root_flex_box, layout, flex_parent);
 }
 
