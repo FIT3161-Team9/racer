@@ -11,20 +11,25 @@
 #include <engine/window.h>
 #include <engine/zindex.h>
 
-namespace icon
-{
+// namespace Icon
+// {
 
-inline Entity spawn(AppCommands& app_commands, sf::Vector2f transform)
+// inline Entity spawn(AppCommands& app_commands, sf::Vector2f transform)
+// {
+//   using utils::u8;
+//   return app_commands.spawn()
+//     .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
+//     .add_component<Colour>(colour::black())
+//     .add_component<Transform>(transform);
+// };
+
+// inline void destroy(AppCommands& app_commands, entt::entity icon) { app_commands.destroy(icon); };
+
+// }// namespace background
+
+struct Icon
 {
-  using utils::u8;
-  return app_commands.spawn()
-    .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
-    .add_component<Colour>(colour::black())
-    .add_component<Transform>(transform);
-    // .add_component<Outline>(colour::blue(), 300.f)
-    // .add_component<ZIndex>(1);
+  /* data */
+  int value;
+
 };
-
-inline void destroy(AppCommands& app_commands, entt::entity icon) { app_commands.destroy(icon); };
-
-}// namespace background
