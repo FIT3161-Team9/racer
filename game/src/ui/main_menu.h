@@ -62,6 +62,7 @@ inline void destroy_ui(AppCommands& app_commands, entt::entity flex_container, C
   for (auto child : children.children) { app_commands.destroy(child); }
   app_commands.destroy(flex_container);
 }
+inline void destroy_ui2(AppCommands& app_commands, entt::entity flex_container, Children& children) {}
 
 /// Create the UI for ths main screen
 inline void spawn_ui(AppCommands& app_commands)
@@ -80,14 +81,14 @@ inline void spawn_ui(AppCommands& app_commands)
                       .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
                       .add_component<Colour>(u8(255), u8(237), u8(237))
                       .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(3)
+                      .add_component<ZIndex>(2)
                       .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
 
   auto outline_p6 = app_commands.spawn()
                       .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
                       .add_component<Colour>(u8(255), u8(237), u8(237))
                       .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(4)
+                      .add_component<ZIndex>(2)
                       .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
 
   auto title = app_commands.spawn()
@@ -104,7 +105,13 @@ inline void spawn_ui(AppCommands& app_commands)
                              .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY", u32(75), 0.85f)
                              .add_component<Colour>(colour::black());
 
-  botton->icon::spawn(app_commands, sf::Vector2f{ -610.f, -120.f });
+  auto play_button_icon =
+    app_commands.spawn()
+      .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
+      .add_component<Colour>(colour::black())
+      .add_component<Icon>(0)
+      .add_component<Transform>(sf::Vector2f{ -610.f, -120.f });
+
   auto play_button_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
@@ -172,14 +179,16 @@ inline void spawn_ui(AppCommands& app_commands)
   app_commands.spawn()
     .template add_component<layout::FlexRoot>()
     .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
-    .template add_component<Children>(std::vector{
-      title.entity(),
-      subtitle.entity(),
-      play_button_row.entity(),
-      quit_button_row.entity(),
-      bottom_row.entity(),
-      play_button_icon.entity(),
-    });
+    .template add_component<Children>(std::vector{ title.entity(),
+                                                   subtitle.entity(),
+                                                   play_button_row.entity(),
+                                                   quit_button_row.entity(),
+                                                   bottom_row.entity(),
+                                                   //  quit_button_icon.entity(),
+                                                   play_button_icon.entity(),
+                                                   outline_p2.entity(),
+                                                   outline_p4.entity(),
+                                                   outline_p6.entity() });
 }
 
 
