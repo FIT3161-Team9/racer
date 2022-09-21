@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/System/Vector2.hpp"
 #include <entt/entt.hpp>
 
@@ -15,6 +16,7 @@
 #include "engine/zindex.h"
 
 #include "engine/zindex.h"
+#include "game/src/collisions.h"
 #include "game/src/debug/selectable.h"
 
 namespace debug
@@ -24,6 +26,11 @@ struct Rotateable
   std::optional<entt::entity> rotate_handle{};
   // Whether the user is rotating the entity - i.e. whether the user has clicked and held on the rotate handle
   bool rotating{ false };
+};
+
+struct RotateHandle
+{
+  entt::entity parent;
 };
 
 namespace rotateable
@@ -41,22 +48,27 @@ namespace rotateable
   inline void plugin(AppCommands& app_commands)
   {
     // Spawn rotate handle on select
-    app_commands.add_system(
-      Query<debug::Selectable, Rotateable, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
-        view.each(
-          [&](auto& selectable, auto& rotateable, auto const& rectangle, auto const& transform, auto const& rotation) {
-            if (!selectable.selected || rotateable.rotate_handle.has_value()) { return; }
+    app_commands.add_system(Query<debug::Selectable, Rotateable, Rectangle const, Transform const, Rotation const>{},
+                            [&](auto& view) {
+                              view.each([&](auto selectable_entity,
+                                            auto& selectable,
+                                            auto& rotateable,
+                                            auto const& rectangle,
+                                            auto const& transform,
+                                            auto const& rotation) {
+                                if (!selectable.selected || rotateable.rotate_handle.has_value()) { return; }
 
-            auto handle_position = rotate_handle_position(rectangle, transform, rotation);
+                                auto handle_position = rotate_handle_position(rectangle, transform, rotation);
 
-            rotateable.rotate_handle = app_commands.spawn()
-                                         .add_component<Transform>(handle_position)
-                                         .template add_component<Circle>(8.f)
-                                         .template add_component<ZIndex>(5)
-                                         .template add_component<Colour>(colour::red())
-                                         .entity();
-          });
-      });
+                                rotateable.rotate_handle = app_commands.spawn()
+                                                             .add_component<Transform>(handle_position)
+                                                             .template add_component<RotateHandle>(selectable_entity)
+                                                             .template add_component<Circle>(8.f)
+                                                             .template add_component<ZIndex>(5)
+                                                             .template add_component<Colour>(colour::red())
+                                                             .entity();
+                              });
+                            });
     // Destroy rotate handle on deselect
     app_commands.add_system(Query<Selectable, Rotateable>{}, [&](auto& view) {
       view.each([&](auto& selectable, auto& rotateable) {
@@ -75,7 +87,18 @@ namespace rotateable
             rotate_handle_position(rectangle, transform, rotation);
         });
       });
-    // TODO: Hit test the rotate_handle
+    // Hit test the rotate_handle
+    app_commands.add_system<Event::EventType::MouseButtonPressed>(
+      Query<RotateHandle, Transform, Circle>{}, [&](auto& event, auto& view) {
+        auto const mouse_location = event.mouse_button_pressed.location;
+        for (auto&& [_entity, rotate_handle, transform, circle] : view.each()) {
+          if (collisions::point_circle(circle, transform, mouse_location)) {
+            app_commands.component<Rotateable>(rotate_handle.parent)->rotating = true;
+            return true;
+          }
+        };
+        return false;
+      });
     // TODO: Rotate the entity when the rotate_handle.rotating is true
   }
 
