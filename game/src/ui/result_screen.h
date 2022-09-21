@@ -21,9 +21,6 @@
 
 #include "../game_state.h"
 #include "../utils.h"
-#include "./background.h"
-#include "./vehicle_select.h"
-#include "./main_menu.h"
 
 namespace result_screen
 {
@@ -50,8 +47,7 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-      
-      main_menu::spawn_ui(app_commands);
+
       return true;
     });
 }
@@ -68,28 +64,28 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
-  
+
   auto outline_p2 = app_commands.spawn()
-    .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
-    .add_component<Colour>(u8(255), u8(237), u8(237))
-    .add_component<Outline>(colour::black(), 2.2f)
-    .add_component<ZIndex>(2)
-    .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
+                      .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
+                      .add_component<Colour>(u8(255), u8(237), u8(237))
+                      .add_component<Outline>(colour::black(), 2.2f)
+                      .add_component<ZIndex>(2)
+                      .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
 
   auto outline_p4 = app_commands.spawn()
-    .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
-    .add_component<Colour>(u8(255), u8(237), u8(237))
-    .add_component<Outline>(colour::black(), 2.2f)
-    .add_component<ZIndex>(3)
-    .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
+                      .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
+                      .add_component<Colour>(u8(255), u8(237), u8(237))
+                      .add_component<Outline>(colour::black(), 2.2f)
+                      .add_component<ZIndex>(3)
+                      .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
 
   auto outline_p6 = app_commands.spawn()
-    .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
-    .add_component<Colour>(u8(255), u8(237), u8(237))
-    .add_component<Outline>(colour::black(), 2.2f)
-    .add_component<ZIndex>(4)
-    .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
-    
+                      .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
+                      .add_component<Colour>(u8(255), u8(237), u8(237))
+                      .add_component<Outline>(colour::black(), 2.2f)
+                      .add_component<ZIndex>(4)
+                      .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
+
   auto title = app_commands.spawn()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
                  .add_component<Colour>(colour::black())
@@ -104,28 +100,29 @@ inline void spawn_ui(AppCommands& app_commands)
                              .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY AGAIN", u32(75), 0.85f)
                              .add_component<Colour>(colour::black())
                              .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
-  
- auto quit_button_label = app_commands.spawn()
+
+  auto quit_button_label = app_commands.spawn()
                              .add_component<Text>(utils::INTER_SEMI_BOLD, "Main Menu", u32(75), 0.85f)
                              .add_component<Colour>(colour::black())
                              .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
- 
- auto winer_label = app_commands.spawn()
-                             .add_component<Text>(utils::INTER_SEMI_BOLD, "PLayer One Wins", u32(75), 0.85f)
-                             .add_component<Colour>(colour::black())
-                             .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
+
+  auto winer_label = app_commands.spawn()
+                       .add_component<Text>(utils::INTER_SEMI_BOLD, "PLayer One Wins", u32(75), 0.85f)
+                       .add_component<Colour>(colour::black())
+                       .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
 
 
- auto menu_row =
+  auto menu_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
-      .template add_component<Children>(std::vector{ winer_label.entity(),play_button_label.entity(), quit_button_label.entity()});
+      .template add_component<Children>(
+        std::vector{ winer_label.entity(), play_button_label.entity(), quit_button_label.entity() });
 
   auto play_button_icon =
     app_commands.spawn()
       .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
       .add_component<Colour>(colour::black())
-      .add_component<Transform>(sf::Vector2f{ -360.f, 40.f }); 
+      .add_component<Transform>(sf::Vector2f{ -360.f, 40.f });
 
   auto quit_button_icon =
     app_commands.spawn()
@@ -168,9 +165,9 @@ inline void spawn_ui(AppCommands& app_commands)
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
   auto winer_time = app_commands.spawn()
-                             .add_component<Text>(utils::INTER_SEMI_BOLD, "(123121321)", u32(75), 0.85f)
-                             .add_component<Colour>(colour::black())
-                             .add_component<layout::Margin>(layout::Margin{ .top = - 605.f, .left = -200.f });
+                      .add_component<Text>(utils::INTER_SEMI_BOLD, "(123121321)", u32(75), 0.85f)
+                      .add_component<Colour>(colour::black())
+                      .add_component<layout::Margin>(layout::Margin{ .top = -605.f, .left = -200.f });
   auto bottom_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
@@ -196,7 +193,6 @@ inline void spawn_ui(AppCommands& app_commands)
                                                    outline_p2.entity(),
                                                    outline_p4.entity(),
                                                    outline_p6.entity() });
-  
 }
 
-};
+};// namespace result_screen

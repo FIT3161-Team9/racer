@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "../game_state.h"
-#include "./icon.h"
 #include "../utils.h"
 #include "./background.h"
+#include "./icon.h"
 #include "./main_menu.h"
 #include "./vehicle_select.h"
 #include <engine/app_commands.h>
@@ -34,10 +34,10 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
-   background::spawn(app_commands);
+  background::spawn(app_commands);
 
   // Listen for the "enter" key
-    app_commands.template add_system<Event::EventType::KeyReleased>(
+  app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
       auto&& [_, game_state] = resource_tuple;
 
@@ -52,7 +52,6 @@ inline void plugin(AppCommands& app_commands)
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
       main_menu::spawn_ui(app_commands);
-      // auto icon = icon::spawn(app_commands, sf::Vector2f{ -610.f, -120.f });
 
       return true;
     });

@@ -17,7 +17,10 @@
 #include "game/src/map.h"
 #include "game/src/maximum_velocity.h"
 #include "game/src/shift_key_resource.h"
+#include "game/src/ui/main_menu.h"
+#include "game/src/ui/result_screen.h"
 #include "game/src/ui/splash_screen.h"
+#include "game/src/ui/vehicle_select.h"
 #include "game/src/velocity.h"
 
 int main(int argc, char** argv)
