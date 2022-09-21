@@ -19,6 +19,7 @@
 #include "engine/window.h"
 #include "engine/zindex.h"
 
+#include "./debug/clipboard.h"
 #include "game/src/arrow_keys_resource.h"
 #include "game/src/collisions.h"
 #include "game/src/debug/draggable.h"
@@ -245,6 +246,7 @@ inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_plugin(resize::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
+  app_commands.add_plugin(clipboard::plugin);
 }
 
 }// namespace debug
