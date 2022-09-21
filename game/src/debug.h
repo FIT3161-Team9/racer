@@ -245,10 +245,10 @@ namespace resize
 
 inline void plugin(AppCommands& app_commands)
 {
+  app_commands.add_plugin(rotateable::plugin);
   app_commands.add_plugin(resize::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
   app_commands.add_plugin(clipboard::plugin);
-  app_commands.add_plugin(rotateable::plugin);
 }
 
 }// namespace debug
