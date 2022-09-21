@@ -27,19 +27,33 @@
 
 namespace main_menu
 {
+
 void spawn_ui(AppCommands&);
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
-
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
 {
+  app_commands.add_system<Event::EventType::KeyReleased>(Query<Icon const, Transform>{}, [&](auto& event, auto& view) {
+    if (event.key_released.key == sf::Keyboard::Key::Up) {
+      view.each([&](auto& icon, auto& transform) {
+        (void)icon;
+        transform.value.y = -120.f;
+      });
+    }
+    if (event.key_released.key == sf::Keyboard::Key::Down) {
+      view.each([&](auto& icon, auto& transform) {
+        (void)icon;
+        transform.value.y = 70.f;
+      });
+    }
+    return false;
+  });
+
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
       auto&& [_, game_state] = resource_tuple;
-      // auto icon
-      if (event.key_released.key == sf::Keyboard::Key::Up) { app_commands.destroy(icon_change(start).entity()); }
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
       if (event.key_released.key != sf::Keyboard::Key::Enter
@@ -62,7 +76,6 @@ inline void destroy_ui(AppCommands& app_commands, entt::entity flex_container, C
   for (auto child : children.children) { app_commands.destroy(child); }
   app_commands.destroy(flex_container);
 }
-inline void destroy_ui2(AppCommands& app_commands, entt::entity flex_container, Children& children) {}
 
 /// Create the UI for ths main screen
 inline void spawn_ui(AppCommands& app_commands)
@@ -109,7 +122,7 @@ inline void spawn_ui(AppCommands& app_commands)
     app_commands.spawn()
       .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
       .add_component<Colour>(colour::black())
-      .add_component<Icon>(0)
+      .add_component<Icon>()
       .add_component<Transform>(sf::Vector2f{ -610.f, -120.f });
 
   auto play_button_row =

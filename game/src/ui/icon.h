@@ -6,8 +6,8 @@
 #include <engine/app_commands.h>
 #include <engine/colour.h>
 #include <engine/entity.h>
-#include <engine/triangle.h>
 #include <engine/transform.h>
+#include <engine/triangle.h>
 #include <engine/window.h>
 #include <engine/zindex.h>
 
@@ -27,9 +27,4 @@
 
 // }// namespace background
 
-struct Icon
-{
-  /* data */
-  int value;
-
-};
+enum class Icon {};
