@@ -24,6 +24,7 @@
 #include "game/src/collisions.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
+#include "game/src/debug/rotateable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/ground.h"
 #include "game/src/rectangle_utils.h"
@@ -247,6 +248,7 @@ inline void plugin(AppCommands& app_commands)
   app_commands.add_plugin(resize::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
   app_commands.add_plugin(clipboard::plugin);
+  app_commands.add_plugin(rotateable::plugin);
 }
 
 }// namespace debug
