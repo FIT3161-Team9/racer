@@ -22,6 +22,7 @@
 #include "./debug/clipboard.h"
 #include "game/src/arrow_keys_resource.h"
 #include "game/src/collisions.h"
+#include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotateable.h"
@@ -141,9 +142,10 @@ namespace drag_and_drop
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_plugin(rotateable::plugin);
-  app_commands.add_plugin(resize::plugin);
+  app_commands.add_plugin(resizable::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
   app_commands.add_plugin(clipboard::plugin);
+  app_commands.add_plugin(deletable::plugin);
 }
 
 }// namespace debug

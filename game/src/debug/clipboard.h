@@ -20,6 +20,7 @@
 #include "engine/window.h"
 #include "engine/zindex.h"
 
+#include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotateable.h"
@@ -89,7 +90,8 @@ inline void plugin(AppCommands& app_commands)
     copied.add_component<debug::Rotateable>()
       .add_component<debug::Selectable>()
       .add_component<debug::Resizeable>()
-      .add_component<debug::Draggable>();
+      .add_component<debug::Draggable>()
+      .add_component<debug::Deletable>();
 
     return false;
   });
