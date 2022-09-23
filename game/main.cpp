@@ -30,6 +30,7 @@ int main()
     app_commands.add_plugin(camera::plugin);
     app_commands.add_plugin(image_dimensions::synchronise_image_size_with_rect_size_plugin);
     app_commands.add_plugin(shift_key_resource::plugin);
+    app_commands.add_plugin(arrow_keys_resource::plugin);
 
     app_commands.add_plugin(debug::plugin);
   });
