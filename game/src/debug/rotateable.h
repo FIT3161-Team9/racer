@@ -69,7 +69,13 @@ namespace rotateable
                                                              .entity();
                               });
                             });
-    // Destroy rotate handle on deselect
+    // Destroy rotate handle on parent deletion
+    app_commands.add_system(Query<RotateHandle>{}, [&](auto& view) {
+      view.each([&](auto const rotate_handle_entity, auto const& rotate_handle) {
+        if (!app_commands.alive(rotate_handle.parent)) { app_commands.destroy(rotate_handle_entity); }
+      });
+    });
+    // Destroy rotate handle on deselect or parent deletion
     app_commands.add_system(Query<Selectable, Rotateable>{}, [&](auto& view) {
       view.each([&](auto& selectable, auto& rotateable) {
         if (selectable.selected || !rotateable.rotate_handle.has_value()) { return; }
