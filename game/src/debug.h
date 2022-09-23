@@ -56,6 +56,7 @@ namespace drag_and_drop
             selectable.selected = true;
             draggable.drag_offset = vector_utils::minus(mouse_location, transform.value);
             outline.colour = colour::blue();
+            resizable::make_selection(app_commands, entity, rectangle, transform, rotation);
             selected_something = true;
             continue;
           }
@@ -136,112 +137,6 @@ namespace drag_and_drop
                             });
   }
 }// namespace drag_and_drop
-
-namespace resize
-{
-  inline void plugin(AppCommands& app_commands)
-  {
-    // Spawn circles when selectable is first selected
-    app_commands.add_system(
-      Query<Selectable, Resizeable, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
-        view.each(
-          [&](auto& selectable, auto& resizeable, auto const& rectangle, auto const& transform, auto const& rotation) {
-            if (!selectable.selected || resizeable.resize_circles.size() != 0) { return; }
-            auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
-            for (auto const& corner : corners) {
-              resizeable.resize_circles.push_back(app_commands.spawn()
-                                                    .add_component<Circle>(8.f)
-                                                    .add_component<Transform>(corner)
-                                                    .template add_component<ZIndex>(4)
-                                                    .template add_component<Colour>(colour::blue())
-                                                    .entity());
-            }
-          });
-      });
-
-    // Destroy circles when selectable is first deselected
-    app_commands.add_system(Query<Selectable, Resizeable>{}, [&](auto& view) {
-      view.each([&](auto& selectable, auto& resizeable) {
-        if (selectable.selected || resizeable.resize_circles.size() == 0) { return; }
-
-        for (auto const& corner : resizeable.resize_circles) { app_commands.destroy(corner); }
-        resizeable.resize_circles.clear();
-      });
-    });
-
-    // Synchronise "resize circles" with the selected resizeable
-    app_commands.add_system(
-      Query<Selectable const, Resizeable const, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
-        view.each([&](auto const& selectable,
-                      auto const& resizeable,
-                      auto const& rectangle,
-                      auto const& transform,
-                      auto const& rotation) {
-          if (!selectable.selected) { return; }
-          auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
-          for (auto i = 0; i < 4; i++) {
-            auto& resize_circle_transform = *app_commands.component<Transform>(resizeable.resize_circles[i]);
-            resize_circle_transform.value = corners[i];
-          }
-        });
-      });
-
-    // Resize selected objects when mouse moves and is pressed
-    app_commands.add_system<Event::EventType::MouseMoved>(
-      ResourceQuery<ShiftKeyResource>{},
-      Query<Resizeable, Transform const, Rectangle>{},
-      [&](auto& event, auto& resources, auto& view) {
-        auto const& mouse_location = event.mouse_moved.location;
-        auto&& [_, shift_key_resource] = resources;
-        for (auto&& [_entity, resizeable, transform, rectangle] : view.each()) {
-
-          if (!resizeable.is_resizing) { continue; }
-          auto const width = std::abs((mouse_location.x - transform.value.x) * 2.f);
-          auto const height = std::abs((mouse_location.y - transform.value.y) * 2.f);
-
-          if (!shift_key_resource.shift_pressed) {
-            rectangle.width_height.x = width;
-            rectangle.width_height.y = height;
-            continue;
-          }
-
-          auto [target_width_scale, target_height_scale] = window::scale_required_to_satisfy_aspect_ratio(
-            { width, height }, rectangle.width_height.x / rectangle.width_height.y);
-
-          rectangle.width_height.x = width * target_width_scale;
-          rectangle.width_height.y = height * target_height_scale;
-        }
-
-        return false;
-      });
-
-    // Hittest the resize circles
-    app_commands.add_system<Event::EventType::MouseButtonPressed>(Query<Resizeable>{}, [&](auto& event, auto& view) {
-      auto const mouse_location = event.mouse_button_pressed.location;
-      for (auto&& [_entity, resizeable] : view.each()) {
-        for (auto& circle_entity : resizeable.resize_circles) {
-          auto& corner_circle = *app_commands.component<Circle>(circle_entity);
-          auto& corner_transform = *app_commands.component<Transform>(circle_entity);
-          if (collisions::point_circle(corner_circle, corner_transform, mouse_location)) {
-            resizeable.is_resizing = true;
-            return true;
-          }
-        }
-      }
-      return false;
-    });
-
-    // Clear `is_resizing` when the mouse is released
-    app_commands.add_system<Event::EventType::MouseButtonReleased>(Query<Resizeable>{}, [&](auto& event, auto& view) {
-      (void)event;
-
-      view.each([](auto& resizeable) { resizeable.is_resizing = false; });
-
-      return false;
-    });
-  }
-
-}// namespace resize
 
 inline void plugin(AppCommands& app_commands)
 {
