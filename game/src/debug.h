@@ -25,7 +25,7 @@
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
-#include "game/src/debug/rotateable.h"
+#include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/ground.h"
 #include "game/src/rectangle_utils.h"
@@ -141,7 +141,7 @@ namespace drag_and_drop
 
 inline void plugin(AppCommands& app_commands)
 {
-  app_commands.add_plugin(rotateable::plugin);
+  app_commands.add_plugin(rotatable::plugin);
   app_commands.add_plugin(resizable::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
   app_commands.add_plugin(clipboard::plugin);

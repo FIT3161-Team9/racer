@@ -21,7 +21,7 @@
 
 namespace debug
 {
-struct Rotateable
+struct Rotatable
 {
   std::optional<entt::entity> rotate_handle{};
   // Whether the user is rotating the entity - i.e. whether the user has clicked and held on the rotate handle
@@ -33,7 +33,7 @@ struct RotateHandle
   entt::entity parent;
 };
 
-namespace rotateable
+namespace rotatable
 {
 
   inline sf::Vector2f
@@ -48,25 +48,25 @@ namespace rotateable
   inline void plugin(AppCommands& app_commands)
   {
     // Spawn rotate handle on select
-    app_commands.add_system(Query<debug::Selectable, Rotateable, Rectangle const, Transform const, Rotation const>{},
+    app_commands.add_system(Query<debug::Selectable, Rotatable, Rectangle const, Transform const, Rotation const>{},
                             [&](auto& view) {
                               view.each([&](auto selectable_entity,
                                             auto& selectable,
-                                            auto& rotateable,
+                                            auto& rotatable,
                                             auto const& rectangle,
                                             auto const& transform,
                                             auto const& rotation) {
-                                if (!selectable.selected || rotateable.rotate_handle.has_value()) { return; }
+                                if (!selectable.selected || rotatable.rotate_handle.has_value()) { return; }
 
                                 auto handle_position = rotate_handle_position(rectangle, transform, rotation);
 
-                                rotateable.rotate_handle = app_commands.spawn()
-                                                             .add_component<Transform>(handle_position)
-                                                             .template add_component<RotateHandle>(selectable_entity)
-                                                             .template add_component<Circle>(8.f)
-                                                             .template add_component<ZIndex>(5)
-                                                             .template add_component<Colour>(colour::red())
-                                                             .entity();
+                                rotatable.rotate_handle = app_commands.spawn()
+                                                            .add_component<Transform>(handle_position)
+                                                            .template add_component<RotateHandle>(selectable_entity)
+                                                            .template add_component<Circle>(8.f)
+                                                            .template add_component<ZIndex>(5)
+                                                            .template add_component<Colour>(colour::red())
+                                                            .entity();
                               });
                             });
     // Destroy rotate handle on parent deletion
@@ -76,20 +76,20 @@ namespace rotateable
       });
     });
     // Destroy rotate handle on deselect or parent deletion
-    app_commands.add_system(Query<Selectable, Rotateable>{}, [&](auto& view) {
-      view.each([&](auto& selectable, auto& rotateable) {
-        if (selectable.selected || !rotateable.rotate_handle.has_value()) { return; }
+    app_commands.add_system(Query<Selectable, Rotatable>{}, [&](auto& view) {
+      view.each([&](auto& selectable, auto& rotatable) {
+        if (selectable.selected || !rotatable.rotate_handle.has_value()) { return; }
 
-        app_commands.destroy(*rotateable.rotate_handle);
-        rotateable.rotate_handle.reset();
+        app_commands.destroy(*rotatable.rotate_handle);
+        rotatable.rotate_handle.reset();
       });
     });
     // Keep the position of the rotate handle up to date
     app_commands.add_system(
-      Query<Rotateable const, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
-        view.each([&](auto const& rotateable, auto const& rectangle, auto const& transform, auto const& rotation) {
-          if (!rotateable.rotate_handle.has_value()) { return; }
-          app_commands.component<Transform>(rotateable.rotate_handle.value())->value =
+      Query<Rotatable const, Rectangle const, Transform const, Rotation const>{}, [&](auto& view) {
+        view.each([&](auto const& rotatable, auto const& rectangle, auto const& transform, auto const& rotation) {
+          if (!rotatable.rotate_handle.has_value()) { return; }
+          app_commands.component<Transform>(rotatable.rotate_handle.value())->value =
             rotate_handle_position(rectangle, transform, rotation);
         });
       });
@@ -99,14 +99,20 @@ namespace rotateable
         auto const mouse_location = event.mouse_button_pressed.location;
         for (auto&& [_entity, rotate_handle, transform, circle] : view.each()) {
           if (collisions::point_circle(circle, transform, mouse_location)) {
-            app_commands.component<Rotateable>(rotate_handle.parent)->rotating = true;
+            app_commands.component<Rotatable>(rotate_handle.parent)->rotating = true;
             return true;
           }
         };
         return false;
       });
-    // TODO: Rotate the entity when the rotate_handle.rotating is true
+    // Rotate the entity when the rotate_handle.rotating is true
+    app_commands.add_system<Event::EventType::MouseMoved>(Query<Rotatable const, Transform const, Rotation>{},
+                                                          [&](auto& event, auto& view) {
+                                                            (void)event;
+                                                            (void)view;
+                                                            return false;
+                                                          });
   }
 
-}// namespace rotateable
+}// namespace rotatable
 }// namespace debug
