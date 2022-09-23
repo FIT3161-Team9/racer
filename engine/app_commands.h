@@ -62,6 +62,8 @@ public:
   Entity spawn() { return { m_registry.create(), m_registry }; }
   /// Destroy the given entity
   void destroy(entt::entity entity) { m_registry.destroy(entity); }
+  /// Returns whether the given entity is alive or not
+  bool alive(entt::entity entity) { return m_registry.valid(entity); }
 
   /// Add a system with a resource query and a component query
   template<typename... ResourceQueryTypes, typename... EntityQueryTypes, typename Fn>

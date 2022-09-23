@@ -36,6 +36,7 @@ struct Event
   /// Keyboard key released event
   struct KeyReleased
   {
+    bool control;
     sf::Keyboard::Key key;
   };
 
@@ -76,9 +77,9 @@ inline Event key_pressed(sf::Keyboard::Key key)
   return Event{ .type = Event::EventType::KeyPressed, .key_pressed = { .key = key } };
 }
 
-inline Event key_released(sf::Keyboard::Key key)
+inline Event key_released(sf::Keyboard::Key key, bool control)
 {
-  return Event{ .type = Event::EventType::KeyReleased, .key_released = { .key = key } };
+  return Event{ .type = Event::EventType::KeyReleased, .key_released = { .control = control, .key = key } };
 }
 
 }// namespace event
