@@ -59,8 +59,9 @@ inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::r
 
     auto const* texture = render_context.get_component<Texture const>(entity);
     auto const* scale = render_context.get_component<Scale const>(entity);
-    if (texture != nullptr && scale != nullptr) {
-      render::texture(render_context, window, transform, *texture, *scale);
+    auto const* rotation = render_context.get_component<Rotation const>(entity);
+    if (texture != nullptr && scale != nullptr && rotation != nullptr) {
+      render::texture(render_context, window, transform, *texture, *scale, *rotation);
     }
 
     auto const* rectangle = render_context.get_component<Rectangle const>(entity);

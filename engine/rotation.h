@@ -31,4 +31,6 @@ inline sf::Vector2f
 
 inline float to_radians(float degrees) { return degrees / 180.f * std::numbers::pi_v<float>; }
 
+inline float from_radians(float radians) { return radians * 180.f / std::numbers::pi_v<float>; }
+
 }// namespace rotation
