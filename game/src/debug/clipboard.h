@@ -23,7 +23,7 @@
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
-#include "game/src/debug/rotateable.h"
+#include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
@@ -87,7 +87,7 @@ inline void plugin(AppCommands& app_commands)
     if (rotation) { copied.add_component<Rotation>(*rotation); }
     if (z_index) { copied.add_component<ZIndex>(*z_index); }
 
-    copied.add_component<debug::Rotateable>()
+    copied.add_component<debug::Rotatable>()
       .add_component<debug::Selectable>()
       .add_component<debug::Resizeable>()
       .add_component<debug::Draggable>()
