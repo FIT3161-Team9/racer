@@ -113,7 +113,7 @@ namespace detail
         }
       }
       if (event.type == sf::Event::KeyReleased) {
-        auto key_released_event = event::key_released(event.key.code);
+        auto key_released_event = event::key_released(event.key.code, event.key.control || event.key.system);
         for (auto event_handler : app_commands.m_event_systems) {
           if (event_handler(key_released_event)) { break; }
         }
