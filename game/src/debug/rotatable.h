@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+#include <iostream>
 #include <optional>
 
 #include "SFML/Graphics/CircleShape.hpp"
@@ -105,13 +107,30 @@ namespace rotatable
         };
         return false;
       });
+    // Stop rotating when the mouse is released
+    app_commands.add_system<Event::EventType::MouseButtonReleased>(Query<Rotatable>{}, [&](auto& event, auto& view) {
+      (void)event;
+      view.each([&](auto& rotatable) { rotatable.rotating = false; });
+      return false;
+    });
     // Rotate the entity when the rotate_handle.rotating is true
-    app_commands.add_system<Event::EventType::MouseMoved>(Query<Rotatable const, Transform const, Rotation>{},
-                                                          [&](auto& event, auto& view) {
-                                                            (void)event;
-                                                            (void)view;
-                                                            return false;
-                                                          });
+    app_commands.add_system<Event::EventType::MouseMoved>(
+      Query<Rotatable const, Rectangle const, Transform const, Rotation>{}, [&](auto& event, auto& view) {
+        auto const mouse_location = event.mouse_moved.location;
+
+        view.each([&](auto const& rotatable, auto const& rectangle, auto const& transform, auto& rotation) {
+          if (!rotatable.rotating) { return; }
+
+          auto const a = vector_utils::minus(rotate_handle_position(rectangle, transform, rotation), transform.value);
+          auto const b = vector_utils::minus(mouse_location, transform.value);
+          auto const angle = std::atan2(a.x * b.y - a.y * b.x, a.x * b.x + a.y * b.y);
+          auto const degrees = rotation::from_radians(angle);
+          if (isnan(degrees)) { return; }
+          rotation.degrees += degrees;
+        });
+
+        return false;
+      });
   }
 
 }// namespace rotatable
