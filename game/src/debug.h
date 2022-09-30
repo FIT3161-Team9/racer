@@ -48,11 +48,14 @@ namespace drag_and_drop
     app_commands.add_resource<MoveOnKeyDownTimer>();
     // Specify whether or not entities are being dragged/selected on mouse down
     app_commands.add_system<Event::EventType::MouseButtonPressed>(
+      ResourceQuery<ShiftKeyResource>{},
       Query<Draggable, Selectable, Transform const, Rectangle const, Rotation const, Outline>{},
-      [&](auto& event, auto& view) {
+      [&](auto& event, auto& resources, auto& view) {
+        auto&& [_, shift_key_resource] = resources;
         bool selected_something = false;
         auto const mouse_location = event.mouse_button_pressed.location;
         for (auto&& [entity, draggable, selectable, transform, rectangle, rotation, outline] : view.each()) {
+          // Select entities that pass the hit test
           if (!selected_something && collisions::point_rectangle(rectangle, transform, rotation, mouse_location)) {
             selectable.selected = true;
             draggable.drag_offset = vector_utils::minus(mouse_location, transform.value);
@@ -61,6 +64,12 @@ namespace drag_and_drop
             selected_something = true;
             continue;
           }
+          // If the shift key is pressed, maintain the last selected entity and update it's drag offset
+          if (shift_key_resource.shift_pressed && selectable.selected) {
+            draggable.drag_offset = vector_utils::minus(mouse_location, transform.value);
+            continue;
+          }
+          // Clear entities that failed the hit test
           selectable.selected = false;
           draggable.drag_offset.reset();
           outline.colour = colour::transparent();
