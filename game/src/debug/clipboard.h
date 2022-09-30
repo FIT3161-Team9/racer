@@ -30,7 +30,7 @@
 
 struct Clipboard
 {
-  std::optional<entt::entity> entity{};
+  std::vector<entt::entity> entities{};
 };
 
 namespace clipboard
@@ -46,11 +46,12 @@ inline void plugin(AppCommands& app_commands)
 
       auto&& [_, clipboard] = resources;
 
+      clipboard.entities.clear();
+
       for (auto&& [entity, selectable] : view.each()) {
         if (!selectable.selected) { continue; }
 
-        clipboard.entity = entity;
-        break;
+        clipboard.entities.push_back(entity);
       }
 
       return false;
@@ -61,37 +62,37 @@ inline void plugin(AppCommands& app_commands)
 
     auto&& [_, clipboard] = resources;
 
-    if (!clipboard.entity.has_value()) { return false; }
+    for (auto const entity : clipboard.entities) {
+      auto const* texture = app_commands.component<Texture>(entity);
+      auto const* image_dimensions = app_commands.component<ImageDimensions>(entity);
+      auto const* ground = app_commands.component<Ground>(entity);
+      auto const* scale = app_commands.component<Scale>(entity);
+      auto const* transform = app_commands.component<Transform>(entity);
+      auto const* rectangle = app_commands.component<Rectangle>(entity);
+      auto const* outline = app_commands.component<Outline>(entity);
+      auto const* colour = app_commands.component<Colour>(entity);
+      auto const* rotation = app_commands.component<Rotation>(entity);
+      auto const* z_index = app_commands.component<ZIndex>(entity);
 
-    auto const* texture = app_commands.component<Texture>(*clipboard.entity);
-    auto const* image_dimensions = app_commands.component<ImageDimensions>(*clipboard.entity);
-    auto const* ground = app_commands.component<Ground>(*clipboard.entity);
-    auto const* scale = app_commands.component<Scale>(*clipboard.entity);
-    auto const* transform = app_commands.component<Transform>(*clipboard.entity);
-    auto const* rectangle = app_commands.component<Rectangle>(*clipboard.entity);
-    auto const* outline = app_commands.component<Outline>(*clipboard.entity);
-    auto const* colour = app_commands.component<Colour>(*clipboard.entity);
-    auto const* rotation = app_commands.component<Rotation>(*clipboard.entity);
-    auto const* z_index = app_commands.component<ZIndex>(*clipboard.entity);
+      auto copied = app_commands.spawn();
 
-    auto copied = app_commands.spawn();
+      if (texture) { copied.add_component<Texture>(*texture); }
+      if (image_dimensions) { copied.add_component<ImageDimensions>(*image_dimensions); }
+      if (ground) { copied.add_component<Ground>(*ground); }
+      if (scale) { copied.add_component<Scale>(*scale); }
+      if (transform) { copied.add_component<Transform>(*transform); }
+      if (rectangle) { copied.add_component<Rectangle>(*rectangle); }
+      if (outline) { copied.add_component<Outline>(*outline); }
+      if (colour) { copied.add_component<Colour>(*colour); }
+      if (rotation) { copied.add_component<Rotation>(*rotation); }
+      if (z_index) { copied.add_component<ZIndex>(*z_index); }
 
-    if (texture) { copied.add_component<Texture>(*texture); }
-    if (image_dimensions) { copied.add_component<ImageDimensions>(*image_dimensions); }
-    if (ground) { copied.add_component<Ground>(*ground); }
-    if (scale) { copied.add_component<Scale>(*scale); }
-    if (transform) { copied.add_component<Transform>(*transform); }
-    if (rectangle) { copied.add_component<Rectangle>(*rectangle); }
-    if (outline) { copied.add_component<Outline>(*outline); }
-    if (colour) { copied.add_component<Colour>(*colour); }
-    if (rotation) { copied.add_component<Rotation>(*rotation); }
-    if (z_index) { copied.add_component<ZIndex>(*z_index); }
-
-    copied.add_component<debug::Rotatable>()
-      .add_component<debug::Selectable>()
-      .add_component<debug::Resizeable>()
-      .add_component<debug::Draggable>()
-      .add_component<debug::Deletable>();
+      copied.add_component<debug::Rotatable>()
+        .add_component<debug::Selectable>()
+        .add_component<debug::Resizeable>()
+        .add_component<debug::Draggable>()
+        .add_component<debug::Deletable>();
+    }
 
     return false;
   });
