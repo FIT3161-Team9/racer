@@ -3,6 +3,7 @@
 #include <engine/engine.h>
 #include <engine/timing.h>
 
+#include "game/src/arguments.h"
 #include "game/src/camera.h"
 #include "game/src/debug.h"
 #include "game/src/game_state.h"
@@ -14,11 +15,13 @@
 #include "game/src/velocity.h"
 
 
-int main()
+int main(int argc, char** argv)
 {
+  auto arguments = arguments::parse(argc, argv);
+
   auto app = engine::create_app("RACER");
 
-  engine::run_app(app, [](auto& app_commands) {
+  engine::run_app(app, [arguments](auto& app_commands) {
     app_commands.template add_resource<GameState>(GameState::CurrentScreen::SplashScreen);
 
     app_commands.add_plugin(timing::plugin);
@@ -32,7 +35,7 @@ int main()
     app_commands.add_plugin(shift_key_resource::plugin);
     app_commands.add_plugin(arrow_keys_resource::plugin);
 
-    app_commands.add_plugin(debug::plugin);
+    if (arguments.debug_mode) { app_commands.add_plugin(debug::plugin); }
   });
 
 
