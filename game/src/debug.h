@@ -24,6 +24,7 @@
 #include "game/src/collisions.h"
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
+#include "game/src/debug/pausable.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
@@ -150,6 +151,7 @@ namespace drag_and_drop
 
 inline void plugin(AppCommands& app_commands)
 {
+  app_commands.add_plugin(pausable::plugin);
   app_commands.add_plugin(rotatable::plugin);
   app_commands.add_plugin(resizable::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);
