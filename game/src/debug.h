@@ -28,6 +28,7 @@
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
+#include "game/src/debug/serialization.h"
 #include "game/src/ground.h"
 #include "game/src/rectangle_utils.h"
 #include "game/src/shift_key_resource.h"
@@ -157,6 +158,7 @@ inline void plugin(AppCommands& app_commands)
   app_commands.add_plugin(drag_and_drop::plugin);
   app_commands.add_plugin(clipboard::plugin);
   app_commands.add_plugin(deletable::plugin);
+  app_commands.add_plugin(serialization::plugin);
 }
 
 }// namespace debug
