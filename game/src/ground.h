@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "engine/app_commands.h"
 #include "engine/circle.h"
 #include "engine/query.h"
@@ -39,6 +41,9 @@ inline void circle_ground_collision_plugin(AppCommands& app_commands)
               depth_of_collision),
             sf::Vector2f{ 0.f, 0.f },
             180.f);
+
+          if (!std::isfinite(depth_of_collision_in_direction_of_velocity.x)) { return; }
+          if (!std::isfinite(depth_of_collision_in_direction_of_velocity.y)) { return; }
 
           circle_transform.value.x += depth_of_collision_in_direction_of_velocity.x;
           circle_transform.value.y += depth_of_collision_in_direction_of_velocity.y;
