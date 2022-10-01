@@ -39,11 +39,18 @@ FetchContent_Declare(
   GIT_TAG v3.10.1)
 FetchContent_MakeAvailable(EnTT)
 
+# Fetch json
+FetchContent_Declare(
+  json
+  URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 add_executable(RACER main.cpp)
 
 # Link executable to required SFML modules
 target_include_directories(RACER PUBLIC ../ ../)
-target_link_libraries(RACER sfml-graphics EnTT::EnTT)
+target_link_libraries(RACER sfml-graphics EnTT::EnTT
+                      nlohmann_json::nlohmann_json)
 
 # Add Google Test
 FetchContent_Declare(
@@ -54,8 +61,8 @@ FetchContent_Declare(
 # This is so we don't override compiler settings on windows (as per GoogleTest
 # docs)
 set(gtest_force_shared_crt
-  ON
-  CACHE BOOL "" FORCE)
+    ON
+    CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
