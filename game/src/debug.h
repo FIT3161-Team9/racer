@@ -45,24 +45,42 @@ namespace drag_and_drop
     std::optional<sf::Clock> timer{};
   };
 
+  inline bool hit_test_entity(AppCommands& app_commands, entt::entity entity, sf::Vector2f mouse_location)
+  {
+    auto* rectangle = app_commands.component<Rectangle>(entity);
+    auto* circle = app_commands.component<Circle>(entity);
+    auto* rotation = app_commands.component<Rotation>(entity);
+    auto* transform = app_commands.component<Transform>(entity);
+
+    if (rectangle != nullptr && transform != nullptr && rotation != nullptr) {
+      return collisions::point_rectangle(*rectangle, *transform, *rotation, mouse_location);
+    }
+
+    if (circle != nullptr && transform != nullptr) {
+      return collisions::point_circle(*circle, *transform, mouse_location);
+    }
+
+    return false;
+  }
+
   inline void plugin(AppCommands& app_commands)
   {
     app_commands.add_resource<MoveOnKeyDownTimer>();
     // Specify whether or not entities are being dragged/selected on mouse down
     app_commands.add_system<Event::EventType::MouseButtonPressed>(
       ResourceQuery<ShiftKeyResource>{},
-      Query<Draggable, Selectable, Transform const, Rectangle const, Rotation const, Outline>{},
+      Query<Draggable, Selectable, Transform const, Outline>{},
       [&](auto& event, auto& resources, auto& view) {
         auto&& [_, shift_key_resource] = resources;
         bool selected_something = false;
         auto const mouse_location = event.mouse_button_pressed.location;
-        for (auto&& [entity, draggable, selectable, transform, rectangle, rotation, outline] : view.each()) {
+        for (auto&& [entity, draggable, selectable, transform, outline] : view.each()) {
           // Select entities that pass the hit test
-          if (!selected_something && collisions::point_rectangle(rectangle, transform, rotation, mouse_location)) {
+          if (!selected_something && hit_test_entity(app_commands, entity, mouse_location)) {
             selectable.selected = true;
             draggable.drag_offset = vector_utils::minus(mouse_location, transform.value);
             outline.colour = colour::blue();
-            resizable::make_selection(app_commands, entity, rectangle, transform, rotation);
+            resizable::make_selection(app_commands, entity);
             selected_something = true;
             continue;
           }
