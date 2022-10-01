@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include <engine/engine.h>
@@ -28,14 +30,24 @@ int main(int argc, char** argv)
     app_commands.add_plugin(velocity::plugin);
     app_commands.add_plugin(gravity::plugin);
     app_commands.add_plugin(ground::circle_ground_collision_plugin);
-    app_commands.add_plugin(splash_screen::plugin);
-    app_commands.add_plugin(main_menu::plugin);
     app_commands.add_plugin(camera::plugin);
     app_commands.add_plugin(image_dimensions::synchronise_image_size_with_rect_size_plugin);
     app_commands.add_plugin(shift_key_resource::plugin);
     app_commands.add_plugin(arrow_keys_resource::plugin);
 
-    if (arguments.debug_mode) { app_commands.add_plugin(debug::plugin); }
+    if (arguments.debug_mode) {
+      std::cout << "Loading in debug mode\n";
+      app_commands.add_plugin(debug::plugin);
+    }
+    if (arguments.level != nullptr) {
+      std::cout << "Loading level " << arguments.level << "\n";
+      map::load_level(app_commands, arguments.level);
+    }
+
+    if (arguments.level == nullptr) {
+      app_commands.add_plugin(splash_screen::plugin);
+      app_commands.add_plugin(main_menu::plugin);
+    }
   });
 
 
