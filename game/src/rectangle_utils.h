@@ -89,9 +89,9 @@ inline std::vector<Segment>
                                  rectangle_transform.value,
                                  rectangle_rotation.degrees);
 
-  return { Segment{ .start = top_right, .end = bottom_right },
-           Segment{ .start = bottom_right, .end = bottom_left },
+  return { Segment{ .start = bottom_right, .end = bottom_left },
            Segment{ .start = bottom_left, .end = top_left },
-           Segment{ .start = top_left, .end = top_right } };
+           Segment{ .start = top_left, .end = top_right },
+           Segment{ .start = top_right, .end = bottom_right } };
 }
 }// namespace rectangle_utils
