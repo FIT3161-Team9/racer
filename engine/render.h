@@ -4,12 +4,10 @@
 #include <iostream>
 
 #include "SFML/System/Vector2.hpp"
-#include "camera_target.h"
 #include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 
 #include "SFML/System/Vector2.hpp"
-#include "camera_target.h"
 #include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 

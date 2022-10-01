@@ -6,7 +6,14 @@
 struct Event
 {
   /// Enum representing the list of events that we allow apps to subscribe to
-  enum class EventType { MouseMoved, MouseButtonPressed, MouseButtonReleased, KeyPressed, KeyReleased };
+  enum class EventType {
+    MouseMoved,
+    MouseButtonPressed,
+    MouseButtonReleased,
+    MouseWheelScrolled,
+    KeyPressed,
+    KeyReleased
+  };
   /// Mouse moved event with the location that it moved to. The location is in the engine's coordinate system
   struct MouseMoved
   {
@@ -25,6 +32,12 @@ struct Event
   struct MouseButtonReleased
   {
     sf::Vector2f location;
+  };
+
+  /// Mouse scrolled event
+  struct MouseWheelScrolled
+  {
+    sf::Vector2f distance;
   };
 
   /// Keyboard key pressed event
@@ -48,6 +61,7 @@ struct Event
     MouseMoved mouse_moved;
     MouseButtonPressed mouse_button_pressed;
     MouseButtonReleased mouse_button_released;
+    MouseWheelScrolled mouse_wheel_scrolled;
     KeyPressed key_pressed;
     KeyReleased key_released;
   };
@@ -70,6 +84,11 @@ inline Event mouse_button_pressed(sf::Vector2f location)
 inline Event mouse_button_released(sf::Vector2f location)
 {
   return Event{ .type = Event::EventType::MouseButtonReleased, .mouse_button_released = { .location = location } };
+}
+
+inline Event mouse_wheel_scrolled(sf::Vector2f distance)
+{
+  return Event{ .type = Event::EventType::MouseWheelScrolled, .mouse_wheel_scrolled = { .distance = distance } };
 }
 
 inline Event key_pressed(sf::Keyboard::Key key)
