@@ -5,6 +5,7 @@
 #include <engine/engine.h>
 #include <engine/timing.h>
 
+#include "game/src/acceleration.h"
 #include "game/src/arguments.h"
 #include "game/src/camera.h"
 #include "game/src/debug.h"
@@ -27,6 +28,7 @@ int main(int argc, char** argv)
 
     app_commands.add_plugin(timing::plugin);
     app_commands.add_plugin(velocity::plugin);
+    app_commands.add_plugin(acceleration::plugin);
     app_commands.add_plugin(gravity::plugin);
     app_commands.add_plugin(ground::circle_ground_collision_plugin);
     app_commands.add_plugin(camera::plugin);
