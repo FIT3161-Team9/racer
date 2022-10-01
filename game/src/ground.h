@@ -18,9 +18,6 @@ enum class Ground {};
 namespace ground
 {
 
-
-inline void print_vector(sf::Vector2f const& vec) { std::cout << "(x=" << vec.x << ", y=" << vec.y << ")"; }
-
 inline void circle_ground_collision_plugin(AppCommands& app_commands)
 {
   auto const handle = [](auto& resources, auto& circle_view, auto& ground_view) {
