@@ -123,8 +123,7 @@ namespace rotatable
 
           auto const a = vector_utils::minus(rotate_handle_position(rectangle, transform, rotation), transform.value);
           auto const b = vector_utils::minus(mouse_location, transform.value);
-          auto const angle = std::atan2(a.x * b.y - a.y * b.x, a.x * b.x + a.y * b.y);
-          auto const degrees = rotation::from_radians(angle);
+          auto const degrees = vector_utils::angle_between(a, b);
           if (isnan(degrees)) { return; }
           rotation.degrees += degrees;
         });
