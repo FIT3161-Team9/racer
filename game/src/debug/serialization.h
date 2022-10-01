@@ -26,6 +26,8 @@
 
 #include "../ground.h"
 #include "../image_dimensions.h"
+#include "game/src/acceleration.h"
+#include "game/src/camera.h"
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
@@ -80,6 +82,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* scale = app_commands.component<Scale>(entity);
   auto const* transform = app_commands.component<Transform>(entity);
   auto const* velocity = app_commands.component<Velocity>(entity);
+  auto const* acceleration = app_commands.component<Acceleration>(entity);
   auto const* rectangle = app_commands.component<Rectangle>(entity);
   auto const* circle = app_commands.component<Circle>(entity);
   auto const* outline = app_commands.component<Outline>(entity);
@@ -92,6 +95,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* draggable = app_commands.component<debug::Draggable>(entity);
   auto const* rotatable = app_commands.component<debug::Rotatable>(entity);
   auto const* deletable = app_commands.component<debug::Deletable>(entity);
+  auto const* camera_target = app_commands.component<camera::Target>(entity);
 
   if (texture != nullptr) { components["texture"] = texture->path; }
   if (image_dimensions != nullptr) { components["image_dimensions"] = serialize_vector(image_dimensions->dimensions); }
@@ -99,6 +103,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (scale != nullptr) { components["scale"] = serialize_vector(scale->scale); }
   if (transform != nullptr) { components["transform"] = serialize_vector(transform->value); }
   if (velocity != nullptr) { components["velocity"] = serialize_vector(velocity->value); }
+  if (acceleration != nullptr) { components["acceleration"] = serialize_vector(acceleration->value); }
   if (rectangle != nullptr) { components["rectangle"] = serialize_vector(rectangle->width_height); }
   if (circle != nullptr) { components["circle"] = circle->radius; }
   if (outline != nullptr) { components["outline"] = serialize_outline(*outline); }
@@ -111,6 +116,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (draggable != nullptr) { components["draggable"] = true; }
   if (rotatable != nullptr) { components["rotatable"] = true; }
   if (deletable != nullptr) { components["deletable"] = true; }
+  if (camera_target != nullptr) { components["camera_target"] = camera_target->is_followed; }
 
   json object;
 
@@ -137,6 +143,9 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
     entity.add_component<Transform>(deserialize_vector(components["transform"]));
   }
   if (components.contains("velocity")) { entity.add_component<Velocity>(deserialize_vector(components["velocity"])); }
+  if (components.contains("acceleration")) {
+    entity.add_component<Acceleration>(deserialize_vector(components["acceleration"]));
+  }
   if (components.contains("rectangle")) {
     entity.add_component<Rectangle>(deserialize_vector(components["rectangle"]));
   }
@@ -151,6 +160,7 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
   if (components.contains("draggable")) { entity.add_component<debug::Draggable>(); }
   if (components.contains("rotatable")) { entity.add_component<debug::Rotatable>(); }
   if (components.contains("deletable")) { entity.add_component<debug::Deletable>(); }
+  if (components.contains("camera_target")) { entity.add_component<camera::Target>(components["camera_target"]); }
 }
 
 inline nlohmann::json serialize_outline(Outline const& outline)
