@@ -20,7 +20,7 @@ inline Arguments parse(int argc, char** argv)
 
   int i = 1;
   while (i < argc) {
-    if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--debug") == 0) { arguments.debug_mode = true; }
+    if ((strcmp(argv[i], "-d") == 0) || (strcmp(argv[i], "--debug") == 0)) { arguments.debug_mode = true; }
 
     if (strcmp(argv[i], "--level") == 0 && i < argc - 1) {
       arguments.level = argv[i + 1];

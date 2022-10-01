@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ctime>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -10,7 +11,9 @@
 #include <entt/entt.hpp>
 #include <nlohmann/json.hpp>
 
+#include "SFML/Window/WindowStyle.hpp"
 #include "engine/app_commands.h"
+#include "engine/circle.h"
 #include "engine/colour.h"
 #include "engine/event.h"
 #include "engine/outline.h"
@@ -23,6 +26,13 @@
 
 #include "../ground.h"
 #include "../image_dimensions.h"
+#include "game/src/debug/deletable.h"
+#include "game/src/debug/draggable.h"
+#include "game/src/debug/resizeable.h"
+#include "game/src/debug/rotatable.h"
+#include "game/src/debug/selectable.h"
+#include "game/src/gravity.h"
+#include "game/src/velocity.h"
 
 namespace serialization
 {
@@ -44,7 +54,7 @@ inline void plugin(AppCommands& app_commands)
     char file_name[100];
     std::strftime(file_name, sizeof(file_name), "%Y-%m-%d_%I.%M.%S.json", std::localtime(&time));
 
-    std::ofstream outfile(file_name);
+    std::ofstream outfile(std::filesystem::path(std::string("./levels/") + file_name));
 
     nlohmann::json array;
 
@@ -69,22 +79,38 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* ground = app_commands.component<Ground>(entity);
   auto const* scale = app_commands.component<Scale>(entity);
   auto const* transform = app_commands.component<Transform>(entity);
+  auto const* velocity = app_commands.component<Velocity>(entity);
   auto const* rectangle = app_commands.component<Rectangle>(entity);
+  auto const* circle = app_commands.component<Circle>(entity);
   auto const* outline = app_commands.component<Outline>(entity);
   auto const* colour = app_commands.component<Colour>(entity);
   auto const* rotation = app_commands.component<Rotation>(entity);
   auto const* z_index = app_commands.component<ZIndex>(entity);
+  auto const* affected_by_gravity = app_commands.component<AffectedByGravity>(entity);
+  auto const* selectable = app_commands.component<debug::Selectable>(entity);
+  auto const* resizeable = app_commands.component<debug::Resizeable>(entity);
+  auto const* draggable = app_commands.component<debug::Draggable>(entity);
+  auto const* rotatable = app_commands.component<debug::Rotatable>(entity);
+  auto const* deletable = app_commands.component<debug::Deletable>(entity);
 
   if (texture != nullptr) { object["texture"] = texture->path; }
   if (image_dimensions != nullptr) { object["image_dimensions"] = serialize_vector(image_dimensions->dimensions); }
   if (ground != nullptr) { object["ground"] = true; }
   if (scale != nullptr) { object["scale"] = serialize_vector(scale->scale); }
   if (transform != nullptr) { object["transform"] = serialize_vector(transform->value); }
+  if (velocity != nullptr) { object["velocity"] = serialize_vector(velocity->value); }
   if (rectangle != nullptr) { object["rectangle"] = serialize_vector(rectangle->width_height); }
+  if (circle != nullptr) { object["circle"] = circle->radius; }
   if (outline != nullptr) { object["outline"] = serialize_outline(*outline); }
   if (colour != nullptr) { object["colour"] = serialize_colour(*colour); }
   if (rotation != nullptr) { object["rotation"] = rotation->degrees; }
   if (z_index != nullptr) { object["z_index"] = z_index->value; }
+  if (affected_by_gravity != nullptr) { object["affected_by_gravity"] = true; }
+  if (selectable != nullptr) { object["selectable"] = true; }
+  if (resizeable != nullptr) { object["resizeable"] = true; }
+  if (draggable != nullptr) { object["draggable"] = true; }
+  if (rotatable != nullptr) { object["rotatable"] = true; }
+  if (deletable != nullptr) { object["deletable"] = true; }
 
   return object;
 }
@@ -93,18 +119,26 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
 {
   auto entity = app_commands.spawn();
 
-  if (object["texture"].is_string()) { entity.add_component<Texture>(object["texture"]); }
-  if (object["image_dimensions"].is_object()) {
+  if (object.contains("texture") && object["texture"].is_string()) { entity.add_component<Texture>(object["texture"]); }
+  if (object.contains("image_dimensions")) {
     entity.add_component<ImageDimensions>(deserialize_vector(object["image_dimensions"]));
   }
-  if (object["ground"]) { entity.add_component<Ground>(); }
-  if (object["scale"].is_object()) { entity.add_component<Scale>(deserialize_vector(object["scale"])); }
-  if (object["tranform"].is_object()) { entity.add_component<Transform>(deserialize_vector(object["transform"])); }
-  if (object["rectangle"].is_object()) { entity.add_component<Rectangle>(deserialize_vector(object["rectangle"])); }
-  if (object["outline"].is_object()) { entity.add_component<Outline>(deserialize_outline(object["outline"])); }
-  if (object["colour"].is_object()) { entity.add_component<Colour>(deserialize_colour(object["colour"])); }
-  if (object["rotation"].is_number_float()) { entity.add_component<Rotation>(object["rotation"]); }
-  if (object["z_index"].is_number_float()) { entity.add_component<ZIndex>(object["z_index"]); }
+  if (object.contains("ground")) { entity.add_component<Ground>(); }
+  if (object.contains("scale")) { entity.add_component<Scale>(deserialize_vector(object["scale"])); }
+  if (object.contains("transform")) { entity.add_component<Transform>(deserialize_vector(object["transform"])); }
+  if (object.contains("velocity")) { entity.add_component<Velocity>(deserialize_vector(object["velocity"])); }
+  if (object.contains("rectangle")) { entity.add_component<Rectangle>(deserialize_vector(object["rectangle"])); }
+  if (object.contains("circle")) { entity.add_component<Circle>(object["circle"]); }
+  if (object.contains("outline")) { entity.add_component<Outline>(deserialize_outline(object["outline"])); }
+  if (object.contains("colour")) { entity.add_component<Colour>(deserialize_colour(object["colour"])); }
+  if (object.contains("rotation")) { entity.add_component<Rotation>(object["rotation"]); }
+  if (object.contains("z_index")) { entity.add_component<ZIndex>(object["z_index"]); }
+  if (object.contains("affected_by_gravity")) { entity.add_component<AffectedByGravity>(); }
+  if (object.contains("selectable")) { entity.add_component<debug::Selectable>(); }
+  if (object.contains("resizeable")) { entity.add_component<debug::Resizeable>(); }
+  if (object.contains("draggable")) { entity.add_component<debug::Draggable>(); }
+  if (object.contains("rotatable")) { entity.add_component<debug::Rotatable>(); }
+  if (object.contains("deletable")) { entity.add_component<debug::Deletable>(); }
 }
 
 inline nlohmann::json serialize_outline(Outline const& outline)
