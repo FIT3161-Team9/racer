@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/src/debug/pausable.h"
 #include <SFML/Graphics.hpp>
 #include <cstdint>
 #include <iostream>
@@ -25,8 +26,10 @@ Transform apply_velocity(Velocity const& velocity, Transform const& current_tran
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_system(
-    ResourceQuery<timing::ElapsedTime>{}, Query<Transform, Velocity>{}, [](auto& resource_tuple, auto& query) {
+    ResourceQuery<timing::ElapsedTime>{}, Query<Transform, Velocity>{}, [&](auto& resource_tuple, auto& query) {
       auto&& [_, elapsed_time] = resource_tuple;
+      auto* pause_state = app_commands.get_resource<debug::pausable::PauseState>();
+      if (pause_state != nullptr && pause_state->paused) { return; }
       for (auto&& [_, transform, velocity] : query.each()) {
         transform = apply_velocity(velocity, transform, elapsed_time.elapsed_milliseconds);
       }
