@@ -76,7 +76,9 @@ inline void all(RenderContext& render_context, sf::RenderWindow& window, entt::r
     }
 
     auto const* circle = render_context.get_component<Circle const>(entity);
-    if (circle != nullptr && colour != nullptr) { render::circle(window, transform, *circle, *colour); }
+    if (circle != nullptr && colour != nullptr) {
+      render::circle(render_context, window, entity, transform, *circle, *colour);
+    }
 
     auto const* text = render_context.get_component<Text const>(entity);
     if (text != nullptr && colour != nullptr) { render::text(render_context, window, transform, *text, *colour); }
