@@ -1,5 +1,6 @@
 #pragma once
 
+#include "rotation.h"
 #include <cmath>
 #include <string>
 
@@ -36,6 +37,12 @@ inline sf::Vector2f minus(sf::Vector2f const& vector_one, sf::Vector2f const& ve
 inline std::string stringify(sf::Vector2f const& vector)
 {
   return "(x=" + std::to_string(vector.x) + ", y=" + std::to_string(vector.y) + ")";
+}
+
+inline float angle_between(sf::Vector2f const& a, sf::Vector2f const& b)
+{
+  auto const angle = std::atan2(a.x * b.y - a.y * b.x, a.x * b.x + a.y * b.y);
+  return rotation::from_radians(angle);
 }
 
 }// namespace vector_utils

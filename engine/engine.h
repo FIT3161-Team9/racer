@@ -106,6 +106,14 @@ namespace detail
           if (event_handler(mouse_button_event)) { break; }
         }
       }
+      if (event.type == sf::Event::MouseWheelScrolled) {
+        auto mouse_scroll_event = event::mouse_wheel_scrolled(
+          { event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel ? 0.f : event.mouseWheelScroll.delta,
+            event.mouseWheelScroll.wheel == sf::Mouse::HorizontalWheel ? 0.f : event.mouseWheelScroll.delta });
+        for (auto event_handler : app_commands.m_event_systems) {
+          if (event_handler(mouse_scroll_event)) { break; }
+        }
+      }
       if (event.type == sf::Event::KeyPressed) {
         auto key_pressed_event = event::key_pressed(event.key.code);
         for (auto event_handler : app_commands.m_event_systems) {
