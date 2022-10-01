@@ -16,7 +16,6 @@
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
 
-
 int main(int argc, char** argv)
 {
   auto arguments = arguments::parse(argc, argv);

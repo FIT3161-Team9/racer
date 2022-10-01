@@ -60,6 +60,7 @@ class AppCommands
 public:
   /// Spawn a new entity
   Entity spawn() { return { m_registry.create(), m_registry }; }
+  Entity spawn(entt::entity hint) { return { m_registry.create(hint), m_registry }; }
   /// Destroy the given entity
   void destroy(entt::entity entity) { m_registry.destroy(entity); }
   /// Returns whether the given entity is alive or not

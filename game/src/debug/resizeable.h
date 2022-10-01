@@ -48,13 +48,16 @@ namespace resizable
       .template add_component<Colour>(colour::blue());
   }
 
-  inline void make_selection(AppCommands& app_commands,
-                             entt::entity const selectable_entity,
-                             Rectangle const rectangle,
-                             Transform const transform,
-                             Rotation const rotation)
+  inline void make_selection(AppCommands& app_commands, entt::entity const selectable_entity)
   {
-    auto const corners = rectangle_utils::corners(rectangle, transform, rotation);
+    auto* rectangle = app_commands.component<Rectangle>(selectable_entity);
+    auto* transform = app_commands.component<Transform>(selectable_entity);
+    auto* rotation = app_commands.component<Rotation>(selectable_entity);
+    auto* resizeable = app_commands.component<Resizeable>(selectable_entity);
+
+    if (rectangle == nullptr || transform == nullptr || rotation == nullptr || resizeable == nullptr) { return; }
+
+    auto const corners = rectangle_utils::corners(*rectangle, *transform, *rotation);
 
     spawn_resize_corner(app_commands, rectangle_utils::Corner::TopRight, selectable_entity, corners[0]);
     spawn_resize_corner(app_commands, rectangle_utils::Corner::TopLeft, selectable_entity, corners[1]);
