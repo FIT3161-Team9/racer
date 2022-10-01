@@ -19,12 +19,12 @@ bool point_rectangle(Rectangle const& rectangle,
                      Rotation const& rectangle_rotation,
                      sf::Vector2f const& point);
 
-bool point_circle(Circle const& circle, Transform const& circle_transform, sf::Vector2f const& point)
+inline bool point_circle(Circle const& circle, Transform const& circle_transform, sf::Vector2f const& point)
 {
   return vector_utils::distance_between(circle_transform.value, point) <= circle.radius;
 }
 
-bool point_segment(Segment const& segment, sf::Vector2f const& point)
+inline bool point_segment(Segment const& segment, sf::Vector2f const& point)
 {
   // Since float comparison isn't perfect, let's check equality
   // within a certain threshold
@@ -40,7 +40,7 @@ bool point_segment(Segment const& segment, sf::Vector2f const& point)
 
 /// Given a segment and a circle, if the circle is colliding with the segment, return the
 /// point on the segment that the circle is touching
-std::unique_ptr<sf::Vector2f>
+inline std::unique_ptr<sf::Vector2f>
   segment_circle(Segment const& segment, Circle const& circle, Transform const& circle_transform)
 {
   // If either end of the segment is within the circle, return true
@@ -76,11 +76,11 @@ struct RectangleCircleCollision
 
 /// Given a rectangle and a circle, if they are colliding, return the normal of the edge of the rectangle
 /// the circle is touching as well as the point of contact along that edge
-std::unique_ptr<RectangleCircleCollision> rectangle_circle(Rectangle const& rectangle,
-                                                           Transform const& rectangle_transform,
-                                                           Rotation const& rectangle_rotation,
-                                                           Circle const& circle,
-                                                           Transform const& circle_transform)
+inline std::unique_ptr<RectangleCircleCollision> rectangle_circle(Rectangle const& rectangle,
+                                                                  Transform const& rectangle_transform,
+                                                                  Rotation const& rectangle_rotation,
+                                                                  Circle const& circle,
+                                                                  Transform const& circle_transform)
 {
   auto const segments = rectangle_utils::segments(rectangle, rectangle_transform, rectangle_rotation);
 
@@ -107,10 +107,10 @@ std::unique_ptr<RectangleCircleCollision> rectangle_circle(Rectangle const& rect
   return nullptr;
 }
 
-bool point_rectangle(Rectangle const& rectangle,
-                     Transform const& rectangle_transform,
-                     Rotation const& rectangle_rotation,
-                     sf::Vector2f const& point)
+inline bool point_rectangle(Rectangle const& rectangle,
+                            Transform const& rectangle_transform,
+                            Rotation const& rectangle_rotation,
+                            sf::Vector2f const& point)
 {
   auto corners = rectangle_utils::corners(rectangle, rectangle_transform, rectangle_rotation);
   for (auto i = 0; i < 4; i++) {
