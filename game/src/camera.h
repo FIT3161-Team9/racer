@@ -37,7 +37,7 @@ inline void update_positions(AppCommands& app_commands)
     // if (app_commands.get_resource<debug::pausable::PauseState>() != nullptr) { return; }
     for (auto&& [ent, target, transform] : targets.each()) {
       if (target.is_followed) {
-        centre_distance = sf::Vector2f{ transform.value.x, transform.value.y - 0.4f * window::COORDINATE_SPACE_HEIGHT };
+        centre_distance = sf::Vector2f{ transform.value.x, transform.value.y - 0.2f * window::COORDINATE_SPACE_HEIGHT };
       }
     }
     if (centre_distance.x < 0.f && centre_distance.y < 0.f) { return; }
