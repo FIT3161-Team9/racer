@@ -28,12 +28,14 @@
 #include "../image_dimensions.h"
 #include "game/src/acceleration.h"
 #include "game/src/camera.h"
+#include "game/src/currently_loaded_map.h"
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/gravity.h"
+#include "game/src/spawn_transform.h"
 #include "game/src/velocity.h"
 
 namespace serialization
@@ -46,28 +48,45 @@ nlohmann::json serialize_vector(sf::Vector2f const&);
 sf::Vector2f deserialize_vector(nlohmann::json const&);
 Outline deserialize_outline(nlohmann::json const&);
 Colour deserialize_colour(nlohmann::json const&);
+std::string get_level_file_name(CurrentlyLoadedMap*);
 
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_system<Event::EventType::KeyReleased>(Query<Transform>{}, [&](auto& event, auto& view) {
     if (event.key_released.key != sf::Keyboard::D) { return false; }
 
-    auto time = std::time(nullptr);
-    char file_name[100];
-    std::strftime(file_name, sizeof(file_name), "%Y-%m-%d_%I.%M.%S.json", std::localtime(&time));
+    auto* loaded_level = app_commands.get_resource<CurrentlyLoadedMap>();
 
+    auto file_name = get_level_file_name(loaded_level);
     std::ofstream outfile(std::filesystem::path(std::string("./levels/") + file_name));
 
-    nlohmann::json array;
+    nlohmann::json map_data;
 
-    for (auto&& [entity, _transform] : view.each()) { array.push_back(serialize(app_commands, entity)); }
+    nlohmann::json entity_array;
 
-    outfile << array.dump();
+    for (auto&& [entity, _transform] : view.each()) { entity_array.push_back(serialize(app_commands, entity)); }
+
+    map_data["entities"] = entity_array;
+    map_data["name"] = loaded_level == nullptr ? "Unnamed Level" : loaded_level->name;
+    map_data["version"] = loaded_level == nullptr ? 0 : loaded_level->version + 1;
+
+    outfile << map_data.dump();
 
     outfile.close();
 
     return true;
   });
+}
+
+inline std::string get_level_file_name(CurrentlyLoadedMap* currently_loaded_map)
+{
+  if (currently_loaded_map != nullptr) {
+    return currently_loaded_map->name + " (" + std::to_string(currently_loaded_map->version + 1) + ").json";
+  }
+  auto time = std::time(nullptr);
+  char file_name[100];
+  std::strftime(file_name, sizeof(file_name), "%Y-%m-%d_%I.%M.%S.json", std::localtime(&time));
+  return file_name;
 }
 
 inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
@@ -80,7 +99,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* image_dimensions = app_commands.component<ImageDimensions>(entity);
   auto const* ground = app_commands.component<Ground>(entity);
   auto const* scale = app_commands.component<Scale>(entity);
-  auto const* transform = app_commands.component<Transform>(entity);
+  auto const* transform = app_commands.component<SpawnTransform>(entity);
   auto const* velocity = app_commands.component<Velocity>(entity);
   auto const* acceleration = app_commands.component<Acceleration>(entity);
   auto const* rectangle = app_commands.component<Rectangle>(entity);
@@ -141,6 +160,7 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
   if (components.contains("scale")) { entity.add_component<Scale>(deserialize_vector(components["scale"])); }
   if (components.contains("transform")) {
     entity.add_component<Transform>(deserialize_vector(components["transform"]));
+    entity.add_component<SpawnTransform>(deserialize_vector(components["transform"]));
   }
   if (components.contains("velocity")) { entity.add_component<Velocity>(deserialize_vector(components["velocity"])); }
   if (components.contains("acceleration")) {
