@@ -25,13 +25,16 @@
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/pausable.h"
+#include "game/src/debug/reset_camera.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/debug/serialization.h"
+#include "game/src/debug/spawn_vehicle.h"
 #include "game/src/ground.h"
 #include "game/src/rectangle_utils.h"
 #include "game/src/shift_key_resource.h"
+#include "game/src/spawn_transform.h"
 
 namespace debug
 {
@@ -111,12 +114,21 @@ namespace drag_and_drop
         if (!move_on_key_down_timer.timer.has_value()) { move_on_key_down_timer.timer = sf::Clock{}; }
         move_on_key_down_timer.timer.value().restart();
 
-        view.each([&](auto const& selectable, auto& transform) {
+        view.each([&](auto entity, auto const& selectable, auto& transform) {
+          sf::Vector2f delta = { 0.f, 0.f };
           if (!selectable.selected) { return; }
-          if (event.key_pressed.key == sf::Keyboard::Left) { transform.value.x -= 1.f; }
-          if (event.key_pressed.key == sf::Keyboard::Right) { transform.value.x += 1.f; }
-          if (event.key_pressed.key == sf::Keyboard::Down) { transform.value.y += 1.f; }
-          if (event.key_pressed.key == sf::Keyboard::Up) { transform.value.y -= 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Left) { delta.x = -1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Right) { delta.x = 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Down) { delta.y = 1.f; }
+          if (event.key_pressed.key == sf::Keyboard::Up) { delta.y = -1.f; }
+          transform.value.x += delta.x;
+          transform.value.y += delta.y;
+
+          auto* spawn_transform = app_commands.component<SpawnTransform>(entity);
+          if (spawn_transform != nullptr) {
+            spawn_transform->value.x += delta.x;
+            spawn_transform->value.y += delta.y;
+          }
         });
         return false;
       });
@@ -161,6 +173,8 @@ inline void plugin(AppCommands& app_commands)
   app_commands.add_plugin(clipboard::plugin);
   app_commands.add_plugin(deletable::plugin);
   app_commands.add_plugin(serialization::plugin);
+  app_commands.add_plugin(spawn_vehicle::plugin);
+  app_commands.add_plugin(reset_camera::plugin);
 }
 
 }// namespace debug

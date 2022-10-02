@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <optional>
 
 #include <SFML/Graphics.hpp>
@@ -35,12 +34,8 @@ namespace draggable
         transform.value = new_transform;
         auto* spawn_transform = app_commands.component<SpawnTransform>(entity);
         if (spawn_transform != nullptr) {
-          std::cout << "Updating spawn transform, starting at: " << vector_utils::stringify(spawn_transform->value)
-                    << "\n";
           spawn_transform->value.x += transform_delta.x;
           spawn_transform->value.y += transform_delta.y;
-          std::cout << "Updated spawn transform, ending at: " << vector_utils::stringify(spawn_transform->value)
-                    << "\n";
         }
       });
       return false;
