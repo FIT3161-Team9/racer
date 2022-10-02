@@ -97,23 +97,6 @@ namespace drag_and_drop
         return selected_something;
       });
 
-    // Clear draggable state on mouse release
-    app_commands.add_system<Event::EventType::MouseButtonReleased>(Query<Draggable>{}, [&](auto& event, auto& view) {
-      (void)event;
-      view.each([&](auto& draggable) { draggable.drag_offset.reset(); });
-      return false;
-    });
-
-    // Update draggable transform when being dragged
-    app_commands.add_system<Event::EventType::MouseMoved>(Query<Draggable, Transform>{}, [&](auto& event, auto& view) {
-      auto const& mouse_location = event.mouse_moved.location;
-      view.each([&](auto& draggable, auto& transform) {
-        if (!draggable.drag_offset.has_value()) { return; }
-        transform.value = vector_utils::minus(mouse_location, draggable.drag_offset.value());
-      });
-      return false;
-    });
-
     // Move selected item when arrow key is initially pressed, and start the timer
     app_commands.add_system<Event::EventType::KeyPressed>(
       ResourceQuery<MoveOnKeyDownTimer>{},
@@ -171,6 +154,7 @@ namespace drag_and_drop
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_plugin(pausable::plugin);
+  app_commands.add_plugin(draggable::plugin);
   app_commands.add_plugin(rotatable::plugin);
   app_commands.add_plugin(resizable::plugin);
   app_commands.add_plugin(drag_and_drop::plugin);

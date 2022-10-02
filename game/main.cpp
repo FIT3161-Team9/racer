@@ -8,6 +8,7 @@
 #include "game/src/acceleration.h"
 #include "game/src/arguments.h"
 #include "game/src/camera.h"
+#include "game/src/currently_loaded_map.h"
 #include "game/src/debug.h"
 #include "game/src/game_state.h"
 #include "game/src/gravity.h"
@@ -43,7 +44,8 @@ int main(int argc, char** argv)
     }
     if (arguments.level != nullptr) {
       std::cout << "Loading level " << arguments.level << "\n";
-      map::load_level(app_commands, arguments.level);
+      auto const map = map::load_level(app_commands, arguments.level);
+      app_commands.template add_resource<CurrentlyLoadedMap>(map);
     }
 
     if (arguments.level == nullptr) {
