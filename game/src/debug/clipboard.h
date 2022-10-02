@@ -25,8 +25,10 @@
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
+#include "game/src/debug/serialization.h"
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
+#include "game/src/spawn_transform.h"
 
 struct Clipboard
 {
@@ -73,6 +75,8 @@ inline void plugin(AppCommands& app_commands)
       auto const* colour = app_commands.component<Colour>(entity);
       auto const* rotation = app_commands.component<Rotation>(entity);
       auto const* z_index = app_commands.component<ZIndex>(entity);
+      auto const* spawn_transform = app_commands.component<SpawnTransform>(entity);
+      auto const* serialized = app_commands.component<serialization::Serialized>(entity);
 
       auto copied = app_commands.spawn();
 
@@ -86,6 +90,8 @@ inline void plugin(AppCommands& app_commands)
       if (colour) { copied.add_component<Colour>(*colour); }
       if (rotation) { copied.add_component<Rotation>(*rotation); }
       if (z_index) { copied.add_component<ZIndex>(*z_index); }
+      if (spawn_transform) { copied.add_component<SpawnTransform>(*spawn_transform); }
+      if (serialized) { copied.add_component<serialization::Serialized>(); }
 
       copied.add_component<debug::Rotatable>()
         .add_component<debug::Selectable>()
