@@ -19,6 +19,9 @@ struct Target
   bool is_followed;
 };
 
+/// Entities with this component won't have their transform updated in response to camera movement
+enum class Sticky {};
+
 
 inline void update_positions(AppCommands& app_commands);
 inline void update_target(AppCommands& app_commands);
@@ -41,7 +44,9 @@ inline void update_positions(AppCommands& app_commands)
       }
     }
     if (centre_distance.x < 0.f && centre_distance.y < 0.f) { return; }
-    for (auto&& [ent, transform] : view.each()) {
+    for (auto&& [entity, transform] : view.each()) {
+      if (app_commands.component<Sticky>(entity) != nullptr) { continue; }
+
       if (centre_distance.y > 0.f) { transform.value.y = transform.value.y - centre_distance.y; }
       if (centre_distance.x > 0.f) { transform.value.x = transform.value.x - centre_distance.x; }
     }
@@ -49,7 +54,8 @@ inline void update_positions(AppCommands& app_commands)
 
   app_commands.add_system<Event::EventType::MouseWheelScrolled>(Query<Transform>{}, [&](auto& event, auto& view) {
     if (app_commands.get_resource<debug::pausable::PauseState>() == nullptr) { return false; }
-    view.each([&](auto& transform) {
+    view.each([&](auto entity, auto& transform) {
+      if (app_commands.component<Sticky>(entity) != nullptr) { return; }
       transform.value.x += event.mouse_wheel_scrolled.distance.x * 1.1f;
       transform.value.y += event.mouse_wheel_scrolled.distance.y * 1.1f;
     });

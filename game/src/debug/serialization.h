@@ -41,6 +41,8 @@
 namespace serialization
 {
 
+enum class Serialized {};
+
 nlohmann::json serialize(AppCommands& app_commands, entt::entity entity);
 nlohmann::json serialize_outline(Outline const&);
 nlohmann::json serialize_colour(Colour const&);
@@ -52,7 +54,7 @@ std::string get_level_file_name(CurrentlyLoadedMap*);
 
 inline void plugin(AppCommands& app_commands)
 {
-  app_commands.add_system<Event::EventType::KeyReleased>(Query<Transform>{}, [&](auto& event, auto& view) {
+  app_commands.add_system<Event::EventType::KeyReleased>(Query<Serialized>{}, [&](auto& event, auto& view) {
     if (event.key_released.key != sf::Keyboard::D) { return false; }
 
     auto* loaded_level = app_commands.get_resource<CurrentlyLoadedMap>();
@@ -64,7 +66,7 @@ inline void plugin(AppCommands& app_commands)
 
     nlohmann::json entity_array;
 
-    for (auto&& [entity, _transform] : view.each()) { entity_array.push_back(serialize(app_commands, entity)); }
+    for (auto&& [entity, _serialized] : view.each()) { entity_array.push_back(serialize(app_commands, entity)); }
 
     map_data["entities"] = entity_array;
     map_data["name"] = loaded_level == nullptr ? "Unnamed Level" : loaded_level->name;
@@ -115,6 +117,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* rotatable = app_commands.component<debug::Rotatable>(entity);
   auto const* deletable = app_commands.component<debug::Deletable>(entity);
   auto const* camera_target = app_commands.component<camera::Target>(entity);
+  auto const* sticky = app_commands.component<camera::Sticky>(entity);
 
   if (texture != nullptr) { components["texture"] = texture->path; }
   if (image_dimensions != nullptr) { components["image_dimensions"] = serialize_vector(image_dimensions->dimensions); }
@@ -136,6 +139,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (rotatable != nullptr) { components["rotatable"] = true; }
   if (deletable != nullptr) { components["deletable"] = true; }
   if (camera_target != nullptr) { components["camera_target"] = camera_target->is_followed; }
+  if (sticky != nullptr) { components["sticky"] = true; }
 
   json object;
 
@@ -148,7 +152,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
 inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json const& object)
 {
   auto components = object["components"];
-  auto entity = app_commands.spawn(object["id"]);
+  auto entity = app_commands.spawn(object["id"]).add_component<Serialized>();
 
   if (components.contains("texture") && components["texture"].is_string()) {
     entity.add_component<Texture>(components["texture"]);
@@ -181,6 +185,7 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
   if (components.contains("rotatable")) { entity.add_component<debug::Rotatable>(); }
   if (components.contains("deletable")) { entity.add_component<debug::Deletable>(); }
   if (components.contains("camera_target")) { entity.add_component<camera::Target>(components["camera_target"]); }
+  if (components.contains("sticky")) { entity.add_component<camera::Sticky>(); }
 }
 
 inline nlohmann::json serialize_outline(Outline const& outline)
