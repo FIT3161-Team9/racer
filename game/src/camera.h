@@ -9,7 +9,7 @@
 #include "engine/vector_utils.h"
 #include "engine/window.h"
 
-#include "./debug/pausable.h"
+#include "game/src/pause_state.h"
 
 namespace camera
 {
@@ -37,7 +37,6 @@ inline void update_positions(AppCommands& app_commands)
 {
   app_commands.add_system(Query<Target, Transform>{}, Query<Transform>{}, [&](auto& targets, auto& view) {
     sf::Vector2f centre_distance = {};
-    // if (app_commands.get_resource<debug::pausable::PauseState>() != nullptr) { return; }
     for (auto&& [ent, target, transform] : targets.each()) {
       if (target.is_followed) {
         centre_distance = sf::Vector2f{ transform.value.x, transform.value.y - 0.2f * window::COORDINATE_SPACE_HEIGHT };
@@ -53,7 +52,7 @@ inline void update_positions(AppCommands& app_commands)
   });
 
   app_commands.add_system<Event::EventType::MouseWheelScrolled>(Query<Transform>{}, [&](auto& event, auto& view) {
-    if (app_commands.get_resource<debug::pausable::PauseState>() == nullptr) { return false; }
+    if (app_commands.get_resource<PauseState>() == nullptr) { return false; }
     view.each([&](auto entity, auto& transform) {
       if (app_commands.component<Sticky>(entity) != nullptr) { return; }
       transform.value.x += event.mouse_wheel_scrolled.distance.x * 1.1f;
