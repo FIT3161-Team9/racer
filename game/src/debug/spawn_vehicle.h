@@ -1,5 +1,7 @@
 #pragma once
 
+#include <random>
+
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
@@ -20,6 +22,7 @@
 #include "game/src/debug/selectable.h"
 #include "game/src/gravity.h"
 #include "game/src/maximum_velocity.h"
+#include "game/src/vehicle.h"
 #include "game/src/velocity.h"
 
 namespace spawn_vehicle
@@ -27,9 +30,16 @@ namespace spawn_vehicle
 
 inline void spawn(AppCommands& app_commands, sf::Vector2f const& location)
 {
+  const std::uint32_t seed = static_cast<std::uint32_t>(std::random_device{}());
+  std::mt19937 generator(seed);
+  std::uniform_int_distribution<std::int32_t> distribute(500.f, 800.f);
+
+  auto const random_value = distribute(generator);
+
 
   app_commands.spawn()
-    .add_component<Acceleration>(sf::Vector2f{ 600.f, 0.f })
+    .add_component<Vehicle>(false)
+    .add_component<Acceleration>(sf::Vector2f{ static_cast<float>(random_value), 0.f })
     .add_component<MaximumVelocity>(2000.f)
     .add_component<AffectedByGravity>()
     .add_component<camera::Target>()

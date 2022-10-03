@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <optional>
 #include <string>
 
@@ -52,6 +53,7 @@ inline void plugin(AppCommands& app_commands)
 
 inline entt::entity start(AppCommands& app_commands)
 {
+  std::cout << "Starting countdown_timer\n";
   auto* timer = app_commands.get_resource<CountDownTimer>();
 
   timer->timer = sf::Clock();

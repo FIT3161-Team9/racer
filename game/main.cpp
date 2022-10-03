@@ -11,6 +11,7 @@
 #include "game/src/count_down_timer.h"
 #include "game/src/currently_loaded_map.h"
 #include "game/src/debug.h"
+#include "game/src/finish_line.h"
 #include "game/src/game_state.h"
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
@@ -47,6 +48,7 @@ int main(int argc, char** argv)
     app_commands.add_plugin(shift_key_resource::plugin);
     app_commands.add_plugin(arrow_keys_resource::plugin);
     app_commands.add_plugin(maximum_velocity::plugin);
+    app_commands.add_plugin(finish_line::plugin);
 
     if (arguments.debug_mode) {
       std::cout << "Loading in debug mode\n";

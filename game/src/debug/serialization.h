@@ -34,6 +34,7 @@
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
+#include "game/src/finish_line.h"
 #include "game/src/gravity.h"
 #include "game/src/spawn_transform.h"
 #include "game/src/velocity.h"
@@ -73,7 +74,6 @@ inline void plugin(AppCommands& app_commands)
     map_data["version"] = loaded_level == nullptr ? 0 : loaded_level->version + 1;
     map_data["vehicle_spawn_location"] =
       serialize_vector(loaded_level == nullptr ? sf::Vector2f{ 0.f, 0.f } : loaded_level->vehicle_spawn_location);
-    map_data["finish_line_location"] = loaded_level == nullptr ? 0.f : loaded_level->finish_line_location;
 
     outfile << map_data.dump();
 
@@ -121,6 +121,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* deletable = app_commands.component<debug::Deletable>(entity);
   auto const* camera_target = app_commands.component<camera::Target>(entity);
   auto const* sticky = app_commands.component<camera::Sticky>(entity);
+  auto const* finish_line = app_commands.component<FinishLine>(entity);
 
   if (texture != nullptr) { components["texture"] = texture->path; }
   if (image_dimensions != nullptr) { components["image_dimensions"] = serialize_vector(image_dimensions->dimensions); }
@@ -143,6 +144,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (deletable != nullptr) { components["deletable"] = true; }
   if (camera_target != nullptr) { components["camera_target"] = camera_target->is_followed; }
   if (sticky != nullptr) { components["sticky"] = true; }
+  if (finish_line != nullptr) { components["finish_line"] = true; }
 
   json object;
 
@@ -189,6 +191,7 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
   if (components.contains("deletable")) { entity.add_component<debug::Deletable>(); }
   if (components.contains("camera_target")) { entity.add_component<camera::Target>(components["camera_target"]); }
   if (components.contains("sticky")) { entity.add_component<camera::Sticky>(); }
+  if (components.contains("finish_line")) { entity.add_component<FinishLine>(); }
 }
 
 inline nlohmann::json serialize_outline(Outline const& outline)

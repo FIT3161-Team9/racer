@@ -10,6 +10,5 @@ struct CurrentlyLoadedMap
 {
   std::string name;
   int version;
-  float finish_line_location;
   sf::Vector2f vehicle_spawn_location;
 };
