@@ -8,6 +8,7 @@
 #include "game/src/acceleration.h"
 #include "game/src/arguments.h"
 #include "game/src/camera.h"
+#include "game/src/count_down_timer.h"
 #include "game/src/currently_loaded_map.h"
 #include "game/src/debug.h"
 #include "game/src/game_state.h"
@@ -35,6 +36,7 @@ int main(int argc, char** argv)
     app_commands.template add_resource<GameState>(GameState::CurrentScreen::SplashScreen);
     app_commands.template add_resource<PauseState>(true);
 
+    app_commands.add_plugin(count_down_timer::plugin);
     app_commands.add_plugin(timing::plugin);
     app_commands.add_plugin(velocity::plugin);
     app_commands.add_plugin(acceleration::plugin);

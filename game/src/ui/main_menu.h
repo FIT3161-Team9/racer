@@ -20,6 +20,7 @@
 #include <engine/window.h>
 #include <engine/zindex.h>
 
+#include "game/src/count_down_timer.h"
 #include "game/src/debug/spawn_vehicle.h"
 #include "game/src/game_state.h"
 #include "game/src/map.h"
