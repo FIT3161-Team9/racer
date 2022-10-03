@@ -9,10 +9,12 @@
 
 #include "engine/app_commands.h"
 #include "engine/colour.h"
+#include "engine/query.h"
 #include "engine/text.h"
 #include "engine/transform.h"
 
 #include "engine/zindex.h"
+#include "game/src/pause_state.h"
 #include "game/src/utils.h"
 
 struct CountDownTimer
@@ -25,7 +27,28 @@ enum class CountDownText {};
 namespace count_down_timer
 {
 
-inline void plugin(AppCommands& app_commands) { app_commands.add_resource<CountDownTimer>(); }
+inline void plugin(AppCommands& app_commands)
+{
+  app_commands.add_resource<CountDownTimer>();
+
+  app_commands.add_system(
+    ResourceQuery<CountDownTimer, PauseState>{}, Query<CountDownText, Text>{}, [&](auto& resources, auto& view) {
+      auto&& [_, count_down_timer, pause_state] = resources;
+
+      if (!count_down_timer.timer.has_value()) { return; }
+
+      for (auto&& [entity, count_down_text, text] : view.each()) {
+        auto const elapsed_seconds = count_down_timer.timer.value().getElapsedTime().asSeconds();
+        if (elapsed_seconds > 1.f) { text.content = "2"; }
+        if (elapsed_seconds > 2.f) { text.content = "1"; }
+        if (elapsed_seconds > 3.f) {
+          pause_state.paused = false;
+          count_down_timer.timer.reset();
+          app_commands.destroy(entity);
+        }
+      }
+    });
+}
 
 inline entt::entity start(AppCommands& app_commands)
 {
