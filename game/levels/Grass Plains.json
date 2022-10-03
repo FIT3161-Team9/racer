@@ -3829,5 +3829,6 @@
     }
   ],
   "name": "Grass Plains",
+  "vehicle_spawn_location": { "x": -850.0, "y": 200.0 },
   "version": 9
 }

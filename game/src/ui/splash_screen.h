@@ -35,11 +35,13 @@ void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 inline void plugin(AppCommands& app_commands)
 {
   // Spawn the background
-  background::spawn(app_commands);
+  auto const background = background::spawn(app_commands).entity();
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
-    ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
+    ResourceQuery<GameState>{},
+    Query<layout::Flex>{},
+    [&, background](auto& event, auto& resource_tuple, auto& flex_query) {
       auto&& [_, game_state] = resource_tuple;
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
@@ -52,6 +54,7 @@ inline void plugin(AppCommands& app_commands)
       game_state.current_screen = GameState::CurrentScreen::MainMenu;
       auto flex_container = *flex_query.begin();
       destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+      background::destroy(app_commands, background);
       main_menu::spawn_ui(app_commands);
 
       return true;

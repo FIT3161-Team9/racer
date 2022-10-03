@@ -18,33 +18,41 @@
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/selectable.h"
+#include "game/src/gravity.h"
 #include "game/src/maximum_velocity.h"
 #include "game/src/velocity.h"
 
 namespace spawn_vehicle
 {
 
+inline void spawn(AppCommands& app_commands, sf::Vector2f const& location)
+{
+
+  app_commands.spawn()
+    .add_component<Acceleration>(sf::Vector2f{ 600.f, 0.f })
+    .add_component<MaximumVelocity>(2000.f)
+    .add_component<AffectedByGravity>()
+    .add_component<camera::Target>()
+    .add_component<Circle>(77.5f)
+    .add_component<Colour>(colour::transparent())
+    .add_component<debug::Draggable>()
+    .add_component<Outline>(colour::transparent(), 2.f)
+    .add_component<Rotation>(0.f)
+    .add_component<Scale>(sf::Vector2f{ 1.f, 1.f })
+    .add_component<debug::Selectable>()
+    .add_component<debug::Deletable>()
+    .add_component<Texture>("assets/Car1.png")
+    .add_component<ZIndex>(2)
+    .add_component<Transform>(location)
+    .add_component<Velocity>(sf::Vector2f{ 0.f, 0.f });
+}
+
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_system<Event::EventType::KeyReleased>([&](auto& event) {
     if (event.key_released.key != sf::Keyboard::S) { return false; }
-    app_commands.spawn()
-      .add_component<Acceleration>(sf::Vector2f{ 600.f, 0.f })
-      .add_component<MaximumVelocity>(2000.f)
-      .add_component<AffectedByGravity>()
-      .add_component<camera::Target>()
-      .add_component<Circle>(77.5f)
-      .add_component<Colour>(colour::transparent())
-      .add_component<debug::Draggable>()
-      .add_component<Outline>(colour::transparent(), 2.f)
-      .add_component<Rotation>(0.f)
-      .add_component<Scale>(sf::Vector2f{ 1.f, 1.f })
-      .add_component<debug::Selectable>()
-      .add_component<debug::Deletable>()
-      .add_component<Texture>("assets/Car1.png")
-      .add_component<ZIndex>(2)
-      .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
-      .add_component<Velocity>(sf::Vector2f{ 0.f, 0.f });
+
+    spawn(app_commands, sf::Vector2f{ 0.f, 0.f });
 
     return false;
   });
