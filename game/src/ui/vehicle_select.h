@@ -20,11 +20,14 @@
 #include "../utils.h"
 #include "./result_screen.h"
 
+
+
 namespace vehicle_select
 {
 
 void spawn_ui(AppCommands&);
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
+entt::entity createInfor(AppCommands& app_commands,float& speed,float& acc, float& feul );
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
@@ -36,16 +39,23 @@ inline void plugin(AppCommands& app_commands)
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
-      if (event.key_released.key != sf::Keyboard::Key::Enter
-          || game_state.current_screen != GameState::CurrentScreen::VehicleSelect) {
-        return false;
+      if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect) {
+        if (event.key_released.key == sf::Keyboard::Key::Enter){
+          game_state.current_screen = GameState::CurrentScreen::ResultScreen;
+          auto flex_container = *flex_query.begin();
+          destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+          result_screen::spawn_ui(app_commands);
+          return true;
+        }
+        if (event.key_released.key == sf::Keyboard::Key::Escape){
+          game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
+          auto flex_container = *flex_query.begin();
+          destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+          display_course::spawn_ui(app_commands);
+          return true;
+        }
       }
-
-      game_state.current_screen = GameState::CurrentScreen::ResultScreen;
-      auto flex_container = *flex_query.begin();
-      destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-      result_screen::spawn_ui(app_commands);
-      return true;
+      return false;
     });
 }
 
@@ -54,6 +64,59 @@ inline void destroy_ui(AppCommands& app_commands, entt::entity flex_container, C
 {
   for (auto child : children.children) { app_commands.destroy(child); }
   app_commands.destroy(flex_container);
+}
+
+inline entt::entity createInfor(AppCommands& app_commands,float& speed,float& acc, float& feul ){
+  
+  auto state_speed = app_commands.spawn()
+                       .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
+                       .add_component<Outline>(colour::black(), 2.2f)
+                       .add_component<Colour>(colour::black())
+                       .add_component<ZIndex>(3)
+                       .add_component<Transform>(sf::Vector2f{ 400.f, -80.f });
+
+  auto vehicle_speed = app_commands.spawn()
+                         .add_component<Rectangle>(sf::Vector2f{ speed, 50.f })
+                         .add_component<Outline>(colour::black(), 2.2f)
+                         .add_component<Colour>(colour::white())
+                         .add_component<ZIndex>(4)
+                         .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-speed)/2, -80.f });
+
+  auto state_acceleration = app_commands.spawn()
+                              .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
+                              .add_component<Outline>(colour::black(), 2.2f)
+                              .add_component<Colour>(colour::black())
+                              .add_component<ZIndex>(3)
+                              .add_component<Transform>(sf::Vector2f{ 400.f, 75.f });
+
+  auto vehicle_acceleration = app_commands.spawn()
+                                .add_component<Rectangle>(sf::Vector2f{ acc, 50.f })
+                                .add_component<Outline>(colour::black(), 2.2f)
+                                .add_component<Colour>(colour::white())
+                                .add_component<ZIndex>(4)
+                                .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-acc)/2, 75.f });
+
+
+  auto state_feul = app_commands.spawn()
+                      .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
+                      .add_component<Outline>(colour::black(), 2.2f)
+                      .add_component<Colour>(colour::black())
+                      .add_component<ZIndex>(3)
+                      .add_component<Transform>(sf::Vector2f{ 400.f, 215.f });
+
+  auto vehicle_feul = app_commands.spawn()
+                        .add_component<Rectangle>(sf::Vector2f{ feul, 50.f })
+                        .add_component<Outline>(colour::black(), 2.2f)
+                        .add_component<Colour>(colour::white())
+                        .add_component<ZIndex>(4)
+                        .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-acc)/2, 215.f });
+
+  return state_speed.entity(),
+         vehicle_speed.entity(),
+         state_acceleration.entity(),
+         vehicle_acceleration.entity(),
+         state_feul.entity(),
+         vehicle_feul.entity();
 }
 
 /// Create the UI for ths main screen

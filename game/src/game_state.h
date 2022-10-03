@@ -9,6 +9,7 @@ struct GameState
     MainMenu,
     VehicleSelect,
     ResultScreen,
+    DisplayCourse,
   };
 
   CurrentScreen current_screen;

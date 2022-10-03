@@ -26,12 +26,34 @@ namespace result_screen
 {
 
 void spawn_ui(AppCommands&);
-
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
+struct {int state; }selected_state;
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
 {
+  app_commands.add_system<Event::EventType::KeyReleased>(
+    ResourceQuery<GameState>{}, Query<Icon const, Transform>{}, [&](auto& event, auto& resource_tuple, auto& view) {
+      auto&& [_, game_state] = resource_tuple;
+      if(game_state.current_screen == GameState::CurrentScreen::ResultScreen){
+        if (event.key_released.key == sf::Keyboard::Key::Up) {
+          view.each([&](auto& icon, auto& transform) {
+            (void)icon;
+            transform.value.y = 40.f;
+            selected_state.state = 0;
+          });
+        }
+        if (event.key_released.key == sf::Keyboard::Key::Down) {
+          view.each([&](auto& icon, auto& transform) {
+            (void)icon;
+            transform.value.y = 200.f;
+            selected_state.state = 1;
+          });
+        }
+      }
+      return false;
+  });
+
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<layout::Flex>{}, [&](auto& event, auto& resource_tuple, auto& flex_query) {
@@ -39,16 +61,26 @@ inline void plugin(AppCommands& app_commands)
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
-      if (event.key_released.key != sf::Keyboard::Key::Enter
-          || game_state.current_screen != GameState::CurrentScreen::ResultScreen) {
-        return false;
+      if (game_state.current_screen == GameState::CurrentScreen::ResultScreen) {
+        
+        if (event.key_released.key == sf::Keyboard::Key::Enter){
+          if (selected_state.state == 0){
+            game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
+            auto flex_container = *flex_query.begin();
+            destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+            display_course::spawn_ui(app_commands);
+            return true;
+          }
+          if (selected_state.state == 1){
+            game_state.current_screen = GameState::CurrentScreen::MainMenu;
+            auto flex_container = *flex_query.begin();
+            destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+            main_menu::spawn_ui(app_commands);
+            return true;
+          }
+        }
       }
-
-      game_state.current_screen = GameState::CurrentScreen::MainMenu;
-      auto flex_container = *flex_query.begin();
-      destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-
-      return true;
+      return false;
     });
 }
 
@@ -122,13 +154,9 @@ inline void spawn_ui(AppCommands& app_commands)
     app_commands.spawn()
       .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
       .add_component<Colour>(colour::black())
+      .add_component<Icon>()
       .add_component<Transform>(sf::Vector2f{ -360.f, 40.f });
-
-  auto quit_button_icon =
-    app_commands.spawn()
-      .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
-      .add_component<Colour>(colour::black())
-      .add_component<Transform>(sf::Vector2f{ -360.f, 200.f });
+  selected_state.state = 0;
 
   auto prompt_1 = app_commands.spawn()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "USE THE ", u32(21), 0.85f)
@@ -188,7 +216,7 @@ inline void spawn_ui(AppCommands& app_commands)
                                                    subtitle.entity(),
                                                    menu_row.entity(),
                                                    bottom_row.entity(),
-                                                   quit_button_icon.entity(),
+                                                  //  quit_button_icon.entity(),
                                                    play_button_icon.entity(),
                                                    outline_p2.entity(),
                                                    outline_p4.entity(),

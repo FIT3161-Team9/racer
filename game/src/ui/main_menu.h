@@ -23,31 +23,38 @@
 #include "../utils.h"
 #include "./background.h"
 #include "./icon.h"
-#include "./vehicle_select.h"
+#include "./display_course.h"
 
 namespace main_menu
 {
 
 void spawn_ui(AppCommands&);
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
+struct {int state; }selected_state;
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
 {
-  app_commands.add_system<Event::EventType::KeyReleased>(Query<Icon const, Transform>{}, [&](auto& event, auto& view) {
-    if (event.key_released.key == sf::Keyboard::Key::Up) {
-      view.each([&](auto& icon, auto& transform) {
-        (void)icon;
-        transform.value.y = -120.f;
-      });
-    }
-    if (event.key_released.key == sf::Keyboard::Key::Down) {
-      view.each([&](auto& icon, auto& transform) {
-        (void)icon;
-        transform.value.y = 70.f;
-      });
-    }
-    return false;
+  app_commands.add_system<Event::EventType::KeyReleased>(
+    ResourceQuery<GameState>{}, Query<Icon const, Transform>{}, [&](auto& event, auto& resource_tuple, auto& view) {
+      auto&& [_, game_state] = resource_tuple;
+      if(game_state.current_screen == GameState::CurrentScreen::MainMenu){
+        if (event.key_released.key == sf::Keyboard::Key::Up) {
+          view.each([&](auto& icon, auto& transform) {
+            (void)icon;
+            transform.value.y = -120.f;
+            selected_state.state = 0;
+          });
+        }
+        if (event.key_released.key == sf::Keyboard::Key::Down) {
+          view.each([&](auto& icon, auto& transform) {
+            (void)icon;
+            transform.value.y = 70.f;
+            selected_state.state = 1;
+          });
+        }
+      }
+      return false;
   });
 
   // Listen for the "enter" key
@@ -56,17 +63,28 @@ inline void plugin(AppCommands& app_commands)
       auto&& [_, game_state] = resource_tuple;
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
-      if (event.key_released.key != sf::Keyboard::Key::Enter
-          || game_state.current_screen != GameState::CurrentScreen::MainMenu) {
-        return false;
+      if ( game_state.current_screen == GameState::CurrentScreen::MainMenu) {
+        if (event.key_released.key == sf::Keyboard::Key::Escape) {
+          game_state.current_screen = GameState::CurrentScreen::SplashScreen;
+          auto flex_container = *flex_query.begin();
+          destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+
+          splash_screen::spawn_ui(app_commands);
+          return true;
+        }
+        if (event.key_released.key == sf::Keyboard::Key::Enter) {
+          if (selected_state.state == 0){
+            game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
+            auto flex_container = *flex_query.begin();
+            destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+
+            display_course::spawn_ui(app_commands);
+            return true;
+          }
+        }
       }
-
-      game_state.current_screen = GameState::CurrentScreen::VehicleSelect;
-      auto flex_container = *flex_query.begin();
-      destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-
-      vehicle_select::spawn_ui(app_commands);
-      return true;
+      return false;
+      
     });
 }
 
@@ -124,6 +142,8 @@ inline void spawn_ui(AppCommands& app_commands)
       .add_component<Colour>(colour::black())
       .add_component<Icon>()
       .add_component<Transform>(sf::Vector2f{ -610.f, -120.f });
+  
+  selected_state.state = 0;
 
   auto play_button_row =
     app_commands.spawn()
