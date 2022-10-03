@@ -39,7 +39,7 @@ inline entt::entity start(AppCommands& app_commands)
     .add_component<Transform>(sf::Vector2f{ 0.f, 0.f })
     .add_component<Colour>(colour::black())
     .add_component<ZIndex>(4)
-    .add_component<Text>(utils::INTER_SEMI_BOLD, std::string{ "3" }, utils::u32(20), 1.f)
+    .add_component<Text>(utils::INTER_SEMI_BOLD, std::string{ "3" }, utils::u32(70), 1.f)
     .add_component<CountDownText>()
     .entity();
 }

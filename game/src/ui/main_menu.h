@@ -25,6 +25,8 @@
 #include "game/src/game_state.h"
 #include "game/src/map.h"
 #include "game/src/ui/background.h"
+#include "game/src/ui/display_course.h"
+#include "game/src/ui/icon.h"
 #include "game/src/utils.h"
 
 namespace main_menu
@@ -89,6 +91,9 @@ inline void plugin(AppCommands& app_commands)
             background::destroy(app_commands, background);
 
             game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
+
+            display_course::spawn_ui(app_commands);
+
             return true;
           }
         }
