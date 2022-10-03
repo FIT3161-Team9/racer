@@ -29,7 +29,6 @@ namespace main_menu
 {
 
 void spawn_ui(AppCommands&);
-void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
 
 struct SelectedState
 {
@@ -90,13 +89,6 @@ inline void plugin(AppCommands& app_commands)
       }
       return false;
     });
-}
-
-/// Destroy the UI for the main screen
-inline void destroy_ui(AppCommands& app_commands, entt::entity flex_container, Children& children)
-{
-  for (auto child : children.children) { app_commands.destroy(child); }
-  app_commands.destroy(flex_container);
 }
 
 /// Create the UI for ths main screen
