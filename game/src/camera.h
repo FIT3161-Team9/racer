@@ -50,16 +50,6 @@ inline void update_positions(AppCommands& app_commands)
       if (centre_distance.x > 0.f) { transform.value.x = transform.value.x - centre_distance.x; }
     }
   });
-
-  app_commands.add_system<Event::EventType::MouseWheelScrolled>(Query<Transform>{}, [&](auto& event, auto& view) {
-    if (app_commands.get_resource<PauseState>() == nullptr) { return false; }
-    view.each([&](auto entity, auto& transform) {
-      if (app_commands.component<Sticky>(entity) != nullptr) { return; }
-      transform.value.x += event.mouse_wheel_scrolled.distance.x * 1.1f;
-      transform.value.y += event.mouse_wheel_scrolled.distance.y * 1.1f;
-    });
-    return false;
-  });
 }
 
 /// Updates the entity that the camera is centred on

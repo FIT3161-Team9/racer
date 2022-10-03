@@ -28,6 +28,7 @@
 #include "game/src/debug/reset_camera.h"
 #include "game/src/debug/resizeable.h"
 #include "game/src/debug/rotatable.h"
+#include "game/src/debug/scroll_camera.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/debug/serialization.h"
 #include "game/src/debug/spawn_vehicle.h"
@@ -175,6 +176,7 @@ inline void plugin(AppCommands& app_commands)
   app_commands.add_plugin(serialization::plugin);
   app_commands.add_plugin(spawn_vehicle::plugin);
   app_commands.add_plugin(reset_camera::plugin);
+  app_commands.add_plugin(scroll_camera::plugin);
 }
 
 }// namespace debug
