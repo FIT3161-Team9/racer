@@ -111,7 +111,7 @@ inline void root_flex_box(RenderContext& render_context,
   auto const starting_coords = window::to_screen_space(sf::Vector2f{ starting_x, starting_y });
 
   auto const root_flex_box = layout::FlexContext{
-    .height = height, .width = width, .current_x = starting_coords.x, .current_y = starting_coords.y
+    .current_x = starting_coords.x, .current_y = starting_coords.y, .width = width, .height = height
   };
   layout::layout_flex(render_context, window, root_flex_box, layout, flex_parent);
 }
