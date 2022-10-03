@@ -18,7 +18,7 @@
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/draggable.h"
 #include "game/src/debug/selectable.h"
-#include "game/src/gravity.h"
+#include "game/src/maximum_velocity.h"
 #include "game/src/velocity.h"
 
 namespace spawn_vehicle
@@ -30,6 +30,7 @@ inline void plugin(AppCommands& app_commands)
     if (event.key_released.key != sf::Keyboard::S) { return false; }
     app_commands.spawn()
       .add_component<Acceleration>(sf::Vector2f{ 600.f, 0.f })
+      .add_component<MaximumVelocity>(2000.f)
       .add_component<AffectedByGravity>()
       .add_component<camera::Target>()
       .add_component<Circle>(77.5f)

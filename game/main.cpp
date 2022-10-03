@@ -15,6 +15,7 @@
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
 #include "game/src/map.h"
+#include "game/src/maximum_velocity.h"
 #include "game/src/shift_key_resource.h"
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
@@ -37,6 +38,7 @@ int main(int argc, char** argv)
     app_commands.add_plugin(image_dimensions::synchronise_image_size_with_rect_size_plugin);
     app_commands.add_plugin(shift_key_resource::plugin);
     app_commands.add_plugin(arrow_keys_resource::plugin);
+    app_commands.add_plugin(maximum_velocity::plugin);
 
     if (arguments.debug_mode) {
       std::cout << "Loading in debug mode\n";
