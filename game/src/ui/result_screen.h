@@ -20,6 +20,7 @@
 #include <engine/zindex.h>
 
 #include "game/src/game_state.h"
+#include "game/src/ui/background.h"
 #include "game/src/ui/display_course.h"
 #include "game/src/ui/icon.h"
 #include "game/src/ui/main_menu.h"
@@ -103,6 +104,8 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
+
+  background::spawn(app_commands).add_component<UIElement>();
 
   auto* selected_state = app_commands.get_resource<SelectedState>();
 
