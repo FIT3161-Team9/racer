@@ -71,6 +71,9 @@ inline void plugin(AppCommands& app_commands)
     map_data["entities"] = entity_array;
     map_data["name"] = loaded_level == nullptr ? "Unnamed Level" : loaded_level->name;
     map_data["version"] = loaded_level == nullptr ? 0 : loaded_level->version + 1;
+    map_data["vehicle_spawn_location"] =
+      serialize_vector(loaded_level == nullptr ? sf::Vector2f{ 0.f, 0.f } : loaded_level->vehicle_spawn_location);
+    map_data["finish_line_location"] = loaded_level == nullptr ? 0.f : loaded_level->finish_line_location;
 
     outfile << map_data.dump();
 
