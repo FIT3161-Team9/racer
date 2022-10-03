@@ -24,6 +24,7 @@
 #include "game/src/map.h"
 #include "game/src/ui/background.h"
 #include "game/src/utils.h"
+#include "game/src/vehicle.h"
 
 namespace vehicle_select
 {
@@ -48,7 +49,11 @@ inline void plugin(AppCommands& app_commands)
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
           auto const level = map::LEVELS[0];
-          map::load_level(app_commands, level.c_str());
+          auto const loaded_level = map::load_level(app_commands, level.c_str());
+
+          vehicle::load(app_commands, vehicle::VEHICLES[0].c_str(), loaded_level.vehicle_spawn_location);
+          vehicle::load(app_commands, vehicle::VEHICLES[0].c_str(), loaded_level.vehicle_spawn_location);
+
           count_down_timer::start(app_commands);
 
           game_state.current_screen = GameState::CurrentScreen::InLevel;

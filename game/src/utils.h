@@ -18,7 +18,7 @@ const std::string INTER_SEMI_BOLD = std::filesystem::path("./assets/Inter-SemiBo
 inline nlohmann::json parse_json_from_file(char const* path)
 {
   auto const file_path = std::filesystem::path(path);
-  std::ifstream const file(file_path);
+  std::ifstream file(file_path);
   return nlohmann::json::parse(file);
 }
 
