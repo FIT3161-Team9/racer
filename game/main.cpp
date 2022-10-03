@@ -16,6 +16,7 @@
 #include "game/src/image_dimensions.h"
 #include "game/src/map.h"
 #include "game/src/maximum_velocity.h"
+#include "game/src/pause_state.h"
 #include "game/src/shift_key_resource.h"
 #include "game/src/ui/display_course.h"
 #include "game/src/ui/main_menu.h"
@@ -32,6 +33,7 @@ int main(int argc, char** argv)
 
   engine::run_app(app, [arguments](auto& app_commands) {
     app_commands.template add_resource<GameState>(GameState::CurrentScreen::SplashScreen);
+    app_commands.template add_resource<PauseState>(true);
 
     app_commands.add_plugin(timing::plugin);
     app_commands.add_plugin(velocity::plugin);
