@@ -13,6 +13,7 @@
 #include "game/src/gravity.h"
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
+#include "game/src/map.h"
 #include "game/src/shift_key_resource.h"
 #include "game/src/ui/splash_screen.h"
 #include "game/src/velocity.h"
