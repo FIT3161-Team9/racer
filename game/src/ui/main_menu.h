@@ -30,10 +30,13 @@ namespace main_menu
 
 void spawn_ui(AppCommands&);
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
+
 struct SelectedState
 {
   int state;
 };
+
+enum class UIElement {};
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
@@ -64,9 +67,7 @@ inline void plugin(AppCommands& app_commands)
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
-    ResourceQuery<GameState, SelectedState>{},
-    Query<layout::Flex>{},
-    [&](auto& event, auto& resource_tuple, auto& flex_query) {
+    ResourceQuery<GameState, SelectedState>{}, Query<UIElement>{}, [&](auto& event, auto& resource_tuple, auto& view) {
       auto&& [_, game_state, selected_state] = resource_tuple;
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
@@ -75,8 +76,12 @@ inline void plugin(AppCommands& app_commands)
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
           if (selected_state.state == 0) {
             game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
-            auto flex_container = *flex_query.begin();
-            destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
+
+            // Delete all of the main_menu's ui elements
+            view.each([&](auto entity, auto& ui_element) {
+              (void)ui_element;
+              app_commands.destroy(entity);
+            });
 
             display_course::spawn_ui(app_commands);
             return true;
@@ -100,57 +105,66 @@ inline void spawn_ui(AppCommands& app_commands)
   using utils::u32;
   using utils::u8;
 
-  auto outline_p2 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(2)
-                      .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
+  app_commands.spawn()
+    .add_component<UIElement>()
+    .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
+    .add_component<Colour>(u8(255), u8(237), u8(237))
+    .add_component<Outline>(colour::black(), 2.2f)
+    .add_component<ZIndex>(2)
+    .add_component<Transform>(sf::Vector2f{ -753.f, 425.f });
 
-  auto outline_p4 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(2)
-                      .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
+  app_commands.spawn()
+    .add_component<UIElement>()
+    .add_component<Rectangle>(sf::Vector2f{ 80.f, 40.f })
+    .add_component<Colour>(u8(255), u8(237), u8(237))
+    .add_component<Outline>(colour::black(), 2.2f)
+    .add_component<ZIndex>(2)
+    .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
 
   auto title = app_commands.spawn()
+                 .add_component<UIElement>()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
                  .add_component<Colour>(colour::black())
                  .add_component<layout::Margin>(layout::Margin{ .top = 80.f, .left = 80.f });
 
   auto subtitle = app_commands.spawn()
+                    .add_component<UIElement>()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "SIMULATION-BASED RACING", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .top = 40.f, .left = 80.f });
 
   auto play_button_label = app_commands.spawn()
+                             .add_component<UIElement>()
                              .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAY", u32(75), 0.85f)
                              .add_component<Colour>(colour::black());
 
-  auto play_button_icon =
-    app_commands.spawn()
-      .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
-      .add_component<Colour>(colour::black())
-      .add_component<Icon>()
-      .add_component<Transform>(sf::Vector2f{ -610.f, -120.f });
+  app_commands.spawn()
+    .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
+    .add_component<UIElement>()
+    .add_component<Colour>(colour::black())
+    .add_component<Icon>()
+    .add_component<Transform>(sf::Vector2f{ -610.f, -120.f })
+    .add_component<ZIndex>(2);
 
   auto* selected_state = app_commands.get_resource<SelectedState>();
   selected_state->state = 0;
 
   auto play_button_row =
     app_commands.spawn()
+      .add_component<UIElement>()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
       .template add_component<layout::Height>(100.f)
-      .template add_component<Children>(std::vector{ play_button_label.entity(), play_button_icon.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 140.f, .left = 80.f });
+      .template add_component<Children>(std::vector{ play_button_label.entity() })
+      .template add_component<layout::Margin>(layout::Margin{ .top = 100.f, .bottom = 80.f, .left = 80.f });
 
   auto quit_button_label = app_commands.spawn()
+                             .add_component<UIElement>()
                              .add_component<Text>(utils::INTER_SEMI_BOLD, "QUIT", u32(75), 0.85f)
                              .add_component<Colour>(colour::black());
 
   auto quit_button_row =
     app_commands.spawn()
+      .add_component<UIElement>()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::Center)
       .template add_component<layout::Height>(100.f)
       .template add_component<Children>(std::vector{ quit_button_label.entity() })
@@ -158,24 +172,29 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto prompt_1 = app_commands.spawn()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "USE THE ", u32(21), 0.85f)
+                    .add_component<UIElement>()
                     .add_component<Colour>(colour::black());
 
   auto prompt_2 = app_commands.spawn()
+                    .add_component<UIElement>()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, " ARROW KEY ", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
   auto prompt_3 = app_commands.spawn()
+                    .add_component<UIElement>()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "TO NAVIGATE,", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
   auto prompt_4 = app_commands.spawn()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, " ENTER ", u32(21), 0.85f)
+                    .add_component<UIElement>()
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
   auto prompt_5 = app_commands.spawn()
+                    .add_component<UIElement>()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "TO SELECT", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
@@ -183,6 +202,7 @@ inline void spawn_ui(AppCommands& app_commands)
   auto bottom_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
+      .add_component<UIElement>()
       .template add_component<Children>(std::vector{
         prompt_1.entity(),
         prompt_2.entity(),
@@ -194,15 +214,15 @@ inline void spawn_ui(AppCommands& app_commands)
 
   app_commands.spawn()
     .template add_component<layout::FlexRoot>()
+    .add_component<UIElement>()
     .template add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Start)
-    .template add_component<Children>(std::vector{ title.entity(),
-                                                   subtitle.entity(),
-                                                   play_button_row.entity(),
-                                                   quit_button_row.entity(),
-                                                   bottom_row.entity(),
-                                                   play_button_icon.entity(),
-                                                   outline_p2.entity(),
-                                                   outline_p4.entity() });
+    .template add_component<Children>(std::vector{
+      title.entity(),
+      subtitle.entity(),
+      play_button_row.entity(),
+      quit_button_row.entity(),
+      bottom_row.entity(),
+    });
 }
 
 
