@@ -17,6 +17,7 @@
 #include "game/src/map.h"
 #include "game/src/maximum_velocity.h"
 #include "game/src/shift_key_resource.h"
+#include "game/src/ui/display_course.h"
 #include "game/src/ui/main_menu.h"
 #include "game/src/ui/result_screen.h"
 #include "game/src/ui/splash_screen.h"
@@ -58,6 +59,7 @@ int main(int argc, char** argv)
       app_commands.add_plugin(main_menu::plugin);
       app_commands.add_plugin(vehicle_select::plugin);
       app_commands.add_plugin(result_screen::plugin);
+      app_commands.add_plugin(display_course::plugin);
     }
   });
 
