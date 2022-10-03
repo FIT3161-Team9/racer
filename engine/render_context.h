@@ -47,6 +47,7 @@ public:
       sf::Texture sf_texture{};
       if (!sf_texture.loadFromFile(texture.path)) {
         // TODO: Handle texture loading errors
+        std::cout << "Failed to load texture: " << texture.path << "\n";
       }
       m_texture_cache.insert({ texture.path, sf_texture });
     }
