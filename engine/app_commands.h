@@ -63,6 +63,7 @@ public:
   Entity spawn(entt::entity hint) { return { m_registry.create(hint), m_registry }; }
   /// Destroy the given entity
   void destroy(entt::entity entity) { m_registry.destroy(entity); }
+  void destroy_all() { m_registry.clear(); }
   /// Returns whether the given entity is alive or not
   bool alive(entt::entity entity) { return m_registry.valid(entity); }
 
