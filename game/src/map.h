@@ -19,21 +19,17 @@
 #include "engine/window.h"
 #include "engine/zindex.h"
 
-#include "./ground.h"
 #include "game/src/currently_loaded_map.h"
 #include "game/src/debug/deletable.h"
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/serialization.h"
 #include "game/src/debug/spawn_vehicle.h"
+#include "game/src/finish_line.h"
+#include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
 
 namespace map
 {
-
-struct FinishLine
-{
-  float location;
-};
 
 std::array<std::string, 1> const LEVELS = { "./levels/Grass Plains.json" };
 
@@ -47,11 +43,8 @@ inline CurrentlyLoadedMap load_level(AppCommands& app_commands, char const* leve
   spawn_vehicle::spawn(app_commands, serialization::deserialize_vector(data["vehicle_spawn_location"]));
   spawn_vehicle::spawn(app_commands, serialization::deserialize_vector(data["vehicle_spawn_location"]));
 
-  app_commands.spawn().add_component<FinishLine>(data["finish_line_location"]);
-
   return CurrentlyLoadedMap{ .name = data["name"],
                              .version = data["version"],
-                             .finish_line_location = data["finish_line_location"],
                              .vehicle_spawn_location =
                                serialization::deserialize_vector(data["vehicle_spawn_location"]) };
 }

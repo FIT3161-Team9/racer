@@ -51,6 +51,8 @@ inline void plugin(AppCommands& app_commands)
           map::load_level(app_commands, level.c_str());
           count_down_timer::start(app_commands);
 
+          game_state.current_screen = GameState::CurrentScreen::InLevel;
+
           return true;
         }
       }
