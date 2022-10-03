@@ -15,6 +15,7 @@
 #include "engine/app_commands.h"
 #include "engine/circle.h"
 #include "engine/colour.h"
+#include "engine/entity.h"
 #include "engine/event.h"
 #include "engine/outline.h"
 #include "engine/query.h"
@@ -154,7 +155,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   return object;
 }
 
-inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json const& object)
+inline Entity deserialize_and_spawn(AppCommands& app_commands, nlohmann::json const& object)
 {
   auto components = object["components"];
   auto entity = app_commands.spawn(object["id"]).add_component<Serialized>();
@@ -192,6 +193,8 @@ inline void deserialize_and_spawn(AppCommands& app_commands, nlohmann::json cons
   if (components.contains("camera_target")) { entity.add_component<camera::Target>(components["camera_target"]); }
   if (components.contains("sticky")) { entity.add_component<camera::Sticky>(); }
   if (components.contains("finish_line")) { entity.add_component<FinishLine>(); }
+
+  return entity;
 }
 
 inline nlohmann::json serialize_outline(Outline const& outline)

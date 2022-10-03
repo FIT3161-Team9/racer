@@ -39,9 +39,6 @@ inline CurrentlyLoadedMap load_level(AppCommands& app_commands, char const* leve
   auto const data = utils::parse_json_from_file(level_path);
   for (auto const& entity : data["entities"]) { serialization::deserialize_and_spawn(app_commands, entity); }
 
-  spawn_vehicle::spawn(app_commands, serialization::deserialize_vector(data["vehicle_spawn_location"]));
-  spawn_vehicle::spawn(app_commands, serialization::deserialize_vector(data["vehicle_spawn_location"]));
-
   return CurrentlyLoadedMap{ .name = data["name"],
                              .version = data["version"],
                              .vehicle_spawn_location =
