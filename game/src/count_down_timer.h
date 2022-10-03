@@ -15,8 +15,9 @@
 #include "engine/query.h"
 #include "engine/text.h"
 #include "engine/transform.h"
-
 #include "engine/zindex.h"
+
+#include "game/src/cross_line.h"
 #include "game/src/pause_state.h"
 #include "game/src/utils.h"
 
@@ -51,6 +52,7 @@ inline void plugin(AppCommands& app_commands)
         if (elapsed_seconds > 3.f) {
           pause_state.paused = false;
           count_down_timer.timer.reset();
+          cross_line::start_timer(app_commands);
         }
       }
     });
