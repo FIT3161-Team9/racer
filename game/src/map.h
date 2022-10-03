@@ -27,6 +27,7 @@
 #include "game/src/finish_line.h"
 #include "game/src/ground.h"
 #include "game/src/image_dimensions.h"
+#include "game/src/utils.h"
 
 namespace map
 {
@@ -35,9 +36,7 @@ std::array<std::string, 1> const LEVELS = { "./levels/Grass Plains.json" };
 
 inline CurrentlyLoadedMap load_level(AppCommands& app_commands, char const* level_path)
 {
-  auto file_path = std::filesystem::path(level_path);
-  std::ifstream file(file_path);
-  nlohmann::json data = nlohmann::json::parse(file);
+  auto const data = utils::parse_json_from_file(level_path);
   for (auto const& entity : data["entities"]) { serialization::deserialize_and_spawn(app_commands, entity); }
 
   spawn_vehicle::spawn(app_commands, serialization::deserialize_vector(data["vehicle_spawn_location"]));
