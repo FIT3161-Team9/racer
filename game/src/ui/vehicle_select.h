@@ -19,7 +19,10 @@
 #include "engine/outline.h"
 #include "engine/triangle.h"
 #include "engine/zindex.h"
+#include "game/src/count_down_timer.h"
 #include "game/src/game_state.h"
+#include "game/src/map.h"
+#include "game/src/ui/background.h"
 #include "game/src/utils.h"
 
 namespace vehicle_select
@@ -41,9 +44,12 @@ inline void plugin(AppCommands& app_commands)
       // the main screen, do nothing
       if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect) {
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
-          game_state.current_screen = GameState::CurrentScreen::ResultScreen;
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
+
+          auto const level = map::LEVELS[0];
+          map::load_level(app_commands, level.c_str());
+          count_down_timer::start(app_commands);
 
           return true;
         }
@@ -57,6 +63,11 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
+
+  auto background = background::spawn(app_commands);
+
+  background.add_component<UIElement>();
+
   auto title = app_commands.spawn()
                  .add_component<UIElement>()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)

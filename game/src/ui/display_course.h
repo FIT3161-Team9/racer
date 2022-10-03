@@ -17,6 +17,7 @@
 #include <engine/window.h>
 
 #include "game/src/game_state.h"
+#include "game/src/ui/background.h"
 #include "game/src/ui/vehicle_select.h"
 #include "game/src/utils.h"
 
@@ -64,6 +65,11 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
+
+  auto background = background::spawn(app_commands);
+
+  background.add_component<UIElement>();
+
   auto title = app_commands.spawn()
                  .add_component<UIElement>()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
