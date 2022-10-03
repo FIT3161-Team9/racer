@@ -1,9 +1,10 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 #include <filesystem>
 #include <vector>
+
+#include <SFML/Graphics.hpp>
 
 #include <engine/app_commands.h>
 #include <engine/children.h>
@@ -19,11 +20,11 @@
 #include <engine/window.h>
 #include <engine/zindex.h>
 
-#include "../game_state.h"
-#include "../utils.h"
-#include "./background.h"
-#include "./display_course.h"
-#include "./icon.h"
+#include "game/src/debug/spawn_vehicle.h"
+#include "game/src/game_state.h"
+#include "game/src/map.h"
+#include "game/src/ui/background.h"
+#include "game/src/utils.h"
 
 namespace main_menu
 {
@@ -64,9 +65,14 @@ inline void plugin(AppCommands& app_commands)
                                                            return false;
                                                          });
 
+  // Spawn the background
+  auto const background = background::spawn(app_commands).entity();
+
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
-    ResourceQuery<GameState, SelectedState>{}, Query<UIElement>{}, [&](auto& event, auto& resource_tuple, auto& view) {
+    ResourceQuery<GameState, SelectedState>{},
+    Query<UIElement>{},
+    [&, background](auto& event, auto& resource_tuple, auto& view) {
       auto&& [_, game_state, selected_state] = resource_tuple;
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
@@ -74,19 +80,19 @@ inline void plugin(AppCommands& app_commands)
       if (game_state.current_screen == GameState::CurrentScreen::MainMenu) {
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
           if (selected_state.state == 0) {
-            game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
-
             // Delete all of the main_menu's ui elements
             view.each([&](auto entity, auto& ui_element) {
               (void)ui_element;
               app_commands.destroy(entity);
             });
+            background::destroy(app_commands, background);
 
-            display_course::spawn_ui(app_commands);
+            game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
             return true;
           }
         }
       }
+
       return false;
     });
 }
