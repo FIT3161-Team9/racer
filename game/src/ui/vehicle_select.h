@@ -16,18 +16,18 @@
 #include <engine/transform.h>
 #include <engine/window.h>
 
-#include "../game_state.h"
-#include "../utils.h"
-#include "./result_screen.h"
-
-
+#include "engine/outline.h"
+#include "engine/triangle.h"
+#include "engine/zindex.h"
+#include "game/src/game_state.h"
+#include "game/src/utils.h"
 
 namespace vehicle_select
 {
 
 void spawn_ui(AppCommands&);
 void destroy_ui(AppCommands&, entt::entity flex_container, Children&);
-entt::entity createInfor(AppCommands& app_commands,float& speed,float& acc, float& feul );
+entt::entity createInfor(AppCommands& app_commands, float& speed, float& acc, float& feul);
 
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
@@ -40,18 +40,10 @@ inline void plugin(AppCommands& app_commands)
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
       if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect) {
-        if (event.key_released.key == sf::Keyboard::Key::Enter){
+        if (event.key_released.key == sf::Keyboard::Key::Enter) {
           game_state.current_screen = GameState::CurrentScreen::ResultScreen;
           auto flex_container = *flex_query.begin();
           destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-          result_screen::spawn_ui(app_commands);
-          return true;
-        }
-        if (event.key_released.key == sf::Keyboard::Key::Escape){
-          game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
-          auto flex_container = *flex_query.begin();
-          destroy_ui(app_commands, flex_container, *app_commands.component<Children>(flex_container));
-          display_course::spawn_ui(app_commands);
           return true;
         }
       }
@@ -66,8 +58,9 @@ inline void destroy_ui(AppCommands& app_commands, entt::entity flex_container, C
   app_commands.destroy(flex_container);
 }
 
-inline entt::entity createInfor(AppCommands& app_commands,float& speed,float& acc, float& feul ){
-  
+inline entt::entity createInfor(AppCommands& app_commands, float& speed, float& acc, float& feul)
+{
+
   auto state_speed = app_commands.spawn()
                        .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
                        .add_component<Outline>(colour::black(), 2.2f)
@@ -80,7 +73,7 @@ inline entt::entity createInfor(AppCommands& app_commands,float& speed,float& ac
                          .add_component<Outline>(colour::black(), 2.2f)
                          .add_component<Colour>(colour::white())
                          .add_component<ZIndex>(4)
-                         .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-speed)/2, -80.f });
+                         .add_component<Transform>(sf::Vector2f{ 400.f - (700.f - speed) / 2, -80.f });
 
   auto state_acceleration = app_commands.spawn()
                               .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
@@ -94,7 +87,7 @@ inline entt::entity createInfor(AppCommands& app_commands,float& speed,float& ac
                                 .add_component<Outline>(colour::black(), 2.2f)
                                 .add_component<Colour>(colour::white())
                                 .add_component<ZIndex>(4)
-                                .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-acc)/2, 75.f });
+                                .add_component<Transform>(sf::Vector2f{ 400.f - (700.f - acc) / 2, 75.f });
 
 
   auto state_feul = app_commands.spawn()
@@ -109,14 +102,10 @@ inline entt::entity createInfor(AppCommands& app_commands,float& speed,float& ac
                         .add_component<Outline>(colour::black(), 2.2f)
                         .add_component<Colour>(colour::white())
                         .add_component<ZIndex>(4)
-                        .add_component<Transform>(sf::Vector2f{ 400.f-(700.f-acc)/2, 215.f });
+                        .add_component<Transform>(sf::Vector2f{ 400.f - (700.f - acc) / 2, 215.f });
 
-  return state_speed.entity(),
-         vehicle_speed.entity(),
-         state_acceleration.entity(),
-         vehicle_acceleration.entity(),
-         state_feul.entity(),
-         vehicle_feul.entity();
+  return state_speed.entity(), vehicle_speed.entity(), state_acceleration.entity(), vehicle_acceleration.entity(),
+         state_feul.entity(), vehicle_feul.entity();
 }
 
 /// Create the UI for ths main screen
@@ -237,13 +226,6 @@ inline void spawn_ui(AppCommands& app_commands)
                       .add_component<ZIndex>(3)
                       .add_component<Transform>(sf::Vector2f{ -483.f, 425.f });
 
-  auto outline_p6 = app_commands.spawn()
-                      .add_component<Rectangle>(sf::Vector2f{ 56.f, 40.f })
-                      .add_component<Colour>(u8(255), u8(237), u8(237))
-                      .add_component<Outline>(colour::black(), 2.2f)
-                      .add_component<ZIndex>(4)
-                      .add_component<Transform>(sf::Vector2f{ -231.f, 425.f });
-
   auto prompt_1 = app_commands.spawn()
                     .add_component<Text>(utils::INTER_SEMI_BOLD, "USE THE ", u32(21), 0.85f)
                     .add_component<Colour>(colour::black());
@@ -264,31 +246,20 @@ inline void spawn_ui(AppCommands& app_commands)
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
   auto prompt_5 = app_commands.spawn()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO SELECT, AND", u32(21), 0.85f)
+                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO SELECT", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
-
-  auto prompt_6 = app_commands.spawn()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, " ESC ", u32(21), 0.85f)
-                    .add_component<Colour>(colour::black())
-                    .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
-
-  auto prompt_7 = app_commands.spawn()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO GO BACK", u32(21), 0.85f)
-                    .add_component<Colour>(colour::black())
-                    .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
-
 
   auto bottom_row =
     app_commands.spawn()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
-      .template add_component<Children>(std::vector{ prompt_1.entity(),
-                                                     prompt_2.entity(),
-                                                     prompt_3.entity(),
-                                                     prompt_4.entity(),
-                                                     prompt_5.entity(),
-                                                     prompt_6.entity(),
-                                                     prompt_7.entity() })
+      .template add_component<Children>(std::vector{
+        prompt_1.entity(),
+        prompt_2.entity(),
+        prompt_3.entity(),
+        prompt_4.entity(),
+        prompt_5.entity(),
+      })
       .template add_component<layout::Margin>(layout::Margin{ .top = 68.f, .left = 80.f });
 
   app_commands.spawn()
@@ -313,8 +284,7 @@ inline void spawn_ui(AppCommands& app_commands)
                                                    vehicle_acceleration.entity(),
                                                    vehicle_feul.entity(),
                                                    outline_p2.entity(),
-                                                   outline_p4.entity(),
-                                                   outline_p6.entity() });
+                                                   outline_p4.entity() });
 }
 
 };// namespace vehicle_select

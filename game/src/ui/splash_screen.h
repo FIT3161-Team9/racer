@@ -6,12 +6,6 @@
 #include <iostream>
 #include <vector>
 
-#include "../game_state.h"
-#include "../utils.h"
-#include "./background.h"
-#include "./icon.h"
-#include "./main_menu.h"
-#include "./vehicle_select.h"
 #include <engine/app_commands.h>
 #include <engine/children.h>
 #include <engine/colour.h>
@@ -23,6 +17,13 @@
 #include <engine/transform.h>
 #include <engine/triangle.h>
 #include <engine/window.h>
+
+
+#include "../game_state.h"
+#include "../utils.h"
+#include "./background.h"
+#include "./icon.h"
+#include "./main_menu.h"
 
 namespace splash_screen
 {
