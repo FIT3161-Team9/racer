@@ -4,6 +4,7 @@
 #include <entt/entt.hpp>
 #include <filesystem>
 #include <vector>
+#include <string>
 
 #include <engine/app_commands.h>
 #include <engine/children.h>
@@ -41,11 +42,11 @@ inline void plugin(AppCommands& app_commands)
       if (game_state.current_screen == GameState::CurrentScreen::DisplayCourse) {
 
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
-          game_state.current_screen = GameState::CurrentScreen::VehicleSelect;
+          game_state.current_screen = GameState::CurrentScreen::VehicleSelect1;
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
-          vehicle_select::spawn_ui(app_commands);
+          vehicle_select::spawn_ui(app_commands, "PLAYER   ONE   SELECT   VEHICLE");
           return true;
         }
       }
@@ -126,7 +127,7 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto prompt_5 = app_commands.spawn()
                     .add_component<UIElement>()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO SELECT", u32(21), 0.85f)
+                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO CONTINUE", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 

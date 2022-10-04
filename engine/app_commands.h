@@ -41,6 +41,9 @@ class AppCommands
   entt::registry m_resource_registry{};
   /// The resource entity. Each resource component hangs off of this entity in the m_resource_registry
   entt::entity m_resource_entity;
+  /// Whether the app should remain open. The client application can call AppCommands.quit() to set this to false,
+  /// at which point the main game loop should exit
+  bool m_run_app{ true };
 
   template<typename StartupFn>
   friend void engine::run_app(App const&, StartupFn);
@@ -66,6 +69,9 @@ public:
   void destroy_all() { m_registry.clear(); }
   /// Returns whether the given entity is alive or not
   bool alive(entt::entity entity) { return m_registry.valid(entity); }
+
+  /// Quit the app
+  void quit() { m_run_app = false; }
 
   /// Add a system with a resource query and a component query
   template<typename... ResourceQueryTypes, typename... EntityQueryTypes, typename Fn>

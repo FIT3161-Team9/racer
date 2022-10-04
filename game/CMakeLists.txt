@@ -45,7 +45,7 @@ FetchContent_Declare(
   URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
-add_executable(RACER main.cpp)
+add_executable(RACER main.cpp src/cross_line.cpp)
 
 # Link executable to required SFML modules
 target_include_directories(RACER PUBLIC ../ ../)
