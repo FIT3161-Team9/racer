@@ -45,28 +45,28 @@ enum class UIElement {};
 inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_resource<SelectedState>(0);
-  app_commands.add_system<Event::EventType::KeyReleased>(ResourceQuery<GameState, SelectedState>{},
-                                                         Query<Icon const, Transform>{},
-                                                         [&](auto& event, auto& resource_tuple, auto& view) {
-                                                           auto&& [_, game_state, selected_state] = resource_tuple;
-                                                           if (game_state.current_screen
-                                                               != GameState::CurrentScreen::MainMenu) {
-                                                             return false;
-                                                           }
-                                                           if (event.key_released.key == sf::Keyboard::Key::Up) {
-                                                             for (auto&& [_entity, icon, transform] : view.each()) {
-                                                               transform.value.y = -120.f;
-                                                               selected_state.state = 0;
-                                                             }
-                                                           }
-                                                           if (event.key_released.key == sf::Keyboard::Key::Down) {
-                                                             for (auto&& [_entity, icon, transform] : view.each()) {
-                                                               transform.value.y = 70.f;
-                                                               selected_state.state = 1;
-                                                             }
-                                                           }
-                                                           return false;
-                                                         });
+  app_commands.add_system<Event::EventType::KeyPressed>(ResourceQuery<GameState, SelectedState>{},
+                                                        Query<Icon const, Transform>{},
+                                                        [&](auto& event, auto& resource_tuple, auto& view) {
+                                                          auto&& [_, game_state, selected_state] = resource_tuple;
+                                                          if (game_state.current_screen
+                                                              != GameState::CurrentScreen::MainMenu) {
+                                                            return false;
+                                                          }
+                                                          if (event.key_pressed.key == sf::Keyboard::Key::Up) {
+                                                            for (auto&& [_entity, icon, transform] : view.each()) {
+                                                              transform.value.y = -120.f;
+                                                              selected_state.state = 0;
+                                                            }
+                                                          }
+                                                          if (event.key_pressed.key == sf::Keyboard::Key::Down) {
+                                                            for (auto&& [_entity, icon, transform] : view.each()) {
+                                                              transform.value.y = 70.f;
+                                                              selected_state.state = 1;
+                                                            }
+                                                          }
+                                                          return false;
+                                                        });
 
   // Spawn the background
   auto const background = background::spawn(app_commands).entity();
@@ -94,6 +94,10 @@ inline void plugin(AppCommands& app_commands)
 
             display_course::spawn_ui(app_commands);
 
+            return true;
+          }
+          if (selected_state.state == 1) {
+            app_commands.quit();
             return true;
           }
         }
