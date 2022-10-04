@@ -25,8 +25,8 @@
 #include "game/src/game_state.h"
 #include "game/src/map.h"
 #include "game/src/ui/background.h"
-#include "game/src/ui/display_course.h"
 #include "game/src/ui/icon.h"
+#include "game/src/ui/map_select.h"
 #include "game/src/utils.h"
 
 namespace main_menu
