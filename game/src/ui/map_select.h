@@ -104,12 +104,19 @@ inline void spawn_ui(AppCommands& app_commands)
                         .add_component<layout::Margin>(layout::Margin{ .top = -120.f, .left = 1600.f });
 
 
-  auto Jungle_txt = app_commands.spawn()
-                      .add_component<UIElement>()
-                      .add_component<Text>(utils::INTER_SEMI_BOLD, map.name, u32(53), 0.85f)
-                      .add_component<Colour>(colour::black())
-                      .add_component<layout::Margin>(layout::Margin{ .top = 670.f, .left = 900.f });
+  auto playing_on_text =
+    app_commands.spawn()
+      .add_component<UIElement>()
+      .add_component<Text>(utils::INTER_SEMI_BOLD, std::string("PLAYING ON: ") + map.name, u32(53), 0.85f)
+      .add_component<Colour>(colour::black())
+      .add_component<layout::Margin>(layout::Margin{ .top = 790.f })
+      .entity();
 
+  app_commands.spawn()
+    .add_component<UIElement>()
+    .add_component<layout::FlexRoot>()
+    .add_component<layout::Flex>(layout::Flex::Direction::Vertical, layout::Flex::Alignment::Center)
+    .add_component<Children>(std::vector{ playing_on_text });
 
   app_commands.spawn()
     .add_component<UIElement>()
@@ -151,7 +158,7 @@ inline void spawn_ui(AppCommands& app_commands)
       .add_component<UIElement>()
       .template add_component<layout::Flex>(layout::Flex::Direction::Horizontal, layout::Flex::Alignment::End)
       .template add_component<Children>(std::vector{ prompt_1.entity(), prompt_4.entity(), prompt_5.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 58.f, .left = 80.f });
+      .template add_component<layout::Margin>(layout::Margin{ .top = 778.f, .left = 80.f });
 
   app_commands.spawn()
     .add_component<UIElement>()
@@ -161,7 +168,6 @@ inline void spawn_ui(AppCommands& app_commands)
       title.entity(),
       subtitle.entity(),
       select_label.entity(),
-      Jungle_txt.entity(),
       bottom_row.entity(),
     });
 }
