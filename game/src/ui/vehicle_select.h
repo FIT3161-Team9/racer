@@ -47,7 +47,7 @@ inline void plugin(AppCommands& app_commands)
     app_commands.template add_system<Event::EventType::KeyReleased>(ResourceQuery<GameState, SelectedState>{},
         Query<VehicleInfo>{},[&](auto& event, auto& resource_tuple, auto& view) {
       auto&& [_, game_state, selected_state] = resource_tuple;
-      if (game_state.current_screen != GameState::CurrentScreen::VehicleSelect) {
+      if (game_state.current_screen != GameState::CurrentScreen::VehicleSelect1 && game_state.current_screen != GameState::CurrentScreen::VehicleSelect2 ) {
         return false;
       }
       if (event.key_released.key == sf::Keyboard::Key::Left) {
@@ -91,7 +91,18 @@ inline void plugin(AppCommands& app_commands)
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
-      if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect) {
+      if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1) {
+
+        if (event.key_released.key == sf::Keyboard::Key::Enter) {
+          game_state.current_screen = GameState::CurrentScreen::VehicleSelect2;
+
+          for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
+
+          vehicle_select::spawn_ui(app_commands);
+          return true;
+        }
+      }
+      if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect2) {
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
