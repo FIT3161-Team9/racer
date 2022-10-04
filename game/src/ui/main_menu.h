@@ -214,7 +214,7 @@ inline void spawn_ui(AppCommands& app_commands)
         prompt_4.entity(),
         prompt_5.entity(),
       })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 347.f, .left = 80.f });
+      .template add_component<layout::Margin>(layout::Margin{ .top = 327.f, .left = 80.f });
 
   app_commands.spawn()
     .template add_component<layout::FlexRoot>()
