@@ -65,7 +65,7 @@ int main(int argc, char** argv)
       app_commands.add_plugin(main_menu::plugin);
       app_commands.add_plugin(vehicle_select::plugin);
       app_commands.add_plugin(result_screen::plugin);
-      app_commands.add_plugin(display_course::plugin);
+      app_commands.add_plugin(map_select::plugin);
     }
   });
 
