@@ -77,7 +77,7 @@ inline void plugin(AppCommands& app_commands)
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
           if (selected_state.state == 0) {
-            game_state.current_screen = GameState::CurrentScreen::DisplayCourse;
+            game_state.current_screen = GameState::CurrentScreen::MapSelect;
             display_course::spawn_ui(app_commands);
             return true;
           }
@@ -104,6 +104,8 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
+
+  auto const* game_state = app_commands.get_resource<GameState>();
 
   background::spawn(app_commands).add_component<UIElement>();
 
@@ -222,7 +224,12 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto winner_time = app_commands.spawn()
                        .add_component<UIElement>()
-                       .add_component<Text>(utils::INTER_SEMI_BOLD, "(123121321)", u32(75), 0.85f)
+                       .add_component<Text>(
+                         utils::INTER_SEMI_BOLD,
+                         std::string("(") + std::to_string(game_state->result_screen.milliseconds_to_complete / 1000.f)
+                           + std::string("s)"),
+                         u32(75),
+                         0.85f)
                        .add_component<Colour>(colour::black())
                        .add_component<layout::Margin>(layout::Margin{ .top = -605.f, .left = -200.f });
   auto bottom_row =

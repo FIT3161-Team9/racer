@@ -4,6 +4,7 @@
 
 #include "game/src/cross_line.h"
 #include "game/src/game_state.h"
+#include "game/src/players.h"
 #include "game/src/ui/result_screen.h"
 #include "game/src/vehicle.h"
 
@@ -33,7 +34,8 @@ void plugin(AppCommands& app_commands)
           if (vehicle_transform.value.x >= finish_line_transform.value.x) {
             pause_state.paused = true;
             std::cout << "Race took " << timer.value.value().getElapsedTime().asSeconds() << " seconds\n";
-            game_state.current_screen = GameState::CurrentScreen::ResultScreen;
+            game_state = game_state::level_finished(timer.value.value().getElapsedTime().asMilliseconds(),
+                                                    app_commands.component<PlayerOne>(vehicle_entity) != nullptr);
             app_commands.destroy_all();
             result_screen::spawn_ui(app_commands);
           }

@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <entt/entt.hpp>
 #include <filesystem>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include <engine/app_commands.h>
 #include <engine/children.h>
@@ -39,10 +39,10 @@ inline void plugin(AppCommands& app_commands)
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
       // the main screen, do nothing
-      if (game_state.current_screen == GameState::CurrentScreen::DisplayCourse) {
+      if (game_state.current_screen == GameState::CurrentScreen::MapSelect) {
 
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
-          game_state.current_screen = GameState::CurrentScreen::VehicleSelect1;
+          game_state.current_screen = GameState::CurrentScreen::VehicleSelectPlayerOne;
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 

@@ -34,7 +34,7 @@ int main(int argc, char** argv)
   auto app = engine::create_app("RACER");
 
   engine::run_app(app, [arguments](auto& app_commands) {
-    app_commands.template add_resource<GameState>(GameState::CurrentScreen::SplashScreen);
+    app_commands.template add_resource<GameState>(game_state::splash_screen());
     app_commands.template add_resource<PauseState>(true);
 
     app_commands.add_plugin(count_down_timer::plugin);
