@@ -4,7 +4,7 @@
 struct GameState
 {
   /// The current screen to be rendered
-  enum class CurrentScreen { SplashScreen, MainMenu, VehicleSelect, ResultScreen, DisplayCourse, InLevel };
+  enum class CurrentScreen { SplashScreen, MainMenu, VehicleSelect1, VehicleSelect2, ResultScreen, DisplayCourse, InLevel };
 
   enum class CurrentMap {Map1, Map2};
 
