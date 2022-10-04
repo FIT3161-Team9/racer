@@ -8,11 +8,15 @@ struct GameState
 
   enum class CurrentMap {Map1, Map2};
 
-  enum class CurrentVehicle {Vehicle1, Vehicle2, Vehicle3};
+  enum class CurrentVehicle_p1 {Vehicle1, Vehicle2, Vehicle3};
+
+  enum class CurrentVehicle_p2 {Vehicle1, Vehicle2, Vehicle3};
 
   CurrentScreen current_screen;
 
   CurrentMap current_map;
 
-  CurrentVehicle current_vehicle;
+  CurrentVehicle_p1 current_vehicle_p1;
+
+  CurrentVehicle_p2 current_vehicle_p2;
 };

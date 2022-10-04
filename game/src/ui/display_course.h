@@ -4,6 +4,7 @@
 #include <entt/entt.hpp>
 #include <filesystem>
 #include <vector>
+#include <string>
 
 #include <engine/app_commands.h>
 #include <engine/children.h>
@@ -45,7 +46,7 @@ inline void plugin(AppCommands& app_commands)
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
-          vehicle_select::spawn_ui(app_commands);
+          vehicle_select::spawn_ui(app_commands, "PLAYER   ONE   SELECT   VEHICLE");
           return true;
         }
       }
