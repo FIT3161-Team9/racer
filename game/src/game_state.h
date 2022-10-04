@@ -1,5 +1,9 @@
 #pragma once
 
+#include "game/src/map.h"
+#include <cstdlib>
+#include <ctime>
+
 /// The global state of the game
 
 struct GameState
@@ -25,15 +29,18 @@ struct GameState
 
   struct VehicleSelectPlayerOne
   {
+    int selected_map_index;
   };
 
   struct VehicleSelectPlayerTwo
   {
+    int selected_map_index;
     int player_one_vehicle;
   };
 
   struct MapSelect
   {
+    int selected_map_index;
   };
 
   struct InLevel
@@ -62,11 +69,18 @@ struct GameState
 namespace game_state
 {
 
-inline GameState player_one_select_vehicle(int vehicle_index)
+inline GameState vehicle_select_player_two(int selected_map_index, int vehicle_index)
 {
   return GameState{ .current_screen = GameState::CurrentScreen::VehicleSelectPlayerTwo,
-                    .vehicle_select_player_two =
-                      GameState::VehicleSelectPlayerTwo{ .player_one_vehicle = vehicle_index } };
+                    .vehicle_select_player_two = GameState::VehicleSelectPlayerTwo{
+                      .selected_map_index = selected_map_index, .player_one_vehicle = vehicle_index } };
+}
+
+inline GameState vehicle_select_player_one(int selected_map_index)
+{
+  return GameState{ .current_screen = GameState::CurrentScreen::VehicleSelectPlayerOne,
+                    .vehicle_select_player_one =
+                      GameState::VehicleSelectPlayerOne{ .selected_map_index = selected_map_index } };
 }
 
 inline GameState splash_screen()
@@ -81,4 +95,14 @@ inline GameState level_finished(float milliseconds, bool player_one_did_win)
                     .result_screen = GameState::ResultScreen{ .milliseconds_to_complete = milliseconds,
                                                               .player_one_did_win = player_one_did_win } };
 }
+
+inline GameState map_select()
+{
+  std::srand(std::time(nullptr));
+  int const random_map_index = std::rand() % map::LEVELS.size();
+
+  return GameState{ .current_screen = GameState::CurrentScreen::MapSelect,
+                    .map_select = GameState::MapSelect{ .selected_map_index = random_map_index } };
+}
+
 }// namespace game_state

@@ -11,4 +11,5 @@ struct CurrentlyLoadedMap
   std::string name;
   int version;
   sf::Vector2f vehicle_spawn_location;
+  std::string preview_path;
 };

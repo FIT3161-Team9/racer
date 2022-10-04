@@ -17,7 +17,10 @@
 #include <engine/transform.h>
 #include <engine/window.h>
 
+#include "engine/rotation.h"
+#include "engine/scale.h"
 #include "game/src/game_state.h"
+#include "game/src/map.h"
 #include "game/src/ui/background.h"
 #include "game/src/ui/vehicle_select.h"
 #include "game/src/utils.h"
@@ -29,9 +32,15 @@ void spawn_ui(AppCommands&);
 
 enum class UIElement {};
 
+struct MapInformation
+{
+  std::vector<map::Information> maps{};
+};
+
 /// This plugin implements the game's main screen
 inline void plugin(AppCommands& app_commands)
 {
+  app_commands.add_resource<MapInformation>(map::load_information());
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
     ResourceQuery<GameState>{}, Query<UIElement>{}, [&](auto& event, auto& resource_tuple, auto& view) {
@@ -42,7 +51,7 @@ inline void plugin(AppCommands& app_commands)
       if (game_state.current_screen == GameState::CurrentScreen::MapSelect) {
 
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
-          game_state.current_screen = GameState::CurrentScreen::VehicleSelectPlayerOne;
+          game_state = game_state::vehicle_select_player_one(game_state.map_select.selected_map_index);
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
@@ -71,6 +80,11 @@ inline void spawn_ui(AppCommands& app_commands)
 
   background.add_component<UIElement>();
 
+  auto const map_information = *app_commands.get_resource<MapInformation>();
+  auto const game_state = *app_commands.get_resource<GameState>();
+  auto const selected_map_index = game_state.map_select.selected_map_index;
+  auto const& map = map_information.maps[selected_map_index];
+
   auto title = app_commands.spawn()
                  .add_component<UIElement>()
                  .add_component<Text>(utils::INTER_BLACK, "RACER", u32(97), 2.5f)
@@ -92,15 +106,16 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto Jungle_txt = app_commands.spawn()
                       .add_component<UIElement>()
-                      .add_component<Text>(utils::INTER_SEMI_BOLD, "Jungle Name", u32(53), 0.85f)
+                      .add_component<Text>(utils::INTER_SEMI_BOLD, map.name, u32(53), 0.85f)
                       .add_component<Colour>(colour::black())
                       .add_component<layout::Margin>(layout::Margin{ .top = 670.f, .left = 900.f });
 
 
   app_commands.spawn()
     .add_component<UIElement>()
-    .add_component<Rectangle>(sf::Vector2f{ 1400.f, 550.f })
-    .add_component<Colour>(colour::white())
+    .add_component<Texture>(map.preview_file_path)
+    .add_component<Scale>(sf::Vector2f{ 0.5f, 0.5f })
+    .add_component<Rotation>(0.f)
     .add_component<Outline>(colour::black(), 2.2f)
     .add_component<ZIndex>(2)
     .add_component<Transform>(sf::Vector2f{ 0.f, 0.f });

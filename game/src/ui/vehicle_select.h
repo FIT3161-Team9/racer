@@ -98,7 +98,8 @@ inline void plugin(AppCommands& app_commands)
       if (event.key_released.key != sf::Keyboard::Key::Enter) { return false; }
 
       if (game_state.current_screen == GameState::CurrentScreen::VehicleSelectPlayerOne) {
-        game_state = game_state::player_one_select_vehicle(selected_vehicle.vehicle_index);
+        game_state = game_state::vehicle_select_player_two(game_state.vehicle_select_player_one.selected_map_index,
+                                                           selected_vehicle.vehicle_index);
 
         for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
         vehicle_select::spawn_ui(app_commands, "PLAYER   TWO   SELECT   VEHICLE");
@@ -109,7 +110,7 @@ inline void plugin(AppCommands& app_commands)
 
         for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
-        auto const level = map::LEVELS[2];
+        auto const level = map::LEVELS[game_state.vehicle_select_player_two.selected_map_index];
         auto const loaded_level = map::load_level(app_commands, level.c_str());
 
         vehicle::load(app_commands,
