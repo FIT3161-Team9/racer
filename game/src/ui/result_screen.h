@@ -78,7 +78,7 @@ inline void plugin(AppCommands& app_commands)
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
           if (selected_state.state == 0) {
             game_state.current_screen = GameState::CurrentScreen::MapSelect;
-            display_course::spawn_ui(app_commands);
+            map_select::spawn_ui(app_commands);
             return true;
           }
           if (selected_state.state == 1) {

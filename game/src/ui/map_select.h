@@ -22,7 +22,7 @@
 #include "game/src/ui/vehicle_select.h"
 #include "game/src/utils.h"
 
-namespace display_course
+namespace map_select
 {
 
 void spawn_ui(AppCommands&);
@@ -151,4 +151,4 @@ inline void spawn_ui(AppCommands& app_commands)
     });
 }
 
-};// namespace display_course
+};// namespace map_select

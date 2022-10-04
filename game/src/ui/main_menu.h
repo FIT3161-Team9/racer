@@ -92,7 +92,7 @@ inline void plugin(AppCommands& app_commands)
 
             game_state.current_screen = GameState::CurrentScreen::MapSelect;
 
-            display_course::spawn_ui(app_commands);
+            map_select::spawn_ui(app_commands);
 
             return true;
           }
