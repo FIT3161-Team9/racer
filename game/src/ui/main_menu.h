@@ -90,7 +90,7 @@ inline void plugin(AppCommands& app_commands)
             });
             background::destroy(app_commands, background);
 
-            game_state.current_screen = GameState::CurrentScreen::MapSelect;
+            game_state = game_state::map_select();
 
             map_select::spawn_ui(app_commands);
 
