@@ -48,7 +48,7 @@ inline void circle_ground_collision_plugin(AppCommands& app_commands)
           const auto dot = vector_utils::dot_product(circle_velocity.value, collision_result->normal);
           const auto new_velocity = vector_utils::scale_vector(
             vector_utils::minus(circle_velocity.value, vector_utils::scale_vector(collision_result->normal, 2 * dot)),
-            0.75f);
+            1.f);
 
           circle_velocity.value = new_velocity;
 
