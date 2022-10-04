@@ -41,7 +41,7 @@ inline void plugin(AppCommands& app_commands)
       if (game_state.current_screen == GameState::CurrentScreen::DisplayCourse) {
 
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
-          game_state.current_screen = GameState::CurrentScreen::VehicleSelect;
+          game_state.current_screen = GameState::CurrentScreen::VehicleSelect1;
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
