@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "SFML/System/Vector2.hpp"
 
 #include "engine/app_commands.h"
