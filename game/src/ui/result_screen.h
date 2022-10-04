@@ -22,7 +22,6 @@
 #include "game/src/game_state.h"
 #include "game/src/ui/background.h"
 #include "game/src/ui/icon.h"
-#include "game/src/ui/main_menu.h"
 #include "game/src/ui/map_select.h"
 #include "game/src/utils.h"
 
@@ -43,26 +42,27 @@ inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_resource<SelectedState>(0);
   app_commands.add_system<Event::EventType::KeyReleased>(ResourceQuery<GameState, SelectedState>{},
-        Query<Icon const, Transform>{},
-        [](auto& event, auto& resource_tuple, auto& view) {
-          auto&& [_, game_state, selected_state] = resource_tuple;
-          if (game_state.current_screen != GameState::CurrentScreen::ResultScreen) {
-            return false;
-          }
-          if (event.key_released.key == sf::Keyboard::Key::Up) {
-            for (auto&& [_entity, icon, transform] : view.each()) {
-              transform.value.y = 40.f;
-              selected_state.state = 0;
-            }
-          }
-          if (event.key_released.key == sf::Keyboard::Key::Down) {
-            for (auto&& [_entity, icon, transform] : view.each()) {
-              transform.value.y = 200.f;
-              selected_state.state = 1;
-            }
-          }
-          return false;
-        });
+                                                         Query<Icon const, Transform>{},
+                                                         [](auto& event, auto& resource_tuple, auto& view) {
+                                                           auto&& [_, game_state, selected_state] = resource_tuple;
+                                                           if (game_state.current_screen
+                                                               != GameState::CurrentScreen::ResultScreen) {
+                                                             return false;
+                                                           }
+                                                           if (event.key_released.key == sf::Keyboard::Key::Up) {
+                                                             for (auto&& [_entity, icon, transform] : view.each()) {
+                                                               transform.value.y = 40.f;
+                                                               selected_state.state = 0;
+                                                             }
+                                                           }
+                                                           if (event.key_released.key == sf::Keyboard::Key::Down) {
+                                                             for (auto&& [_entity, icon, transform] : view.each()) {
+                                                               transform.value.y = 200.f;
+                                                               selected_state.state = 1;
+                                                             }
+                                                           }
+                                                           return false;
+                                                         });
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -76,13 +76,12 @@ inline void plugin(AppCommands& app_commands)
         if (event.key_released.key == sf::Keyboard::Key::Enter) {
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
           if (selected_state.state == 0) {
-            game_state.current_screen = GameState::CurrentScreen::MapSelect;
+            game_state = game_state::map_select();
             map_select::spawn_ui(app_commands);
             return true;
           }
           if (selected_state.state == 1) {
-            game_state.current_screen = GameState::CurrentScreen::MainMenu;
-            main_menu::spawn_ui(app_commands);
+            app_commands.quit();
             return true;
           }
         }
@@ -110,9 +109,7 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto* selected_state = app_commands.get_resource<SelectedState>();
   std::string playerWinned = "Player One Wins";
-  if (!game_state->result_screen.player_one_did_win){
-    playerWinned = "Player Two Wins";
-  }
+  if (!game_state->result_screen.player_one_did_win) { playerWinned = "Player Two Wins"; }
 
   app_commands.spawn()
     .add_component<UIElement>()
@@ -158,7 +155,7 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto quit_button_label = app_commands.spawn()
                              .add_component<UIElement>()
-                             .add_component<Text>(utils::INTER_SEMI_BOLD, "Main Menu", u32(75), 0.85f)
+                             .add_component<Text>(utils::INTER_SEMI_BOLD, "QUIT", u32(75), 0.85f)
                              .add_component<Colour>(colour::black())
                              .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
 
