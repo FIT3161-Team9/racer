@@ -43,27 +43,26 @@ inline void plugin(AppCommands& app_commands)
 {
   app_commands.add_resource<SelectedState>(0);
   app_commands.add_system<Event::EventType::KeyReleased>(ResourceQuery<GameState, SelectedState>{},
-                                                         Query<Icon const, Transform>{},
-                                                         [](auto& event, auto& resource_tuple, auto& view) {
-                                                           auto&& [_, game_state, selected_state] = resource_tuple;
-                                                           if (game_state.current_screen
-                                                               != GameState::CurrentScreen::ResultScreen) {
-                                                             return false;
-                                                           }
-                                                           if (event.key_released.key == sf::Keyboard::Key::Up) {
-                                                             for (auto&& [_entity, icon, transform] : view.each()) {
-                                                               transform.value.y = 40.f;
-                                                               selected_state.state = 0;
-                                                             }
-                                                           }
-                                                           if (event.key_released.key == sf::Keyboard::Key::Down) {
-                                                             for (auto&& [_entity, icon, transform] : view.each()) {
-                                                               transform.value.y = 200.f;
-                                                               selected_state.state = 1;
-                                                             }
-                                                           }
-                                                           return false;
-                                                         });
+        Query<Icon const, Transform>{},
+        [](auto& event, auto& resource_tuple, auto& view) {
+          auto&& [_, game_state, selected_state] = resource_tuple;
+          if (game_state.current_screen != GameState::CurrentScreen::ResultScreen) {
+            return false;
+          }
+          if (event.key_released.key == sf::Keyboard::Key::Up) {
+            for (auto&& [_entity, icon, transform] : view.each()) {
+              transform.value.y = 40.f;
+              selected_state.state = 0;
+            }
+          }
+          if (event.key_released.key == sf::Keyboard::Key::Down) {
+            for (auto&& [_entity, icon, transform] : view.each()) {
+              transform.value.y = 200.f;
+              selected_state.state = 1;
+            }
+          }
+          return false;
+        });
 
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
@@ -110,6 +109,10 @@ inline void spawn_ui(AppCommands& app_commands)
   background::spawn(app_commands).add_component<UIElement>();
 
   auto* selected_state = app_commands.get_resource<SelectedState>();
+  std::string playerWinned = "Player One Wins";
+  if (!game_state->result_screen.player_one_did_win){
+    playerWinned = "Player Two Wins";
+  }
 
   app_commands.spawn()
     .add_component<UIElement>()
@@ -161,7 +164,7 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto winner_label = app_commands.spawn()
                         .add_component<UIElement>()
-                        .add_component<Text>(utils::INTER_SEMI_BOLD, "PLayer One Wins", u32(75), 0.85f)
+                        .add_component<Text>(utils::INTER_SEMI_BOLD, playerWinned, u32(75), 0.85f)
                         .add_component<Colour>(colour::black())
                         .add_component<layout::Margin>(layout::Margin{ .top = 100.f, .left = 80.f });
 
@@ -178,6 +181,7 @@ inline void spawn_ui(AppCommands& app_commands)
     .add_component<Triangle>(sf::Vector2f{ 50.f, 0.f }, sf::Vector2f{ 50.f, 60.f }, sf::Vector2f{ 90.f, 30.f })
     .add_component<Colour>(colour::black())
     .add_component<Icon>()
+    .add_component<ZIndex>(4)
     .add_component<Transform>(sf::Vector2f{ -360.f, 40.f });
   selected_state->state = 0;
 
@@ -244,7 +248,7 @@ inline void spawn_ui(AppCommands& app_commands)
                                                      prompt_6.entity(),
                                                      prompt_7.entity(),
                                                      winner_time.entity() })
-      .template add_component<layout::Margin>(layout::Margin{ .top = 8.0f, .left = 80.f });
+      .template add_component<layout::Margin>(layout::Margin{ .top = 217.f, .left = 80.f });
 
   app_commands.spawn()
     .add_component<UIElement>()

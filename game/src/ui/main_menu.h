@@ -112,7 +112,8 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
-
+  
+  background::spawn(app_commands).add_component<UIElement>();
   app_commands.spawn()
     .add_component<UIElement>()
     .add_component<Rectangle>(sf::Vector2f{ 135.f, 40.f })
