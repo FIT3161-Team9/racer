@@ -1,6 +1,11 @@
 {
   "components": {
     "acceleration": { "x": 500.0, "y": 0.0 },
+    "fuel": {
+      "burn_rate": 0.1,
+      "current_fuel": 100.0,
+      "max_capacity": 100.0
+    },
     "maximum_velocity": 2000.0,
     "affected_by_gravity": true,
     "circle": 77.5,

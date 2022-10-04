@@ -1,0 +1,1773 @@
+{
+  "entities": [
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 15372.6796875, "y": 2704.5419921875 },
+        "z_index": 4
+      },
+      "id": 4941828
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 15495.142578125, "y": 2488.9189453125 },
+        "z_index": 4
+      },
+      "id": 2844685
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 12546.564453125, "y": 2724.33349609375 },
+        "z_index": 4
+      },
+      "id": 3893244
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 13104.90625, "y": 2725.37548828125 },
+        "z_index": 4
+      },
+      "id": 3893274
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 13135.7607421875, "y": 2493.083984375 },
+        "z_index": 4
+      },
+      "id": 2844708
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10144.4443359375, "y": 2256.626953125 },
+        "z_index": 4
+      },
+      "id": 1796112
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10144.466796875, "y": 1978.50048828125 },
+        "z_index": 4
+      },
+      "id": 1796162
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10141.3564453125, "y": 1700.3758544921875 },
+        "z_index": 4
+      },
+      "id": 747537
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 50.0395622253418,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 8162.16064453125, "y": 1142.04052734375 },
+        "z_index": 4
+      },
+      "id": 34301975
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -9.212786674499512,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 7888.1435546875, "y": 812.8309326171875 },
+        "z_index": 4
+      },
+      "id": 16476193
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -8.23331356048584,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 7879.8798828125, "y": 1039.955322265625 },
+        "z_index": 4
+      },
+      "id": 3893277
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 51.235137939453125,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 8323.53515625, "y": 984.705078125 },
+        "z_index": 4
+      },
+      "id": 2844734
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -1.1096922159194946,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 4813.212890625, "y": 1398.29150390625 },
+        "z_index": 4
+      },
+      "id": 7039019
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -8.697503089904785,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 5384.04443359375, "y": 1350.3746337890625 },
+        "z_index": 4
+      },
+      "id": 1796128
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -1.1096922159194946,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 4785.08935546875, "y": 1404.54150390625 },
+        "z_index": 4
+      },
+      "id": 16476198
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 2572.5947265625, "y": 1353.5001220703125 },
+        "z_index": 4
+      },
+      "id": 4941852
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -8.378948211669922,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 5339.2880859375, "y": 1157.623291015625 },
+        "z_index": 4
+      },
+      "id": 5990435
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 2168.42578125, "y": 1231.6248779296875 },
+        "z_index": 4
+      },
+      "id": 4941866
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 1878.84130859375, "y": 1105.583251953125 },
+        "z_index": 4
+      },
+      "id": 5990445
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 1614.257080078125, "y": 980.5834350585938 },
+        "z_index": 4
+      },
+      "id": 3893297
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 1388.214599609375, "y": 784.75 },
+        "z_index": 4
+      },
+      "id": 32204865
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.5970470905303955,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 931.9635620117188, "y": 753.4998779296875 },
+        "z_index": 4
+      },
+      "id": 747571
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 549.41796875, "y": 182.68157958984375 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 24.23709487915039,
+        "scale": { "x": 8.58465576171875, "y": 5.708799362182617 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 2447.624755859375, "y": 963.875 },
+        "z_index": 4
+      },
+      "id": 1796153
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": -701.369384765625, "y": 297.2501220703125 },
+        "z_index": 4
+      },
+      "id": 18573346
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 26.77067756652832,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 2358.00634765625, "y": 1121.208251953125 },
+        "z_index": 4
+      },
+      "id": 2844728
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": -700.6676635742188, "y": 98.29180908203125 },
+        "z_index": 4
+      },
+      "id": 18573342
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 2000.0, "y": 1000.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 2000.0, "y": 1000.0 },
+        "rotation": 0.0,
+        "scale": { "x": 1.0, "y": 1.0 },
+        "sticky": true,
+        "texture": "assets/Mountains_BG.png",
+        "transform": { "x": 0.0, "y": 0.0 },
+        "z_index": 1
+      },
+      "id": 9438039
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "finish_line": true,
+        "image_dimensions": { "x": 72.0, "y": 200.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 166.34567260742188, "y": 462.0712890625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 2.310356616973877, "y": 2.310356378555298 },
+        "selectable": true,
+        "texture": "assets/FinishLine.png",
+        "transform": { "x": 14422.771484375, "y": 2624.12744140625 },
+        "z_index": 5
+      },
+      "id": 1909155913
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 8.423460960388184,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": -127.7510986328125, "y": 139.95849609375 },
+        "z_index": 4
+      },
+      "id": 4941891
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 21.409006118774414,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 409.7489013671875, "y": 283.7086181640625 },
+        "z_index": 4
+      },
+      "id": 8087621
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 10.839699745178223,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": -208.66119384765625, "y": 299.3333740234375 },
+        "z_index": 4
+      },
+      "id": 9136189
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 23.28338050842285,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 335.08880615234375, "y": 454.54193115234375 },
+        "z_index": 4
+      },
+      "id": 4941879
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 3.3504321575164795,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 954.540771484375, "y": 406.62506103515625 },
+        "z_index": 4
+      },
+      "id": 4941851
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 20.325040817260742,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 402.79705810546875, "y": 468.08349609375 },
+        "z_index": 4
+      },
+      "id": 4941864
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 3.6732754707336426,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 944.4635620117188, "y": 569.1250610351563 },
+        "z_index": 4
+      },
+      "id": 11233339
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 549.41796875, "y": 182.68157958984375 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 24.23709487915039,
+        "scale": { "x": 8.58465576171875, "y": 5.708799362182617 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 1459.08349609375, "y": 521.166748046875 },
+        "z_index": 4
+      },
+      "id": 7039023
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 28.732776641845703,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 1402.797119140625, "y": 662.8750610351563 },
+        "z_index": 4
+      },
+      "id": 18573382
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 549.41796875, "y": 182.68157958984375 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 24.23709487915039,
+        "scale": { "x": 8.58465576171875, "y": 5.708799362182617 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 1958.0418701171875, "y": 744.0833740234375 },
+        "z_index": 4
+      },
+      "id": 23816264
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 26.77067756652832,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 1843.4227294921875, "y": 869.1249389648438 },
+        "z_index": 4
+      },
+      "id": 18573360
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 7.914955139160156,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 2994.123046875, "y": 1122.2496337890625 },
+        "z_index": 4
+      },
+      "id": 747578
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 26.77067756652832,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 2467.38232421875, "y": 1070.1661376953125 },
+        "z_index": 4
+      },
+      "id": 7039030
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 8.696978569030762,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 2994.46435546875, "y": 1320.16650390625 },
+        "z_index": 4
+      },
+      "id": 1796121
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 2.82124662399292,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 3578.496826171875, "y": 1179.541259765625 },
+        "z_index": 4
+      },
+      "id": 7039020
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 3.7185895442962646,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 3563.211669921875, "y": 1360.7916259765625 },
+        "z_index": 4
+      },
+      "id": 11233344
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.45723408460617065,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 4168.0830078125, "y": 1195.1663818359375 },
+        "z_index": 4
+      },
+      "id": 17524796
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.0559979677200317,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 4131.96435546875, "y": 1382.66650390625 },
+        "z_index": 4
+      },
+      "id": 13330495
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.45723408460617065,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 4760.78662109375, "y": 1201.416259765625 },
+        "z_index": 4
+      },
+      "id": 14379049
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 1.0559979677200317,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 4712.169921875, "y": 1396.2083740234375 },
+        "z_index": 4
+      },
+      "id": 11233317
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -8.378948211669922,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 5981.99755859375, "y": 1062.83056640625 },
+        "z_index": 4
+      },
+      "id": 13330503
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -6.576395034790039,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 5970.50390625, "y": 1252.45703125 },
+        "z_index": 4
+      },
+      "id": 1796146
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -7.229330062866211,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 6612.2080078125, "y": 977.413818359375 },
+        "z_index": 4
+      },
+      "id": 747530
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -7.493208408355713,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 6524.666015625, "y": 1177.4561767578125 },
+        "z_index": 4
+      },
+      "id": 1796105
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -5.740462779998779,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 7104.87548828125, "y": 1107.664306640625 },
+        "z_index": 4
+      },
+      "id": 21719086
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -6.456135272979736,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 7253.7607421875, "y": 901.3723754882813 },
+        "z_index": 4
+      },
+      "id": 3893255
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -5.740462779998779,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 7283.00537109375, "y": 1275.37353515625 },
+        "z_index": 4
+      },
+      "id": 8087573
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -5.740462779998779,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 7290.2900390625, "y": 1074.331298828125 },
+        "z_index": 4
+      },
+      "id": 15427606
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -5.740462779998779,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 6700.71484375, "y": 1348.2906494140625 },
+        "z_index": 4
+      },
+      "id": 32204852
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -1.6906402111053467,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 8851.5419921875, "y": 1231.5816650390625 },
+        "z_index": 4
+      },
+      "id": 2844692
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 5.175649642944336,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 7926.751953125, "y": 1299.333740234375 },
+        "z_index": 4
+      },
+      "id": 4941855
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 5.175649642944336,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 8558.0087890625, "y": 1351.416748046875 },
+        "z_index": 4
+      },
+      "id": 7038995
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -1.6906402111053467,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 9490.078125, "y": 1211.789794921875 },
+        "z_index": 4
+      },
+      "id": 4941842
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -2.521167039871216,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 9230.931640625, "y": 1453.5008544921875 },
+        "z_index": 4
+      },
+      "id": 5990412
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 652.6624755859375, "y": 195.3160400390625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -1.6906402111053467,
+        "scale": { "x": 10.197851181030273, "y": 6.103626251220703 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Crack.png",
+        "transform": { "x": 10138.0107421875, "y": 1191.9976806640625 },
+        "z_index": 4
+      },
+      "id": 11233291
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 9858.0205078125, "y": 1423.292236328125 },
+        "z_index": 4
+      },
+      "id": 12281864
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10138.2412109375, "y": 1423.292236328125 },
+        "z_index": 4
+      },
+      "id": 17524775
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.12224380671977997,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 10765.9912109375, "y": 2493.083984375 },
+        "z_index": 4
+      },
+      "id": 747534
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.9672272801399231,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10144.4462890625, "y": 2528.5029296875 },
+        "z_index": 4
+      },
+      "id": 12281880
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 10766.333984375, "y": 2728.50048828125 },
+        "z_index": 4
+      },
+      "id": 14379014
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.12224380671977997,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 11358.6982421875, "y": 2494.12548828125 },
+        "z_index": 4
+      },
+      "id": 11233280
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 11335.1015625, "y": 2729.5419921875 },
+        "z_index": 4
+      },
+      "id": 15427652
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 11949.3154296875, "y": 2495.1669921875 },
+        "z_index": 4
+      },
+      "id": 4941811
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 11919.4833984375, "y": 2714.958251953125 },
+        "z_index": 4
+      },
+      "id": 1796094
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 12542.01953125, "y": 2494.12548828125 },
+        "z_index": 4
+      },
+      "id": 2844669
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 13725.341796875, "y": 2493.0849609375 },
+        "z_index": 4
+      },
+      "id": 7038991
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 14313.880859375, "y": 2493.08447265625 },
+        "z_index": 4
+      },
+      "id": 4941818
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 13719.505859375, "y": 2722.249755859375 },
+        "z_index": 4
+      },
+      "id": 10184709
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 14285.15625, "y": 2725.375 },
+        "z_index": 4
+      },
+      "id": 7038969
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": -0.16267485916614532,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground.png",
+        "transform": { "x": 14899.2978515625, "y": 2491.002197265625 },
+        "z_index": 4
+      },
+      "id": 11233283
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 651.1065673828125, "y": 283.391845703125 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.19722458720207214,
+        "scale": { "x": 10.173540115356445, "y": 8.855995178222656 },
+        "selectable": true,
+        "texture": "assets/Mountains_Ground_Base.png",
+        "transform": { "x": 14903.9169921875, "y": 2700.375 },
+        "z_index": 4
+      },
+      "id": 8087544
+    }
+  ],
+  "name": "Mountains",
+  "vehicle_spawn_location": { "x": -950.0, "y": 270.0 },
+  "version": 12
+}

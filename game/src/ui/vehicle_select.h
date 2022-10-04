@@ -109,7 +109,7 @@ inline void plugin(AppCommands& app_commands)
 
         for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
-        auto const level = map::LEVELS[0];
+        auto const level = map::LEVELS[2];
         auto const loaded_level = map::load_level(app_commands, level.c_str());
 
         vehicle::load(app_commands,
