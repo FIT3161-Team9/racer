@@ -32,7 +32,7 @@
 namespace map
 {
 
-std::array<std::string, 1> const LEVELS = { "./levels/Grass Plains.json" };
+std::array<std::string, 1> const LEVELS = { "./levels/Highway.json" };
 
 inline CurrentlyLoadedMap load_level(AppCommands& app_commands, char const* level_path)
 {
