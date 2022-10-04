@@ -37,6 +37,7 @@
 #include "game/src/debug/selectable.h"
 #include "game/src/finish_line.h"
 #include "game/src/gravity.h"
+#include "game/src/maximum_velocity.h"
 #include "game/src/spawn_transform.h"
 #include "game/src/velocity.h"
 
@@ -123,6 +124,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* camera_target = app_commands.component<camera::Target>(entity);
   auto const* sticky = app_commands.component<camera::Sticky>(entity);
   auto const* finish_line = app_commands.component<FinishLine>(entity);
+  auto const* maximum_velocity = app_commands.component<MaximumVelocity>(entity);
 
   if (texture != nullptr) { components["texture"] = texture->path; }
   if (image_dimensions != nullptr) { components["image_dimensions"] = serialize_vector(image_dimensions->dimensions); }
@@ -146,6 +148,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (camera_target != nullptr) { components["camera_target"] = camera_target->is_followed; }
   if (sticky != nullptr) { components["sticky"] = true; }
   if (finish_line != nullptr) { components["finish_line"] = true; }
+  if (maximum_velocity != nullptr) { components["maximum_velocity"] = maximum_velocity->value; }
 
   json object;
 
@@ -193,6 +196,9 @@ inline Entity deserialize_and_spawn(AppCommands& app_commands, nlohmann::json co
   if (components.contains("camera_target")) { entity.add_component<camera::Target>(components["camera_target"]); }
   if (components.contains("sticky")) { entity.add_component<camera::Sticky>(); }
   if (components.contains("finish_line")) { entity.add_component<FinishLine>(); }
+  if (components.contains("maximum_velocity")) {
+    entity.add_component<MaximumVelocity>(components["maximum_velocity"]);
+  }
 
   return entity;
 }
