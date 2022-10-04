@@ -1262,6 +1262,6 @@
     }
   ],
   "name": "Highway",
-  "vehicle_spawn_location": { "x": -950.0, "y": 270.0 },
+  "vehicle_spawn_location": { "x": -900.0, "y": 260.0 },
   "version": 9
 }
