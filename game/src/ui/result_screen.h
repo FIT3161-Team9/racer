@@ -21,9 +21,9 @@
 
 #include "game/src/game_state.h"
 #include "game/src/ui/background.h"
-#include "game/src/ui/display_course.h"
 #include "game/src/ui/icon.h"
 #include "game/src/ui/main_menu.h"
+#include "game/src/ui/map_select.h"
 #include "game/src/utils.h"
 
 namespace result_screen
