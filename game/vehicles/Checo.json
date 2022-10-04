@@ -12,8 +12,8 @@
     "velocity": { "x": 0.0, "y": 0.0 },
     "fuel": {
       "burn_rate": 1,
-      "current_fuel": 50,
-      "max_capacity": 50
+      "current_fuel": 100,
+      "max_capacity": 100
     }
   },
   "id": 0,
