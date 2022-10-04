@@ -1263,5 +1263,6 @@
   ],
   "name": "Highway",
   "vehicle_spawn_location": { "x": -900.0, "y": 260.0 },
-  "version": 9
+  "version": 9,
+  "preview": "assets/HighwayPreview.png"
 }
