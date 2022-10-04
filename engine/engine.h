@@ -51,7 +51,7 @@ void run_app(App const& app, StartupFn on_startup)
 
   sf::Clock clock;
   std::uint64_t total_time_since_render{};
-  while (window.isOpen()) {
+  while (window.isOpen() && app_commands.m_run_app) {
     detail::handle_events(window, app_commands);
     sf::Time const elapsed = clock.restart();
     std::uint64_t const elapsed_milliseconds = elapsed.asMilliseconds();
