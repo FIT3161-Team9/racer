@@ -68,14 +68,9 @@ inline void plugin(AppCommands& app_commands)
                                                           return false;
                                                         });
 
-  // Spawn the background
-  auto const background = background::spawn(app_commands).entity();
-
   // Listen for the "enter" key
   app_commands.template add_system<Event::EventType::KeyReleased>(
-    ResourceQuery<GameState, SelectedState>{},
-    Query<UIElement>{},
-    [&, background](auto& event, auto& resource_tuple, auto& view) {
+    ResourceQuery<GameState, SelectedState>{}, Query<UIElement>{}, [&](auto& event, auto& resource_tuple, auto& view) {
       auto&& [_, game_state, selected_state] = resource_tuple;
 
       // If the key that was pressed wasn't "enter", or the current screen isn't
@@ -88,7 +83,6 @@ inline void plugin(AppCommands& app_commands)
               (void)ui_element;
               app_commands.destroy(entity);
             });
-            background::destroy(app_commands, background);
 
             game_state = game_state::map_select();
 
@@ -112,7 +106,7 @@ inline void spawn_ui(AppCommands& app_commands)
 {
   using utils::u32;
   using utils::u8;
-  
+
   background::spawn(app_commands).add_component<UIElement>();
   app_commands.spawn()
     .add_component<UIElement>()
