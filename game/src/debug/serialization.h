@@ -185,7 +185,7 @@ inline Entity deserialize_and_spawn(AppCommands& app_commands, nlohmann::json co
   if (components.contains("acceleration")) {
     entity.add_component<Acceleration>(deserialize_vector(components["acceleration"]));
   }
-  if (components.contains("Fuel")) { entity.add_component<Fuel>(deserialize_fuel(components["fuel"])); }
+  if (components.contains("fuel")) { entity.add_component<Fuel>(deserialize_fuel(components["fuel"])); }
   if (components.contains("rectangle")) {
     entity.add_component<Rectangle>(deserialize_vector(components["rectangle"]));
   }
