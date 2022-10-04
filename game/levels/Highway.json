@@ -1,0 +1,1267 @@
+{
+  "entities": [
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 11542.7138671875, "y": 559.3751220703125 },
+        "z_index": 4
+      },
+      "id": 18573346
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 10918.75, "y": 558.3333129882813 },
+        "z_index": 4
+      },
+      "id": 29059137
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 9734.3740234375, "y": 559.3751220703125 },
+        "z_index": 4
+      },
+      "id": 18573342
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 10321.8896484375, "y": 559.3751220703125 },
+        "z_index": 4
+      },
+      "id": 17524754
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 9143.75390625, "y": 560.4166870117188 },
+        "z_index": 4
+      },
+      "id": 14379039
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 8557.2919921875, "y": 560.4166870117188 },
+        "z_index": 4
+      },
+      "id": 13330464
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 7963.54296875, "y": 560.4166870117188 },
+        "z_index": 4
+      },
+      "id": 12281889
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 7378.1259765625, "y": 563.5416870117188 },
+        "z_index": 4
+      },
+      "id": 11233300
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 6788.5439453125, "y": 562.5 },
+        "z_index": 4
+      },
+      "id": 17524793
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 6216.66552734375, "y": 564.5831909179688 },
+        "z_index": 4
+      },
+      "id": 9136149
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 5044.798828125, "y": 567.7084350585938 },
+        "z_index": 4
+      },
+      "id": 1796139
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 12136.4755859375, "y": 561.4583740234375 },
+        "z_index": 4
+      },
+      "id": 13330498
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 4450.00732421875, "y": 569.791748046875 },
+        "z_index": 4
+      },
+      "id": 8087605
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 3296.878662109375, "y": 572.9166870117188 },
+        "z_index": 4
+      },
+      "id": 10184762
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 5639.5908203125, "y": 566.6668090820313 },
+        "z_index": 4
+      },
+      "id": 747542
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 2747.91796875, "y": 586.4583129882813 },
+        "z_index": 4
+      },
+      "id": 9136196
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 3886.4619140625, "y": 571.875 },
+        "z_index": 4
+      },
+      "id": 9136191
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 2747.91796875, "y": 586.4583129882813 },
+        "z_index": 4
+      },
+      "id": 8087616
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 989.5831298828125, "y": 585.4165649414063 },
+        "z_index": 4
+      },
+      "id": 4941875
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 2166.666748046875, "y": 586.4583129882813 },
+        "z_index": 4
+      },
+      "id": 2844724
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 1578.1256103515625, "y": 587.4998168945313 },
+        "z_index": 4
+      },
+      "id": 7039043
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 403.12493896484375, "y": 586.458251953125 },
+        "z_index": 4
+      },
+      "id": 1796150
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": 989.5831298828125, "y": 585.4165649414063 },
+        "z_index": 4
+      },
+      "id": 1796155
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": -160.41668701171875, "y": 585.4166259765625 },
+        "z_index": 4
+      },
+      "id": 747575
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 12722.91796875, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5990470
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 12144.77734375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 3893319
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 11563.5283203125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 1049404
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 9243.7880859375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 8389422
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 9243.7880859375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5243695
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 10392.75, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 1049392
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 10975.0322265625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 2097997
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 9819.830078125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 817
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 5156.25146484375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 17826634
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 4577.083984375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 18875209
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 3988.541015625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 826
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 2000.0, "y": 1000.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 2000.0, "y": 1000.0 },
+        "rotation": 0.0,
+        "scale": { "x": 1.0, "y": 1.0 },
+        "sticky": true,
+        "texture": "assets/City_BG.png",
+        "transform": { "x": 0.0, "y": 0.0 },
+        "z_index": 1
+      },
+      "id": 9438039
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "finish_line": true,
+        "image_dimensions": { "x": 72.0, "y": 200.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 166.34567260742188, "y": 462.0712890625 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 2.310356616973877, "y": 2.310356378555298 },
+        "selectable": true,
+        "texture": "assets/FinishLine.png",
+        "transform": { "x": 11272.8359375, "y": 591.00048828125 },
+        "z_index": 5
+      },
+      "id": 1909155913
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": -706.25, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 7340884
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 2233.331787109375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 1049423
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 2815.627197265625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 2098006
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 3400.000732421875, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 3146579
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 1055.208251953125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 3146574
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 1643.7498779296875, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 4195154
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 467.708251953125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5243729
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": -117.70819091796875, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5243728
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 5741.6689453125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 813
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 6326.04150390625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 2097996
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 6911.4609375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 1049388
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 7498.96484375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 4195147
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 6326.04150390625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 6292296
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 6326.04150390625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 7340871
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 6326.04150390625, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 3146563
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 8082.29736328125, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 1049399
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 8666.671875, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5243716
+    },
+    {
+      "components": {
+        "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "ground": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 590.0, "y": 142.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.21875, "y": 4.4375 },
+        "selectable": true,
+        "texture": "assets/Road_Start.png",
+        "transform": { "x": 9243.7880859375, "y": 430.0 },
+        "z_index": 4
+      },
+      "id": 5243701
+    },
+    {
+      "components": {
+        "colour": { "a": 1, "b": 0, "g": 0, "r": 0 },
+        "deletable": true,
+        "draggable": true,
+        "image_dimensions": { "x": 64.0, "y": 32.0 },
+        "outline": {
+          "colour": { "a": 0, "b": 0, "g": 0, "r": 0 },
+          "thickness": 2.0
+        },
+        "rectangle": { "x": 600.0, "y": 200.0 },
+        "resizeable": true,
+        "rotatable": true,
+        "rotation": 0.0,
+        "scale": { "x": 9.375, "y": 6.25 },
+        "selectable": true,
+        "texture": "assets/Road_Base.png",
+        "transform": { "x": -735.4165649414063, "y": 588.5415649414063 },
+        "z_index": 4
+      },
+      "id": 1796165
+    }
+  ],
+  "name": "Highway",
+  "vehicle_spawn_location": { "x": -950.0, "y": 270.0 },
+  "version": 9
+}
