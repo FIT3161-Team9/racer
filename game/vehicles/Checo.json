@@ -1,0 +1,15 @@
+{
+  "components": {
+    "acceleration": { "x": 480.0, "y": 0.0 },
+    "maximum_velocity": 2100.0,
+    "affected_by_gravity": true,
+    "circle": 77.5,
+    "colour": { "a": 0, "r": 0, "g": 0, "b": 0 },
+    "rotation": 0.0,
+    "scale": { "x": 1.0, "y": 1.0 },
+    "texture": "assets/Car2.png",
+    "z_index": 2,
+    "velocity": { "x": 0.0, "y": 0.0 }
+  },
+  "id": 0
+}

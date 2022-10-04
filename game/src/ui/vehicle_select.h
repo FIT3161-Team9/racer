@@ -151,7 +151,7 @@ inline void plugin(AppCommands& app_commands)
           auto const loaded_level = map::load_level(app_commands, level.c_str());
 
           vehicle::load(app_commands, vehicle::VEHICLES[0].c_str(), loaded_level.vehicle_spawn_location);
-          vehicle::load(app_commands, vehicle::VEHICLES[0].c_str(), loaded_level.vehicle_spawn_location);
+          vehicle::load(app_commands, vehicle::VEHICLES[1].c_str(), loaded_level.vehicle_spawn_location);
 
           count_down_timer::start(app_commands);
 

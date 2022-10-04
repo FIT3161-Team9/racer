@@ -24,7 +24,7 @@ struct Vehicle
 namespace vehicle
 {
 
-std::array<std::string, 1> const VEHICLES = { "./vehicles/Max.json" };
+std::array<std::string, 2> const VEHICLES = { "./vehicles/Max.json", "./vehicles/Checo.json" };
 
 inline Entity load(AppCommands& app_commands, char const* vehicle_path, sf::Vector2f const location)
 {
