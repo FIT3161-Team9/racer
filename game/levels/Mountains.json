@@ -1769,5 +1769,6 @@
   ],
   "name": "Mountains",
   "vehicle_spawn_location": { "x": -920.0, "y": -100.0 },
-  "version": 12
+  "version": 12,
+  "preview": "assets/MountainsPreview.png"
 }
