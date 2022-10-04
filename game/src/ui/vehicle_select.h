@@ -4,6 +4,7 @@
 #include <entt/entt.hpp>
 #include <filesystem>
 #include <vector>
+#include <string>
 
 #include <engine/app_commands.h>
 #include <engine/children.h>
@@ -55,11 +56,21 @@ inline void plugin(AppCommands& app_commands)
           case 1:
             for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
             createState(app_commands, vehicles::car1().speed, vehicles::car1().acc, vehicles::car1().fuel, colour::white());
+            if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1)
+               {game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle1;}
+            
+            else if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect2)
+               {game_state.current_vehicle_p2 = GameState::CurrentVehicle_p2::Vehicle1;}
             selected_state.state --;
             break;
           case 2:
             for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
             createState(app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
+            if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1)
+               {game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle2;}
+            
+            else if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect2)
+               {game_state.current_vehicle_p2 = GameState::CurrentVehicle_p2::Vehicle2;}
             selected_state.state --;
             break;
           default: break;
@@ -71,11 +82,21 @@ inline void plugin(AppCommands& app_commands)
           case 0:
             for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
             createState(app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
+            if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1)
+               {game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle2;}
+            
+            else if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect2)
+               {game_state.current_vehicle_p2 = GameState::CurrentVehicle_p2::Vehicle2;}
             selected_state.state ++;
             break;
           case 1:
             for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
             createState(app_commands, vehicles::car3().speed, vehicles::car3().acc, vehicles::car3().fuel, colour::black());
+            if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1)
+               {game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle3;}
+            
+            else if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect2)
+               {game_state.current_vehicle_p2 = GameState::CurrentVehicle_p2::Vehicle3;}
             selected_state.state ++;
             break;
           default: break;
@@ -98,7 +119,7 @@ inline void plugin(AppCommands& app_commands)
 
           for (auto&& [entity, _ui_element] : view.each()) { app_commands.destroy(entity); }
 
-          vehicle_select::spawn_ui(app_commands);
+          vehicle_select::spawn_ui(app_commands, "PLAYER   TWO   SELECT   VEHICLE");
           return true;
         }
       }
@@ -164,7 +185,7 @@ inline void createState(AppCommands& app_commands, float speed, float acc, float
 }
 
 /// Create the UI for ths main screen
-inline void spawn_ui(AppCommands& app_commands)
+inline void spawn_ui(AppCommands& app_commands, std::string str)
 {
   using utils::u32;
   using utils::u8;
@@ -187,9 +208,10 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto select_label = app_commands.spawn()
                         .add_component<UIElement>()
-                        .add_component<Text>(utils::INTER_SEMI_BOLD, "PLAYER   ONE   SELECT   VEHICLE", u32(66), 0.85f)
+                        .add_component<Text>(utils::INTER_SEMI_BOLD, str, u32(66), 0.85f)
                         .add_component<Colour>(colour::black())
                         .add_component<layout::Margin>(layout::Margin{ .top = -120.f, .left = 700.f });
+                        
   auto state_label = app_commands.spawn()
                        .add_component<UIElement>()
                        .add_component<Text>(utils::INTER_SEMI_BOLD, "state", u32(53), 0.85f)
@@ -225,14 +247,6 @@ inline void spawn_ui(AppCommands& app_commands)
     .add_component<ZIndex>(3)
     .add_component<Transform>(sf::Vector2f{ 400.f, -80.f });
 
-  // app_commands.spawn()
-  //   .add_component<UIElement>()
-  //   .add_component<Rectangle>(sf::Vector2f{ 300.f, 50.f })
-  //   .add_component<Outline>(colour::black(), 2.2f)
-  //   .add_component<Colour>(colour::white())
-  //   .add_component<ZIndex>(4)
-  //   .add_component<Transform>(sf::Vector2f{ 200.f, -80.f });
-
   
   app_commands.spawn()
     .add_component<UIElement>()
@@ -242,15 +256,7 @@ inline void spawn_ui(AppCommands& app_commands)
     .add_component<ZIndex>(3)
     .add_component<Transform>(sf::Vector2f{ 400.f, 75.f });
 
-  // app_commands.spawn()
-  //   .add_component<UIElement>()
-  //   .add_component<Rectangle>(sf::Vector2f{ 500.f, 50.f })
-  //   .add_component<Outline>(colour::black(), 2.2f)
-  //   .add_component<Colour>(colour::white())
-  //   .add_component<ZIndex>(4)
-  //   .add_component<Transform>(sf::Vector2f{ 300.f, 75.f });
-
-
+  
   app_commands.spawn()
     .add_component<UIElement>()
     .add_component<Rectangle>(sf::Vector2f{ 700.f, 50.f })
@@ -259,13 +265,6 @@ inline void spawn_ui(AppCommands& app_commands)
     .add_component<ZIndex>(3)
     .add_component<Transform>(sf::Vector2f{ 400.f, 215.f });
 
-  // app_commands.spawn()
-  //   .add_component<UIElement>()
-  //   .add_component<Rectangle>(sf::Vector2f{ 600.f, 50.f })
-  //   .add_component<Outline>(colour::black(), 2.2f)
-  //   .add_component<Colour>(colour::white())
-  //   .add_component<ZIndex>(4)
-  //   .add_component<Transform>(sf::Vector2f{ 350.f, 215.f });
 
   createState(app_commands, vehicles::car1().speed, vehicles::car1().acc, vehicles::car1().fuel, colour::white());
 
