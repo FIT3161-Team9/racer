@@ -126,7 +126,7 @@ inline void spawn_ui(AppCommands& app_commands)
 
   auto prompt_5 = app_commands.spawn()
                     .add_component<UIElement>()
-                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO SELECT", u32(21), 0.85f)
+                    .add_component<Text>(utils::INTER_SEMI_BOLD, "TO CONTINUE", u32(21), 0.85f)
                     .add_component<Colour>(colour::black())
                     .add_component<layout::Margin>(layout::Margin{ .left = 10.f });
 
