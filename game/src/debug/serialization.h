@@ -36,6 +36,7 @@
 #include "game/src/debug/rotatable.h"
 #include "game/src/debug/selectable.h"
 #include "game/src/finish_line.h"
+#include "game/src/fuel.h"
 #include "game/src/gravity.h"
 #include "game/src/maximum_velocity.h"
 #include "game/src/spawn_transform.h"
@@ -50,6 +51,9 @@ nlohmann::json serialize(AppCommands& app_commands, entt::entity entity);
 nlohmann::json serialize_outline(Outline const&);
 nlohmann::json serialize_colour(Colour const&);
 nlohmann::json serialize_vector(sf::Vector2f const&);
+nlohmann::json serialize_fuel(Fuel const&);
+
+Fuel deserialize_fuel(nlohmann::json const&);
 sf::Vector2f deserialize_vector(nlohmann::json const&);
 Outline deserialize_outline(nlohmann::json const&);
 Colour deserialize_colour(nlohmann::json const&);
@@ -109,6 +113,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   auto const* transform = app_commands.component<SpawnTransform>(entity);
   auto const* velocity = app_commands.component<Velocity>(entity);
   auto const* acceleration = app_commands.component<Acceleration>(entity);
+  auto const* fuel = app_commands.component<Fuel>(entity);
   auto const* rectangle = app_commands.component<Rectangle>(entity);
   auto const* circle = app_commands.component<Circle>(entity);
   auto const* outline = app_commands.component<Outline>(entity);
@@ -133,6 +138,7 @@ inline nlohmann::json serialize(AppCommands& app_commands, entt::entity entity)
   if (transform != nullptr) { components["transform"] = serialize_vector(transform->value); }
   if (velocity != nullptr) { components["velocity"] = serialize_vector(velocity->value); }
   if (acceleration != nullptr) { components["acceleration"] = serialize_vector(acceleration->value); }
+  if (fuel != nullptr) { components["fuel"] = serialize_fuel(*fuel); }
   if (rectangle != nullptr) { components["rectangle"] = serialize_vector(rectangle->width_height); }
   if (circle != nullptr) { components["circle"] = circle->radius; }
   if (outline != nullptr) { components["outline"] = serialize_outline(*outline); }
@@ -179,6 +185,7 @@ inline Entity deserialize_and_spawn(AppCommands& app_commands, nlohmann::json co
   if (components.contains("acceleration")) {
     entity.add_component<Acceleration>(deserialize_vector(components["acceleration"]));
   }
+  if (components.contains("Fuel")) { entity.add_component<Fuel>(deserialize_fuel(components["fuel"])); }
   if (components.contains("rectangle")) {
     entity.add_component<Rectangle>(deserialize_vector(components["rectangle"]));
   }
@@ -214,6 +221,20 @@ inline nlohmann::json serialize_outline(Outline const& outline)
 
   return object;
 }
+
+inline nlohmann::json serialize_fuel(Fuel const& fuel)
+{
+  using json = nlohmann::json;
+
+  json object;
+
+  object["burn_rate"] = fuel.burn_rate;
+  object["current_fuel"] = fuel.current_fuel;
+  object["max_capacity"] = fuel.max_capacity;
+
+  return object;
+}
+
 
 inline nlohmann::json serialize_colour(Colour const& colour)
 {
@@ -258,6 +279,17 @@ inline Outline deserialize_outline(nlohmann::json const& object)
   outline.colour = deserialize_colour(object["colour"]);
 
   return outline;
+}
+
+inline Fuel deserialize_fuel(nlohmann::json const& object)
+{
+  Fuel fuel;
+
+  fuel.burn_rate = object["burn_rate"];
+  fuel.current_fuel = object["current_fuel"];
+  fuel.max_capacity = object["max_capacity"];
+
+  return fuel;
 }
 
 inline Colour deserialize_colour(nlohmann::json const& object)
