@@ -31,8 +31,8 @@
 namespace vehicle_select
 {
 
-void spawn_ui(AppCommands&);
-void createState(AppCommands& app_commands, float speed, float acc, float fuel);
+void spawn_ui(AppCommands&, std::string);
+void create_state(AppCommands& app_commands, float speed, float acc, float fuel, Colour const& colour);
 
 enum class UIElement {};
 enum class VehicleInfo {};
@@ -58,7 +58,7 @@ inline void plugin(AppCommands& app_commands)
         switch (selected_state.state) {
         case 1:
           for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
-          createState(
+          create_state(
             app_commands, vehicles::car1().speed, vehicles::car1().acc, vehicles::car1().fuel, colour::white());
           if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1) {
             game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle1;
@@ -71,7 +71,8 @@ inline void plugin(AppCommands& app_commands)
           break;
         case 2:
           for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
-          createState(app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
+          create_state(
+            app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
           if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1) {
             game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle2;
           }
@@ -90,7 +91,8 @@ inline void plugin(AppCommands& app_commands)
         switch (selected_state.state) {
         case 0:
           for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
-          createState(app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
+          create_state(
+            app_commands, vehicles::car2().speed, vehicles::car2().acc, vehicles::car2().fuel, colour::red());
           if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1) {
             game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle2;
           }
@@ -102,7 +104,7 @@ inline void plugin(AppCommands& app_commands)
           break;
         case 1:
           for (auto&& [entity, _vehicle_info] : view.each()) { app_commands.destroy(entity); }
-          createState(
+          create_state(
             app_commands, vehicles::car3().speed, vehicles::car3().acc, vehicles::car3().fuel, colour::black());
           if (game_state.current_screen == GameState::CurrentScreen::VehicleSelect1) {
             game_state.current_vehicle_p1 = GameState::CurrentVehicle_p1::Vehicle3;
@@ -160,7 +162,7 @@ inline void plugin(AppCommands& app_commands)
     });
 }
 
-inline void createState(AppCommands& app_commands, float speed, float acc, float fuel, Colour colour)
+inline void create_state(AppCommands& app_commands, float speed, float acc, float fuel, Colour const& colour)
 {
   // speed
   app_commands.spawn()
@@ -284,7 +286,7 @@ inline void spawn_ui(AppCommands& app_commands, std::string str)
     .add_component<Transform>(sf::Vector2f{ 400.f, 215.f });
 
 
-  createState(app_commands, vehicles::car1().speed, vehicles::car1().acc, vehicles::car1().fuel, colour::white());
+  create_state(app_commands, vehicles::car1().speed, vehicles::car1().acc, vehicles::car1().fuel, colour::white());
 
   // Outline
   app_commands.spawn()
