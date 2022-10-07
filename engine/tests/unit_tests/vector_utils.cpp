@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../vector_utils.h"
+#include "../../vector_utils.h"
 #include <SFML/Graphics.hpp>
 #include <gtest/gtest.h>
 

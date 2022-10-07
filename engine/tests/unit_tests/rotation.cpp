@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <gtest/gtest.h>
 
-#include "../rotation.h"
+#include "../../rotation.h"
 
 TEST(Rotation, RotationsAboutPoint)
 {
