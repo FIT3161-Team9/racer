@@ -11,6 +11,7 @@
 #include <engine/query.h>
 #include <engine/transform.h>
 #include <engine/window.h>
+#include <engine/zindex.h>
 
 #include "util.h"
 #include "velocity.h"
@@ -44,6 +45,7 @@ inline Entity spawn(AppCommands& app_commands)
     .add_component<Colour>(colour::white())
     .add_component<Circle>(20.f)
     .add_component<Velocity>(ball_starting_velocity())
+    .add_component<ZIndex>(1)
     .add_component<Ball>();
 }
 
