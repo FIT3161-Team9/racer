@@ -4,9 +4,9 @@
 #include <gtest/gtest.h>
 
 
-#include "../src/collisions.h"
 #include "engine/circle.h"
 #include "engine/transform.h"
+#include "game/src/collisions.h"
 #include "game/src/segment.h"
 
 

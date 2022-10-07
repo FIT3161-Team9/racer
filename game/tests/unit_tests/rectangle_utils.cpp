@@ -1,13 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <gtest/gtest.h>
 
 #include <engine/rectangle.h>
 #include <engine/rotation.h>
 #include <engine/transform.h>
 #include <engine/vector_utils.h>
 
-#include "../src/segment.h"
+#include "game/src/segment.h"
 
 TEST(RectangleUtils, Segments)
 {

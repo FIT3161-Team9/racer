@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 
-#include "../src/velocity.h"
+#include "game/src/velocity.h"
 
 
 TEST(ApplyVelocity, ZeroVelocity)
