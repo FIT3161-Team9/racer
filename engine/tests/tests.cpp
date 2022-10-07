@@ -3,3 +3,4 @@
 
 #include "integration_tests/basics.cpp"
 #include "integration_tests/entities.cpp"
+#include "integration_tests/queries.cpp"
