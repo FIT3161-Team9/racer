@@ -70,6 +70,7 @@ enable_testing()
 
 add_executable(RACER_tests ./tests/tests.cpp)
 target_include_directories(RACER_tests PUBLIC ../ ../)
-target_link_libraries(RACER_tests sfml-graphics EnTT::EnTT GTest::gtest_main)
+target_link_libraries(RACER_tests sfml-graphics EnTT::EnTT
+                      nlohmann_json::nlohmann_json GTest::gtest_main)
 include(GoogleTest)
 gtest_discover_tests(RACER_tests)
