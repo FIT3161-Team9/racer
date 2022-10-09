@@ -87,6 +87,7 @@ For each individual team member:
 2. Once the ticket is complete, put it through the review process
    1. Ticket reviews aren't tasks.
    2. Review other peoples' tasks in your own time.
+   3. All tests should be run as part of the review process.
 
 ### Sprint Retrospective
 
