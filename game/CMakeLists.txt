@@ -73,3 +73,7 @@ target_include_directories(RACER_tests PUBLIC ../ ../)
 target_link_libraries(RACER_tests sfml-graphics EnTT::EnTT GTest::gtest_main)
 include(GoogleTest)
 gtest_discover_tests(RACER_tests)
+
+add_custom_command(TARGET RACER POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --green
+		   "~~~ RACER built to: ${EXECUTABLE_OUTPUT_PATH} ~~~")

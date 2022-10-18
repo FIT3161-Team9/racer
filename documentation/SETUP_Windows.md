@@ -6,16 +6,16 @@ There is an extra step for first time setup on Windows machines
 
 **Create the build directory**:
 
+- `cd game`
 - `mkdir build`
-- `cd build`
 
 **Create the build system**:
 
-- `cmake ..`
+- `cmake -B build`
 
 **Build the code**:
 
-- `cmake --build .`
+- `cmake --build build`
 
 **Move the DLLs**:
 

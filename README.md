@@ -16,13 +16,16 @@ Steps for building for the first time:
 
 > For Windows users: see `SETUP_Windows.md` instead for first-time setup
 
+- `cd game`
 - `mkdir build`
-- `cd build`
-- `cmake ..`
-- `cmake --build .`
+- `cmake -B build`
+- `cmake --build build
 
-### Building & Running
+### Building
 
-- `cmake ..`
-- `cmake --build .`
-- `./RACER`
+After the initial setup, only the `cmake --build build` step is necessary to build the application. (`cmake -B build` is only necessary
+if changes to `CMakeLists.txt` are made.
+
+The game will be built and once successfully built, a green message will indicate the path it has been built to.
+
+The executable must be run from the `game` directory. For example: `.\build\Debug\RACER.exe` on windows, and `./build/RACER` on MacOS.
